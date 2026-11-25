@@ -1,0 +1,1081 @@
+{
+ "basal-omni-2.0-mini-preview": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Remek Kinas (Remigiusz Kinas; Hugging Face Remek, GitHub rkinas)",
+  "axes": {
+   "calibration": 82.09021307180137,
+   "cost": 79.0790159800477,
+   "intelligence": 55.890891574821765,
+   "speed": 91.04936974951954
+  },
+  "base_model": "google/gemma-4-E4B-it",
+  "capability": 68.99055232331156,
+  "composite_ci95": {
+   "A": [
+    70.00688714578571,
+    76.45210769669396
+   ],
+   "B": [
+    64.38587360053765,
+    72.48407607466932
+   ],
+   "C": [
+    48.615893851240074,
+    76.32941285790838
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 4B active parameters; throughput 80585.75 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.004981568814920555/1,000; old list-price estimate USD 0.013280440000000001/1,000 (deepinfra:google/gemma-4-E4B-it at USD 0.02/M input and USD 0.1/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.004981568814920555/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.004981568814920555
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 5,
+   "n_over_limit_answered_ok": 5,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Free-queue preview evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. pin 2c8a5783 (board pin 258a6280 differs in README.md only); GGUF and MLX variants are other systems, not this row; engine --mode eager only, bf16; basal v2.8.1 exists and was not used (only change: ModelOpt/FP8 refusal, irrelevant to this bf16 checkpoint); training data undisclosed; author figures self-reported; dependency stack per model card (torch 2.11.0+cu128, [media] installed, media off); 5 of 1,500 items (0.33 %) read one way (two-way limit 4,096 tokens); below the 5 % row-text threshold; no 422s, no other errors; run complete 1,500/1,500; cost is an estimate on the GPU-time leg; self-hosted latency adjustment x2 + 0.15 s (assumption, not measured); draw v1.6-regular-20261122 anchor-runs-pending: G_med carried from v1.8.18, offset 0 (same equating disclosure as starlord-4b-v2.0-preview).",
+  "disclosures": [
+   "pin 2c8a5783 (board pin 258a6280 differs in README.md only)",
+   "GGUF and MLX variants are other systems, not this row",
+   "engine --mode eager only, bf16; basal v2.8.1 exists and was not used (only change: ModelOpt/FP8 refusal, irrelevant to this bf16 checkpoint)",
+   "training data undisclosed; author figures self-reported",
+   "dependency stack per model card (torch 2.11.0+cu128, [media] installed, media off)",
+   "5 of 1,500 items (0.33 %) read one way (two-way limit 4,096 tokens); below the 5 % row-text threshold",
+   "no 422s, no other errors; run complete 1,500/1,500",
+   "cost is an estimate on the GPU-time leg",
+   "self-hosted latency adjustment x2 + 0.15 s (assumption, not measured)",
+   "draw v1.6-regular-20261122 anchor-runs-pending: G_med carried from v1.8.18, offset 0 (same equating disclosure as starlord-4b-v2.0-preview)"
+  ],
+  "display": "basal-omni-2.0-mini-preview (Remek Kinas, Gemma-4-E4B-it, typed-decision readout, self-hosted)",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "1cbbebefcea3871a878a434c018781d2dee7827a4f5ed3678da5ca18714ec4b4",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "github.com/rkinas/basal@6c1bba625bd7 (v2.8.0), --mode eager, bf16",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1500
+  },
+  "jevbench_score": 74.48462887376392,
+  "key": "basal-omni-2.0-mini-preview",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "Remek/basal-omni-2.0-mini-preview@2c8a5783c1588a9e4aedfa27325d2677765dc00f",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.88,
+   "decisive": 300,
+   "decisive_rate": 0.8,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "paid_fast_lane": false,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/Remek/basal-omni-2.0-mini-preview",
+  "scores": {
+   "A": 74.48462887376392,
+   "B": 69.83790514076549,
+   "C": 64.63179722198
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.2780871579997438,
+   "p50_s_raw": 0.0640435789998719,
+   "p95_s_adjusted": 0.2824113139003657,
+   "p95_s_raw": 0.06620565695018286
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Free-queue preview evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. pin 2c8a5783 (board pin 258a6280 differs in README.md only); GGUF and MLX variants are other systems, not this row; engine --mode eager only, bf16; basal v2.8.1 exists and was not used (only change: ModelOpt/FP8 refusal, irrelevant to this bf16 checkpoint); training data undisclosed; author figures self-reported; dependency stack per model card (torch 2.11.0+cu128, [media] installed, media off); 5 of 1,500 items (0.33 %) read one way (two-way limit 4,096 tokens); below the 5 % row-text threshold; no 422s, no other errors; run complete 1,500/1,500; cost is an estimate on the GPU-time leg; self-hosted latency adjustment x2 + 0.15 s (assumption, not measured); draw v1.6-regular-20261122 anchor-runs-pending: G_med carried from v1.8.18, offset 0 (same equating disclosure as starlord-4b-v2.0-preview).",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     77.07329112366574,
+     84.54715694966964
+    ],
+    "I": [
+     49.579242681537444,
+     59.95924300852982
+    ],
+    "capability": [
+     64.15199919555097,
+     71.65683280691864
+    ],
+    "composite": {
+     "A": [
+      70.00688714578571,
+      76.45210769669396
+     ],
+     "B": [
+      64.38587360053765,
+      72.48407607466932
+     ],
+     "C": [
+      48.615893851240074,
+      76.32941285790838
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 72.25323001040354,
+   "Emphasis on Accuracy 60:20:20": 64.67916966547487,
+   "Emphasis on Cost 20:20:60": 74.83708578466825,
+   "Emphasis on Speed 20:60:20": 78.75660340940085,
+   "Intelligence only": 55.890891574821765
+  }
+ },
+ "strands-decider-12b-gemma4-v2-2611": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "StrandsAgents (Hugging Face)",
+  "axes": {
+   "calibration": 90.52188950453858,
+   "cost": 70.85279188927194,
+   "intelligence": 66.30520772883133,
+   "speed": 90.77108482480976
+  },
+  "base_model": "google/gemma-4-12B-it",
+  "capability": 78.41354861668495,
+  "composite_ci95": {
+   "A": [
+    75.90494288682565,
+    79.0842116840519
+   ],
+   "B": [
+    72.43709173672555,
+    77.03904341852439
+   ],
+   "C": [
+    75.90494288682565,
+    79.0842116840519
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 12B active parameters; throughput 26861.9166667 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.00936641947360716/1,000; old list-price estimate USD 0.02090806666666667/1,000 (openrouter:google/gemma-3-12b-it (older list-price reference) at USD 0.05/M input and USD 0.15/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00936641947360716/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.00936641947360716
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 12B",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "d0d84dde6bf30a97b70958aa3a244bd7e97d5e32e69b136916b7347a2a4ea1ae",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "jevbench_score": 78.03459357907971,
+  "key": "strands-decider-12b-gemma4-v2-2611",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "StrandsAgents/strands-decider-12B-gemma4-v2-2611@41d5dc0d20a4deb2835690eb7529ee92463f6c9f",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.9598540145985401,
+   "decisive": 274,
+   "decisive_rate": 0.732620320855615,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-12B-gemma4-v2-2611",
+  "scores": {
+   "A": 78.03459357907971,
+   "B": 75.36807240434659,
+   "C": 78.03459357907971
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.25085335900004113,
+   "p50_s_raw": 0.050426679500020555,
+   "p95_s_adjusted": 0.33378867439994336,
+   "p95_s_raw": 0.09189433719997168
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     86.2115381291372,
+     91.39825993210722
+    ],
+    "I": [
+     61.21278429928843,
+     70.11798501537555
+    ],
+    "capability": [
+     74.85716102626006,
+     79.92169793398872
+    ],
+    "composite": {
+     "A": [
+      75.90494288682565,
+      79.0842116840519
+     ],
+     "B": [
+      72.43709173672555,
+      77.03904341852439
+     ],
+     "C": [
+      75.90494288682565,
+      79.0842116840519
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 74.60410284518039,
+   "Emphasis on Accuracy 60:20:20": 71.04714079085069,
+   "Emphasis on Cost 20:20:60": 73.0568997436216,
+   "Emphasis on Speed 20:60:20": 80.32681592286296,
+   "Intelligence only": 66.30520772883133
+  }
+ },
+ "strands-decider-26b-a4b-gemma4-v2-2611": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "StrandsAgents (Hugging Face)",
+  "axes": {
+   "calibration": 90.6835783479604,
+   "cost": 74.17447844293774,
+   "intelligence": 72.82003273011622,
+   "speed": 88.5148752416734
+  },
+  "base_model": "google/gemma-4-26B-A4B-it",
+  "capability": 81.75180553903832,
+  "composite_ci95": {
+   "A": [
+    78.92782684860167,
+    81.70476185777103
+   ],
+   "B": [
+    76.54118912934419,
+    80.63612218272475
+   ],
+   "C": [
+    78.92782684860167,
+    81.70476185777103
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: moe gemma, 4B active parameters; throughput 34662.5 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.007258564136028254/1,000; old list-price estimate USD 0.037664420000000004/1,000 (google/gemma-4-26b-a4b-it at USD 0.09/M input and USD 0.3/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.007258564136028254/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.007258564136028254
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 26B-A4B",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "d83a721c277deb042d93ce61e8826baa02cd34b9ef94579604e09623a572813c",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "jevbench_score": 80.74429775519259,
+  "key": "strands-decider-26b-a4b-gemma4-v2-2611",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611@6de21cc0600a5db0413de1aec05c034f6e17540b",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.9860627177700348,
+   "decisive": 287,
+   "decisive_rate": 0.767379679144385,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611",
+  "scores": {
+   "A": 80.74429775519259,
+   "B": 79.02441280851437,
+   "C": 80.74429775519259
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.3507028470000023,
+   "p50_s_raw": 0.10035142350000115,
+   "p95_s_adjusted": 0.4013961331000586,
+   "p95_s_raw": 0.12569806655002932
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     86.9676277585343,
+     91.3545793605052
+    ],
+    "I": [
+     67.94575179869203,
+     76.62187417771177
+    ],
+    "capability": [
+     78.38793508088379,
+     83.33167542516186
+    ],
+    "composite": {
+     "A": [
+      78.92782684860167,
+      81.70476185777103
+     ],
+     "B": [
+      76.54118912934419,
+      80.63612218272475
+     ],
+     "C": [
+      78.92782684860167,
+      81.70476185777103
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 77.89830964514213,
+   "Emphasis on Accuracy 60:20:20": 75.78431051506139,
+   "Emphasis on Cost 20:20:60": 76.36479244184387,
+   "Emphasis on Speed 20:60:20": 81.82392824522252,
+   "Intelligence only": 72.82003273011622
+  }
+ },
+ "strands-decider-31b-gemma4-v2-2611": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "StrandsAgents (Hugging Face)",
+  "axes": {
+   "calibration": 95.57160590384873,
+   "cost": 58.116726168138875,
+   "intelligence": 85.29026597879758,
+   "speed": 86.81236063573198
+  },
+  "base_model": "google/gemma-4-31B-it",
+  "capability": 90.43093594132316,
+  "composite_ci95": {
+   "A": [
+    77.29216071004845,
+    79.03445944408342
+   ],
+   "B": [
+    78.08517525372909,
+    80.75585886005273
+   ],
+   "C": [
+    77.29216071004845,
+    79.03445944408342
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: dense gemma, 31B active parameters; throughput 10106.516129 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.02489482786677858/1,000; old list-price estimate USD 0.03770428666666666/1,000 (google/gemma-4-31b-it at USD 0.09/M input and USD 0.34/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.02489482786677858/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.02489482786677858
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 31B",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "60c42b2b28bb595951cbbb1b75b170b7e3a82be848d07419e03ac6e0197ca10e",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "jevbench_score": 78.56404797973927,
+  "key": "strands-decider-31b-gemma4-v2-2611",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "StrandsAgents/strands-decider-31B-gemma4-v2-2611@5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.9853372434017595,
+   "decisive": 341,
+   "decisive_rate": 0.9117647058823529,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-31B-gemma4-v2-2611",
+  "scores": {
+   "A": 78.56404797973927,
+   "B": 79.82305988687645,
+   "C": 78.56404797973927
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.3715207620000115,
+   "p50_s_raw": 0.11076038100000574,
+   "p95_s_adjusted": 0.5607649330999265,
+   "p95_s_raw": 0.20538246654996326
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     92.40686016510016,
+     95.35346563508448
+    ],
+    "I": [
+     81.2442302653135,
+     88.49394272742961
+    ],
+    "capability": [
+     87.17703166417714,
+     91.49164226472422
+    ],
+    "composite": {
+     "A": [
+      77.29216071004845,
+      79.03445944408342
+     ],
+     "B": [
+      78.08517525372909,
+      80.75585886005273
+     ],
+     "C": [
+      77.29216071004845,
+      79.03445944408342
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 74.16469283189593,
+   "Emphasis on Accuracy 60:20:20": 78.24744562863846,
+   "Emphasis on Cost 20:20:60": 66.78776134717621,
+   "Emphasis on Speed 20:60:20": 78.75416125520029,
+   "Intelligence only": 85.29026597879758
+  }
+ },
+ "strands-decider-e2b-gemma4-v2-2611": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "StrandsAgents (Hugging Face)",
+  "axes": {
+   "calibration": 83.38881579520674,
+   "cost": 87.9786819653602,
+   "intelligence": 38.084548888715,
+   "speed": 93.9081456856735
+  },
+  "base_model": "google/gemma-4-E2B-it",
+  "capability": 60.73668234196087,
+  "composite_ci95": {
+   "A": [
+    30.110229174440224,
+    50.241871893062815
+   ],
+   "B": [
+    25.754183041846414,
+    44.656306668237974
+   ],
+   "C": [
+    20.909881371139047,
+    34.89018881462695
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 2B active parameters; throughput 100000 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.002515999793650794/1,000; base google/gemma-4-E2B-it is UNLISTED in the frozen pricing snapshot, so no list-price leg exists. Applied GPU-time cost = USD 0.002515999793650794/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.002515999793650794
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider E2B (Gemma 4) v2",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "2999b30133f9d9a2e8fa91a70d5f0269ac195d4f42981847c6792d8df34ae9ac",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "Author's Strands Decider v2 runtime, unchanged, evaluator-hosted offline with pinned weights. The checkpoint repository is private; the checkpoint name and revision are disclosed without a public repository link.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "jevbench_score": 38.50846642924707,
+  "key": "strands-decider-e2b-gemma4-v2-2611",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "StrandsAgents/strands-decider-E2B-gemma4-v2-2611@a879714f3b0f2eb9c4eff6dde89e04ee01d44862",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.96875,
+   "decisive": 160,
+   "decisive_rate": 0.42780748663101603,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": null,
+  "scores": {
+   "A": 38.50846642924707,
+   "B": 33.527553042955326,
+   "C": 26.74199057586602
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.19166174299996327,
+   "p50_s_raw": 0.02083087149998164,
+   "p95_s_adjusted": 0.21215340090003562,
+   "p95_s_raw": 0.031076700450017817
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     78.15511419216594,
+     84.84506565030158
+    ],
+    "I": [
+     34.445466583496724,
+     42.598910976638344
+    ],
+    "capability": [
+     57.588269303788735,
+     62.49165161296953
+    ],
+    "composite": {
+     "A": [
+      30.110229174440224,
+      50.241871893062815
+     ],
+     "B": [
+      25.754183041846414,
+      44.656306668237974
+     ],
+     "C": [
+      20.909881371139047,
+      34.89018881462695
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 36.05615710461433,
+   "Emphasis on Accuracy 60:20:20": 28.782085802373718,
+   "Emphasis on Cost 20:20:60": 40.854248197228486,
+   "Emphasis on Speed 20:60:20": 41.69715729072078,
+   "Intelligence only": 22.095632528389917
+  }
+ },
+ "strands-decider-e4b-gemma4-v2-2611": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "StrandsAgents (Hugging Face)",
+  "axes": {
+   "calibration": 88.58732350497466,
+   "cost": 85.16642953086182,
+   "intelligence": 56.32968667958862,
+   "speed": 92.63219460758367
+  },
+  "base_model": "google/gemma-4-E4B-it",
+  "capability": 72.45850509228164,
+  "composite_ci95": {
+   "A": [
+    74.04735972729343,
+    79.31139633941254
+   ],
+   "B": [
+    67.84446933389401,
+    74.71414480042412
+   ],
+   "C": [
+    52.59250133539358,
+    79.28283549803275
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 4B active parameters; throughput 80585.75 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.003122139824535719/1,000; old list-price estimate USD 0.008403093333333334/1,000 (deepinfra:google/gemma-4-E4B-it at USD 0.02/M input and USD 0.1/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.003122139824535719/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.003122139824535719
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 E4B",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": null,
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.21",
+   "results_sha256": "3b7a5ee636e29d465df5ec93cdf5a83f03306ca5699727f73f89d7503cce27a8",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "jevbench_score": 77.55240914797979,
+  "key": "strands-decider-e4b-gemma4-v2-2611",
+  "last_measured_on": null,
+  "licence": null,
+  "listing": "unranked",
+  "measured_in": "v1.8.21",
+  "measurement_date_status": "not-published",
+  "method": "v1.7",
+  "model_pin": "StrandsAgents/strands-decider-E4B-gemma4-v2-2611@1717bca732ba4ef8c8c531fbc9875fafaf858811",
+  "new_in": "v1.8.21",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.9484126984126984,
+   "decisive": 252,
+   "decisive_rate": 0.6737967914438503,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-E4B-gemma4-v2-2611",
+  "scores": {
+   "A": 77.55240914797979,
+   "B": 72.11817342026634,
+   "C": 68.35455558268335
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.21661670699998012,
+   "p50_s_raw": 0.03330835349999006,
+   "p95_s_adjusted": 0.25181905499996443,
+   "p95_s_raw": 0.050909527499982225
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     83.91964825633502,
+     89.80107798231734
+    ],
+    "I": [
+     50.5338891145552,
+     60.60077048681676
+    ],
+    "capability": [
+     68.13266545502574,
+     74.16108710841749
+    ],
+    "composite": {
+     "A": [
+      74.04735972729343,
+      79.31139633941254
+     ],
+     "B": [
+      67.84446933389401,
+      74.71414480042412
+     ],
+     "C": [
+      52.59250133539358,
+      79.28283549803275
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 74.46066845327299,
+   "Emphasis on Accuracy 60:20:20": 65.96742610854471,
+   "Emphasis on Cost 20:20:60": 78.40289135624414,
+   "Emphasis on Speed 20:60:20": 80.80090825367381,
+   "Intelligence only": 56.32968667958862
+  }
+ }
+}

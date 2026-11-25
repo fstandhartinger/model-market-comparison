@@ -1,0 +1,134 @@
+{
+ "basal-omni-2.0-mini-preview": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.004981568814920555,
+  "family": "gemma",
+  "gpu_all": 0.004981568814920555,
+  "gpu_rate_per_m": 0.00750211410905144,
+  "input_tokens": 996033,
+  "list_all": 0.013280440000000001,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.02,
+   "listing": "deepinfra:google/gemma-4-E4B-it",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.1
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 80585.75
+ },
+ "strands-decider-12b-gemma4-v2-2611": {
+  "active_b": 12,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.00936641947360716,
+  "family": "gemma",
+  "gpu_all": 0.00936641947360716,
+  "gpu_rate_per_m": 0.02250634232715432,
+  "input_tokens": 622757,
+  "list_all": 0.02090806666666667,
+  "n_items": 1500,
+  "output_tokens": 1495,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.05,
+   "listing": "openrouter:google/gemma-3-12b-it (older list-price reference)",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.15
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 26861.916666666668
+ },
+ "strands-decider-26b-a4b-gemma4-v2-2611": {
+  "active_b": 4,
+  "architecture_class": "moe",
+  "binding": "gpu",
+  "cost_all": 0.007258564136028254,
+  "family": "gemma",
+  "gpu_all": 0.007258564136028254,
+  "gpu_rate_per_m": 0.017441427827291512,
+  "input_tokens": 622757,
+  "list_all": 0.037664420000000004,
+  "n_items": 1500,
+  "output_tokens": 1495,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.09,
+   "listing": "google/gemma-4-26b-a4b-it",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.3
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 34662.5
+ },
+ "strands-decider-31b-gemma4-v2-2611": {
+  "active_b": 31,
+  "architecture_class": "dense",
+  "binding": "gpu",
+  "cost_all": 0.02489482786677858,
+  "family": "gemma",
+  "gpu_all": 0.02489482786677858,
+  "gpu_rate_per_m": 0.05981917847306515,
+  "input_tokens": 622757,
+  "list_all": 0.03770428666666666,
+  "n_items": 1500,
+  "output_tokens": 1495,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.09,
+   "listing": "google/gemma-4-31b-it",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.33999999999999997
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 10106.516129032258
+ },
+ "strands-decider-e2b-gemma4-v2-2611": {
+  "active_b": 2,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.002515999793650794,
+  "family": "gemma",
+  "gpu_all": 0.002515999793650794,
+  "gpu_rate_per_m": 0.006045634920634921,
+  "input_tokens": 622757,
+  "list_all": null,
+  "n_items": 1500,
+  "output_tokens": 1495,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": null,
+   "listing": null,
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": null
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 100000
+ },
+ "strands-decider-e4b-gemma4-v2-2611": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.003122139824535719,
+  "family": "gemma",
+  "gpu_all": 0.003122139824535719,
+  "gpu_rate_per_m": 0.00750211410905144,
+  "input_tokens": 622757,
+  "list_all": 0.008403093333333334,
+  "n_items": 1500,
+  "output_tokens": 1495,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.02,
+   "listing": "deepinfra:google/gemma-4-E4B-it",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.1
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 80585.75
+ }
+}

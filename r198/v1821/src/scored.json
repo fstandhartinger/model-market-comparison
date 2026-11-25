@@ -1,0 +1,800 @@
+{
+ "basal-omni-2.0-mini-preview": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "1cbbebefcea3871a878a434c018781d2dee7827a4f5ed3678da5ca18714ec4b4"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 82.09021307180137,
+    "cost": 79.0790159800477,
+    "intelligence": 55.890891574821765,
+    "speed": 91.04936974951954
+   },
+   "capability": 68.99055232331156,
+   "composite_ci95": {
+    "A": [
+     70.00688714578571,
+     76.45210769669396
+    ],
+    "B": [
+     64.38587360053765,
+     72.48407607466932
+    ],
+    "C": [
+     48.615893851240074,
+     76.32941285790838
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.004981568814920555
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "basal-omni-2.0-mini-preview (Remek Kinas, Gemma-4-E4B-it, typed-decision readout, self-hosted)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 74.48462887376392,
+   "key": "basal-omni-2.0-mini-preview",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 74.48462887376392,
+    "B": 69.83790514076549,
+    "C": 64.63179722198
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.2780871579997438,
+    "p50_s_raw": 0.0640435789998719,
+    "p95_s_adjusted": 0.2824113139003657,
+    "p95_s_raw": 0.06620565695018286
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      77.07329112366574,
+      84.54715694966964
+     ],
+     "I": [
+      49.579242681537444,
+      59.95924300852982
+     ],
+     "capability": [
+      64.15199919555097,
+      71.65683280691864
+     ],
+     "composite": {
+      "A": [
+       70.00688714578571,
+       76.45210769669396
+      ],
+      "B": [
+       64.38587360053765,
+       72.48407607466932
+      ],
+      "C": [
+       48.615893851240074,
+       76.32941285790838
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 72.25323001040354,
+    "Emphasis on Accuracy 60:20:20": 64.67916966547487,
+    "Emphasis on Cost 20:20:60": 74.83708578466825,
+    "Emphasis on Speed 20:60:20": 78.75660340940085,
+    "Intelligence only": 55.890891574821765
+   }
+  }
+ },
+ "strands-decider-12b-gemma4-v2-2611": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "d0d84dde6bf30a97b70958aa3a244bd7e97d5e32e69b136916b7347a2a4ea1ae"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 90.52188950453858,
+    "cost": 70.85279188927194,
+    "intelligence": 66.30520772883133,
+    "speed": 90.77108482480976
+   },
+   "capability": 78.41354861668495,
+   "composite_ci95": {
+    "A": [
+     75.90494288682565,
+     79.0842116840519
+    ],
+    "B": [
+     72.43709173672555,
+     77.03904341852439
+    ],
+    "C": [
+     75.90494288682565,
+     79.0842116840519
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.00936641947360716
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Strands Decider v2 12B",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 78.03459357907971,
+   "key": "strands-decider-12b-gemma4-v2-2611",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 78.03459357907971,
+    "B": 75.36807240434659,
+    "C": 78.03459357907971
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.25085335900004113,
+    "p50_s_raw": 0.050426679500020555,
+    "p95_s_adjusted": 0.33378867439994336,
+    "p95_s_raw": 0.09189433719997168
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      86.2115381291372,
+      91.39825993210722
+     ],
+     "I": [
+      61.21278429928843,
+      70.11798501537555
+     ],
+     "capability": [
+      74.85716102626006,
+      79.92169793398872
+     ],
+     "composite": {
+      "A": [
+       75.90494288682565,
+       79.0842116840519
+      ],
+      "B": [
+       72.43709173672555,
+       77.03904341852439
+      ],
+      "C": [
+       75.90494288682565,
+       79.0842116840519
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 74.60410284518039,
+    "Emphasis on Accuracy 60:20:20": 71.04714079085069,
+    "Emphasis on Cost 20:20:60": 73.0568997436216,
+    "Emphasis on Speed 20:60:20": 80.32681592286296,
+    "Intelligence only": 66.30520772883133
+   }
+  }
+ },
+ "strands-decider-26b-a4b-gemma4-v2-2611": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "d83a721c277deb042d93ce61e8826baa02cd34b9ef94579604e09623a572813c"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 90.6835783479604,
+    "cost": 74.17447844293774,
+    "intelligence": 72.82003273011622,
+    "speed": 88.5148752416734
+   },
+   "capability": 81.75180553903832,
+   "composite_ci95": {
+    "A": [
+     78.92782684860167,
+     81.70476185777103
+    ],
+    "B": [
+     76.54118912934419,
+     80.63612218272475
+    ],
+    "C": [
+     78.92782684860167,
+     81.70476185777103
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.007258564136028254
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Strands Decider v2 26B-A4B",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 80.74429775519259,
+   "key": "strands-decider-26b-a4b-gemma4-v2-2611",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 80.74429775519259,
+    "B": 79.02441280851437,
+    "C": 80.74429775519259
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.3507028470000023,
+    "p50_s_raw": 0.10035142350000115,
+    "p95_s_adjusted": 0.4013961331000586,
+    "p95_s_raw": 0.12569806655002932
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      86.9676277585343,
+      91.3545793605052
+     ],
+     "I": [
+      67.94575179869203,
+      76.62187417771177
+     ],
+     "capability": [
+      78.38793508088379,
+      83.33167542516186
+     ],
+     "composite": {
+      "A": [
+       78.92782684860167,
+       81.70476185777103
+      ],
+      "B": [
+       76.54118912934419,
+       80.63612218272475
+      ],
+      "C": [
+       78.92782684860167,
+       81.70476185777103
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 77.89830964514213,
+    "Emphasis on Accuracy 60:20:20": 75.78431051506139,
+    "Emphasis on Cost 20:20:60": 76.36479244184387,
+    "Emphasis on Speed 20:60:20": 81.82392824522252,
+    "Intelligence only": 72.82003273011622
+   }
+  }
+ },
+ "strands-decider-31b-gemma4-v2-2611": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "60c42b2b28bb595951cbbb1b75b170b7e3a82be848d07419e03ac6e0197ca10e"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 95.57160590384873,
+    "cost": 58.116726168138875,
+    "intelligence": 85.29026597879758,
+    "speed": 86.81236063573198
+   },
+   "capability": 90.43093594132316,
+   "composite_ci95": {
+    "A": [
+     77.29216071004845,
+     79.03445944408342
+    ],
+    "B": [
+     78.08517525372909,
+     80.75585886005273
+    ],
+    "C": [
+     77.29216071004845,
+     79.03445944408342
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.02489482786677858
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Strands Decider v2 31B",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 78.56404797973927,
+   "key": "strands-decider-31b-gemma4-v2-2611",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 78.56404797973927,
+    "B": 79.82305988687645,
+    "C": 78.56404797973927
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.3715207620000115,
+    "p50_s_raw": 0.11076038100000574,
+    "p95_s_adjusted": 0.5607649330999265,
+    "p95_s_raw": 0.20538246654996326
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      92.40686016510016,
+      95.35346563508448
+     ],
+     "I": [
+      81.2442302653135,
+      88.49394272742961
+     ],
+     "capability": [
+      87.17703166417714,
+      91.49164226472422
+     ],
+     "composite": {
+      "A": [
+       77.29216071004845,
+       79.03445944408342
+      ],
+      "B": [
+       78.08517525372909,
+       80.75585886005273
+      ],
+      "C": [
+       77.29216071004845,
+       79.03445944408342
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 74.16469283189593,
+    "Emphasis on Accuracy 60:20:20": 78.24744562863846,
+    "Emphasis on Cost 20:20:60": 66.78776134717621,
+    "Emphasis on Speed 20:60:20": 78.75416125520029,
+    "Intelligence only": 85.29026597879758
+   }
+  }
+ },
+ "strands-decider-e2b-gemma4-v2-2611": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "2999b30133f9d9a2e8fa91a70d5f0269ac195d4f42981847c6792d8df34ae9ac"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 83.38881579520674,
+    "cost": 87.9786819653602,
+    "intelligence": 38.084548888715,
+    "speed": 93.9081456856735
+   },
+   "capability": 60.73668234196087,
+   "composite_ci95": {
+    "A": [
+     30.110229174440224,
+     50.241871893062815
+    ],
+    "B": [
+     25.754183041846414,
+     44.656306668237974
+    ],
+    "C": [
+     20.909881371139047,
+     34.89018881462695
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.002515999793650794
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Strands Decider E2B (Gemma 4) v2",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 38.50846642924707,
+   "key": "strands-decider-e2b-gemma4-v2-2611",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 38.50846642924707,
+    "B": 33.527553042955326,
+    "C": 26.74199057586602
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.19166174299996327,
+    "p50_s_raw": 0.02083087149998164,
+    "p95_s_adjusted": 0.21215340090003562,
+    "p95_s_raw": 0.031076700450017817
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      78.15511419216594,
+      84.84506565030158
+     ],
+     "I": [
+      34.445466583496724,
+      42.598910976638344
+     ],
+     "capability": [
+      57.588269303788735,
+      62.49165161296953
+     ],
+     "composite": {
+      "A": [
+       30.110229174440224,
+       50.241871893062815
+      ],
+      "B": [
+       25.754183041846414,
+       44.656306668237974
+      ],
+      "C": [
+       20.909881371139047,
+       34.89018881462695
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 36.05615710461433,
+    "Emphasis on Accuracy 60:20:20": 28.782085802373718,
+    "Emphasis on Cost 20:20:60": 40.854248197228486,
+    "Emphasis on Speed 20:60:20": 41.69715729072078,
+    "Intelligence only": 22.095632528389917
+   }
+  }
+ },
+ "strands-decider-e4b-gemma4-v2-2611": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "3b7a5ee636e29d465df5ec93cdf5a83f03306ca5699727f73f89d7503cce27a8"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 88.58732350497466,
+    "cost": 85.16642953086182,
+    "intelligence": 56.32968667958862,
+    "speed": 92.63219460758367
+   },
+   "capability": 72.45850509228164,
+   "composite_ci95": {
+    "A": [
+     74.04735972729343,
+     79.31139633941254
+    ],
+    "B": [
+     67.84446933389401,
+     74.71414480042412
+    ],
+    "C": [
+     52.59250133539358,
+     79.28283549803275
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.003122139824535719
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Strands Decider v2 E4B",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 77.55240914797979,
+   "key": "strands-decider-e4b-gemma4-v2-2611",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 77.55240914797979,
+    "B": 72.11817342026634,
+    "C": 68.35455558268335
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.21661670699998012,
+    "p50_s_raw": 0.03330835349999006,
+    "p95_s_adjusted": 0.25181905499996443,
+    "p95_s_raw": 0.050909527499982225
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      83.91964825633502,
+      89.80107798231734
+     ],
+     "I": [
+      50.5338891145552,
+      60.60077048681676
+     ],
+     "capability": [
+      68.13266545502574,
+      74.16108710841749
+     ],
+     "composite": {
+      "A": [
+       74.04735972729343,
+       79.31139633941254
+      ],
+      "B": [
+       67.84446933389401,
+       74.71414480042412
+      ],
+      "C": [
+       52.59250133539358,
+       79.28283549803275
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 74.46066845327299,
+    "Emphasis on Accuracy 60:20:20": 65.96742610854471,
+    "Emphasis on Cost 20:20:60": 78.40289135624414,
+    "Emphasis on Speed 20:60:20": 80.80090825367381,
+    "Intelligence only": 56.32968667958862
+   }
+  }
+ }
+}

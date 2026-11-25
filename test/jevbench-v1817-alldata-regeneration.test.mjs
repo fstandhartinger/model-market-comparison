@@ -9,7 +9,7 @@ test('v1.8.17 precomputed All-data bytes reproduce on its published release chai
   // A newer live addendum contributes its own row-pool bounds. Freeze this historical
   // regeneration at v1.8.17, without changing any archived source or artifact bytes.
   const root=await mkdtemp(join(tmpdir(),'v1817-chain-'));
-  const hidden=['data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.18-publication.json','data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.19-publication.json','data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.20-publication.json'];
+  const hidden=['data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.18-publication.json','data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.19-publication.json','data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.20-publication.json','data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.21-publication.json'];
   async function mirror(rel=''){
     for(const e of await readdir(resolve(rel||'.'),{withFileTypes:true})){
       if(['.git','.next','.heavy-run','node_modules'].includes(e.name))continue;

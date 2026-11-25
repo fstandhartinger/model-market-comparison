@@ -8030,6 +8030,97 @@
             "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md"
           }
         ]
+      },
+      "strands-decider-e2b-gemma4-v2-2611": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/gemma-4-E2B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "Declared upstream base google/gemma-4-E2B-it: architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "note": "The developer reports this private checkpoint as a fine-tune of google/gemma-4-E2B-it. The source documents the upstream architecture; the checkpoint itself is not publicly verifiable."
+      },
+      "strands-decider-e4b-gemma4-v2-2611": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "fact": "Base google/gemma-4-E4B-it; pinned checkpoint StrandsAgents/strands-decider-E4B-gemma4-v2-2611@1717bca732ba4ef8c8c531fbc9875fafaf858811.",
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-E4B-gemma4-v2-2611/tree/1717bca732ba4ef8c8c531fbc9875fafaf858811"
+          }
+        ]
+      },
+      "strands-decider-12b-gemma4-v2-2611": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "fact": "Base google/gemma-4-12B-it; pinned checkpoint StrandsAgents/strands-decider-12B-gemma4-v2-2611@41d5dc0d20a4deb2835690eb7529ee92463f6c9f.",
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-12B-gemma4-v2-2611/tree/41d5dc0d20a4deb2835690eb7529ee92463f6c9f"
+          }
+        ]
+      },
+      "strands-decider-26b-a4b-gemma4-v2-2611": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "fact": "Base google/gemma-4-26B-A4B-it; pinned checkpoint StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611@6de21cc0600a5db0413de1aec05c034f6e17540b.",
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611/tree/6de21cc0600a5db0413de1aec05c034f6e17540b"
+          }
+        ]
+      },
+      "strands-decider-31b-gemma4-v2-2611": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "fact": "Base google/gemma-4-31B-it; pinned checkpoint StrandsAgents/strands-decider-31B-gemma4-v2-2611@5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e.",
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-31B-gemma4-v2-2611/tree/5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e"
+          }
+        ]
+      },
+      "basal-omni-2.0-mini-preview": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "fact": "Base google/gemma-4-E4B-it; pinned checkpoint Remek/basal-omni-2.0-mini-preview@2c8a5783c1588a9e4aedfa27325d2677765dc00f.",
+            "url": "https://huggingface.co/Remek/basal-omni-2.0-mini-preview/tree/2c8a5783c1588a9e4aedfa27325d2677765dc00f"
+          }
+        ]
       }
     },
     "imagejevbench": {
