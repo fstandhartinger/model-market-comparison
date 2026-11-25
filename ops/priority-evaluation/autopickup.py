@@ -2334,7 +2334,9 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                              record["job"], thread=BOARD_HANDOFF_THREAD):
                 entry = board_entry_id(effects)
                 finish_ok(state, "native_owner_handoff", now, **({"entry": entry} if entry is not None else {}))
-    elif not step_done(state, "operational_handoff"):
+    elif not step_done(state, handoff_step := ("key_intake_handoff" if reason in KEY_INTAKE_HOLD_REASONS
+                                                else "operational_handoff")):
+        # CR-863: the key-import handoff has its own step, so an earlier or later handoff of another hold never mutes it.
         if reason in KEY_INTAKE_HOLD_REASONS:
             # CR-863: say exactly what to do; "measurement owner / runtime contract" sent owners to the runner instead.
             ref = (state.get("operational_hold") or {}).get("submission_ref")
@@ -2351,7 +2353,7 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                     f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
                     "Use the pinned runtime/review contract; never reuse another order's run.")
         if effects.board(text, wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
-            finish_ok(state, "operational_handoff", now)
+            finish_ok(state, handoff_step, now)
     if covered:
         return  # a live native owner with more than 12 h left (3 h once measured) owns the hold; no urgent card
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
@@ -2547,9 +2549,11 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                     operational_escalate(row, state, effects, now, reason, exhausted=True)
                     return
             elif reason in KEY_INTAKE_HOLD_REASONS and not getattr(effects, "dry_run", False) \
-                    and redacted_access(row.get("access_instructions"))["credential"] == "held_privately_host_only":
+                    and (key_access := redacted_access(row.get("access_instructions")))["credential"] == "held_privately_host_only" \
+                    and key_access["endpoint"]:
                 # CR-863: the owner imported the key into private host intake; the hold ends and the evaluation starts.
                 state.pop("operational_hold", None)
+                state.get("steps", {}).pop("key_intake_handoff", None)  # a later key hold gets its own handoff again
                 save_state(state)
                 append_state(job_directory(rid, JOB_ROOT), f"\n\nKey intake hold {reason} cleared at {iso(now)}: the API key is "
                                                             "now held privately on the host; the evaluation starts.\n")

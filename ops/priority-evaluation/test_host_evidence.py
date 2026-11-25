@@ -291,5 +291,6 @@ class LinkedSubmissionKeyTests(unittest.TestCase):
             ap.linked_submission_key_ref("x' OR TRUE --")
         sql.assert_not_called()
 
+
 if __name__ == "__main__":
     unittest.main()

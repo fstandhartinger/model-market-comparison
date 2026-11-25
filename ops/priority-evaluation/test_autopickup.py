@@ -2705,6 +2705,26 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         self.assertGreater(len(fx.started), starts)
         self.assertIsNone(row(rid)["customer_hold_started_at"])
 
+    def test_key_handoff_is_not_muted_by_an_earlier_handoff_and_a_key_never_clears_other_holds(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        key_json = json.dumps({"endpoint": "https://example.invalid/v1/systemone", "api_key": "k" * 24})
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', access_type='api_endpoint', "
+               f"access_instructions='{key_json}' WHERE id='{rid}'")
+        _set_operational_hold(rid, "fetch_source_failed", transient=False)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "fetch_source_failed")  # a key clears only key holds
+        self.assertIn("measurement owner", fx.boards[-1])
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='API: https://example.invalid/v1/systemone' WHERE id='{rid}'")
+        _set_operational_hold(rid, "api_key_in_linked_submission", transient=False)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn("needs a key import", fx.boards[-1])
+        # A key without an endpoint does not clear the hold.
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='{json.dumps({'api_key': 'k' * 24})}' WHERE id='{rid}'")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "api_key_in_linked_submission")
+
     def test_key_intake_hold_stays_while_the_key_is_not_yet_private(self):
         rid = insert_order()
         fx = FakeEffects()
