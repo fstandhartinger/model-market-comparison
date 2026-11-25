@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "gso::opt1-102 version_status / version",
+      "evidence": "Row claims version_status='published' with version 'opt1-102'. c2 defines 'published' as: the maintainer publishes a release identifier for this board and the version copies it. Neither SOURCE 1 nor SOURCE 2 publishes any release/version identifier for the board (page and leaderboard.json contain only task counts, dates, and setting names; no version string exists to copy). Per c2, 'published' is a mismatch when no release identifier is published; the correct value is 'snapshot' with the row's own dated identity, since the page publishes no release identifier.",
+      "repair": "Change version_status from 'published' to 'snapshot' (and version to the snapshot-<date> dated identity used to freeze the observed methodology), unless a maintainer release identifier can be supplied and 'opt1-102' shown to copy it."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or artifact hashes; relied on owner-computed bindings.",
+    "c1 identity: row's version guard (total_tasks 102, Opt@1-only) is confirmed by SOURCE 2 metadata.total_tasks=102 and present Opt@1 settings; 'opt1-102' is the artifact's own identity string, not a maintainer identifier.",
+    "c1 metric/unit/range verified: Opt@1 definition, OpenHands default scaffold, hack-adjusted column, 2026-04-27 iteration-budget and 2026-07-12 network-isolation changelog notes all match SOURCE 1; unit 'percent' and range [0,100] agree with SOURCE 4's served scale (0 to 88.24).",
+    "c2 status 'active' supported by live leaderboard content plus SOURCE 3's 4 newly added values; superseded_by null consistent with no successor named in SOURCE 1.",
+    "2026-09-27 changelog entry (elicitation change) is not mentioned in the row's notes, but the notes only affirmatively claim the two entries they cite; judged not a mismatch."
+  ],
+  "missing_evidence": []
+}

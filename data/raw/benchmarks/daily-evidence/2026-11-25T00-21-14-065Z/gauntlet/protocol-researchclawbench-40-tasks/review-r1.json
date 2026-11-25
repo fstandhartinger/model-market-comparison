@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "researchclawbench::40-tasks .version / .version_status",
+      "evidence": "Row claims version_status='published' with version='40-tasks'. No source publishes a release identifier for this board: the README (SOURCE 3) and site (SOURCE 1) contain no version tag or release identifier the row copies; '40-tasks' appears nowhere as a maintainer identifier (only task counts: 'Tasks-40' badge, '40 tasks total', '10 domains x 4 tasks'). Under c2, 'published' requires the maintainer to publish a release identifier that the version copies; absent one, the field must be 'snapshot' with a dated snapshot-<date> identity.",
+      "repair": "Set version_status='snapshot' and version to the dated identity snapshot-<capture date>, or supply primary evidence of a maintainer-published release identifier that '40-tasks' transcribes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row/artifact hashes or verify owner transport/qualification checks; owner executes these separately.",
+    "The version_guard's required leaderboard.json keys {tasks, agents, scores, frontier} and exact 40 task ids cannot be confirmed from the packet: SOURCE 4/5 are generated summaries of the payload, not the raw JSON. No mismatch found, but that guard clause is unverified in this review.",
+    "README dates (news through 2026-10-28) vs retrieval 2026-11-25: continuity between identity and capture window rests on the unchanged task count and scoring text in the captured README/page.",
+    "Row note 'page says 100 = surpasses the paper, README 70+' matches sources (SOURCE 1: '50 = matches original paper, 100 = surpasses it'; SOURCE 3: '50 = match the paper, 70+ = surpass it'); internally reconciled by the row, not an error."
+  ],
+  "missing_evidence": []
+}

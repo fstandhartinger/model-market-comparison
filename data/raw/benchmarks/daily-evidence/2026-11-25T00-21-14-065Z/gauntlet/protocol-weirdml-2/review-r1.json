@@ -1,0 +1,33 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row weirdml::2 fields version/scoring/description vs SOURCE 1",
+      "evidence": "Row claims version 2 with '17 tasks', metric 'Average Max Accuracy ... 5 iterations', unit percent, range [0,100]. SOURCE 1 excerpt shows only 'WeirdML v3' (11 tasks, official score = 80% normalized log-token AUC + 20% final effective score, effective scores 'not raw accuracy') and merely links 'Previous versions: WeirdML v2'. The excerpt contains no v2 protocol text, so the v2 identity, task count, metric, and scoring rule cannot be verified against primary evidence.",
+      "repair": "Supply an excerpt of the WeirdML v2 protocol page (htihle.github.io v2 link) establishing v2's task set, scoring rule and release identifier, or revise the row to reflect the version the current page actually publishes (v3) with matching metric/units."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row weirdml::2 lifecycle fields vs SOURCE 1",
+      "evidence": "SOURCE 1 presents 'WeirdML v3' as the current benchmark and lists v2 under 'Previous versions: WeirdML v2 · WeirdML v1'. A successor version is named and v2 is labeled previous, but the row sets superseded_by null. version_status 'published' with version '2' is plausible (the page publishes v2 as a previous version) but its scoring/metric cannot be refreshed from the current page, which serves v3.",
+      "repair": "Set superseded_by to the registry id for WeirdML v3 if one exists in the registry, or cite evidence that v2 remains independently reported; alternatively set version_status/status to reflect a retained prior version, per the successor's own registry entry."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 2 activity summary (9 changed avg_acc values) and SOURCE 3 scale summary (162 values, 1.729–93.573) support unit percent / range [0,100] and status 'active' as defined by c1/c2, but they cannot establish which version (v2 vs v3) the payload belongs to or the metric's meaning; per instructions this is a methodological limit, not missing numeric evidence.",
+    "I cannot execute hash verification or transport checks; owner-computed row sha256 e1d4cba9... is taken as binding.",
+    "The page names no explicit retirement of v2, so status 'active' is not directly contradicted; judged independently of supersession."
+  ],
+  "missing_evidence": [
+    "Primary protocol text for WeirdML v2 (task set, scoring rule, metric definition, release identifier) — the packet contains only the v3 page excerpt, so the row's 17-task / Average Max Accuracy / 5-iterations claims for version 2 cannot be verified"
+  ]
+}

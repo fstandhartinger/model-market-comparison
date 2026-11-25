@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "cd58a07debe2ab765c861b5ebe627d6804e74562715424e5fb1fc9173b8d9bd0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row vendor:DeepSeek-V3:longbench::2: value 48.7 matches the served primary cell (Table 6, LongBench v2 (Acc.), DeepSeek-V3 column: 48.7) exactly; unit percent matches (Acc.); basis self_reported is consistent since the source is DeepSeek's own paper evaluating its chat model.",
+    "Subject identity DeepSeek-V3 chat model per arXiv 2412.19437v2 Table 6 matches the primary source; no alias inference performed.",
+    "Protocol text is an accurate transcription of the paper: original evaluation protocols with default prompts from dataset creators, 8192-token output limit, <1000-sample benchmarks tested multiple times with varying temperature.",
+    "Locator string matches the primary table row verbatim including all seven baseline values.",
+    "Harness is null because the source does not name a distinct harness for LongBench v2; no unfounded harness value was inferred, consistent with the criterion against unknown configurations creating comparison_key values.",
+    "published_at is null and comparison_key is null; neither is required by criterion c1, and no numeric evidence is missing.",
+    "I could not independently recompute the owner's row sha256 (c14be5d0...) or artifact sha256; hash binding and transport checks are executed by the owner and their inability here is a limitation, not missing source evidence."
+  ],
+  "missing_evidence": []
+}

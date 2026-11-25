@@ -1,0 +1,12 @@
+{
+"artifact_id": "scores-1",
+"artifact_sha256": "72ad6a2ef581975b51095f484cf62a8e3a33fa30b004548ad5cd68c8b6d72a6a",
+"round": 1,
+"verdict": "pass",
+"coverage_checked": ["vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "c1"],
+"errors_found": 0,
+"findings": [],
+"fixed": [],
+"uncertainties": ["Row 1: value 72.2 matches source 'It reaches 72.2% on SWE-bench Verified'; row 2: 68 equals 68.0 per numeric-equality rule ('Devstral Small 2 scores 68.0% on SWE-bench Verified'). Units percent, basis self_reported, locators and URL/sha256/retrieved_at match SOURCE 1/2 headers exactly.", "Harness: source does not specify the evaluation harness for either SWE-bench Verified number (Cline scaffolding applies only to separate human evaluations); both rows honestly record harness=null and disclose this in protocol, so no unsupported claim exists. Owner separately handles transport/qualification checks; I could not execute them, which is a limitation not missing evidence.", "published_at is null in both rows while the page shows 'December 9, 2025'; treated as a minor provenance note, not a value mismatch, since the criterion does not require this field and the source date is verifiable in the captured text.", "comparison_key null on both rows; unknown configurations did not create comparison_key values, consistent with criterion c1.", "Per-row owner-computed SHA-256 values are taken as given; I cannot recompute them (read-only, no execution)."],
+"missing_evidence": []
+}
