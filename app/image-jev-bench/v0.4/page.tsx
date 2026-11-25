@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ImageJevV04Section } from '../../../components/ImageJevV04Section';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 import { loadImageJevV04Feed } from '../../../lib/imagejev-v04-feed.mjs';
 import { seoTitle } from '../../../lib/seo';
 
@@ -38,5 +39,6 @@ export default async function ImageJevV04Page() {
       <a href="/image-jev-bench" className="mt-3 inline-block text-accent underline">Open the existing ImageJevBench v0.3 board</a>
     </header>
     {feed ? <ImageJevV04Section feed={feed} /> : <p className="bh-muted mt-6" data-bh-imagejev-v04-unavailable>Results are not available yet.</p>}
+    <PageJsonLd meta={await generateMetadata()} />
   </>;
 }
