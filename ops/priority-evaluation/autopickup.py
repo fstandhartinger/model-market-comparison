@@ -7026,12 +7026,13 @@ def fail_api_key_missing(rid: str, job_dir: Path, endpoint: str, status: object)
                           "Send button.\n")
 
 
-PUBLIC_TARIFF_MISSING_FINDING = (
-    "Public price: our results publish a cost figure computed from the token usage your API returns and a public, "
-    "bookable USD price. We could not find a published USD tariff for requests to your endpoint {endpoint}. Please "
-    "publish the USD price per million input and output tokens for these requests (or the USD price per credit plus "
-    "the credits charged per token) on a public page and reply to this email with its link. Your API key and model "
-    "already work; nothing else is needed.")
+PUBLIC_TARIFF_MISSING_FINDINGS = (
+    "Public price: each published result includes a cost figure computed from the token usage your API returns and a "
+    "public, bookable USD price. We could not find a published USD tariff for requests to {endpoint}.",
+    "Please publish the USD price per million input and output tokens for these requests (or the USD price per credit "
+    "plus the credits charged per token) on a public page.",
+)
+TARIFF_CHANGE_REASON = "public_tariff_missing"
 
 
 def tariff_missing(rid: str) -> str:
@@ -7059,11 +7060,12 @@ def tariff_missing(rid: str) -> str:
     runner = job_dir / "trusted-runner"
     runtime = load_json_file(runner / "RUNTIME.json", 64_000)
     meta = load_json_file(runner / "MEASUREMENT-META.json", 64_000)
-    if not isinstance(runtime, dict) or not runtime \
+    ordered = row.get("benchmarks")
+    if not isinstance(ordered, list) or not ordered or set(runtime) != set(ordered) or set(meta) != set(ordered) \
             or any(not isinstance(spec, dict) or spec.get("backend") != "unsupported" for spec in runtime.values()):
-        raise PickupError("the frozen runner bundle is not unsupported for every ordered benchmark")
+        raise PickupError("the frozen runner bundle is not unsupported for exactly the ordered benchmarks")
     system = (meta.get("jevbench") or {}).get("system") if isinstance(meta, dict) else None
-    if "jevbench" not in runtime or not isinstance(system, dict) or system.get("price_kind") != "unavailable" \
+    if ordered != ["jevbench"] or not isinstance(system, dict) or system.get("price_kind") != "unavailable" \
             or system.get("price_in_per_m") is not None or system.get("price_out_per_m") is not None:
         raise PickupError("the frozen JevBench metadata does not record a missing public tariff")
     review_dir = job_dir / "review"
@@ -7074,16 +7076,29 @@ def tariff_missing(rid: str) -> str:
                "endpoint's requests.")
     review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     atomic_write(changes, json.dumps({
-        "reason": "public_tariff_missing", "summary": summary,
-        "findings": [clean_finding(PUBLIC_TARIFF_MISSING_FINDING.format(endpoint=endpoint))],
+        "reason": TARIFF_CHANGE_REASON, "summary": summary,
+        "findings": [clean_finding(item.format(endpoint=endpoint)) for item in PUBLIC_TARIFF_MISSING_FINDINGS],
         "runner_bundle": {name: sha256_file(runner / name) for name in ("RUNTIME.json", "MEASUREMENT-META.json")},
         "requested_at": iso(utcnow())}, indent=2) + "\n")
-    held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
-                           "evaluation_status='pending', change_request_email_status='approval_required'",
-                      "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
-                      "AND customer_hold_started_at IS NULL")
+    try:
+        held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
+                               "evaluation_status='pending', change_request_email_status='approval_required'",
+                          "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                          "AND refund_decision IS NULL AND customer_hold_started_at IS NULL "
+                          "AND evaluation_status IS DISTINCT FROM 'starting' "
+                          "AND evaluation_status IS DISTINCT FROM 'running'")
+    except Exception:
+        # The commit outcome may be unknown (timeout): keep the draft only if the hold is really recorded.
+        try:
+            after = load_row(rid) or {}
+        except Exception:
+            after = {}
+        if not (active_hold(after) and after.get("customer_hold_reason") == CHANGE_HOLD_REASON
+                and after.get("change_request_email_status") == "approval_required"):
+            changes.unlink(missing_ok=True)
+        raise
     if not held:
-        changes.unlink()
+        changes.unlink(missing_ok=True)
         raise PickupError("change request was not recorded: no row matched the guard")
     append_state(job_dir, f"\n\nPublic tariff missing at {iso(utcnow())}: {summary} No refund: the order waits for "
                           "the customer's public price page (48-hour clock paused). The change-request email goes out "
@@ -7136,7 +7151,9 @@ def change_request_message(rid: str, job_dir: Path) -> tuple[str, str]:
     if not findings:
         raise PickupError("the change request has no findings")
     subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: please update your submission"
-    body = fill_template(read_template("autopickup-change-request-template.txt"), {
+    template = ("autopickup-change-request-tariff-template.txt" if data.get("reason") == TARIFF_CHANGE_REASON
+                else "autopickup-change-request-template.txt")
+    body = fill_template(read_template(template), {
         "ORDER_REF": order_ref(rid),
         "FINDINGS": "\n".join(f"- {item}" for item in findings[:MAX_CHANGE_FINDINGS]),
     })
