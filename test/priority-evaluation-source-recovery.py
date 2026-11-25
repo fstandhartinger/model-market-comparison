@@ -47,6 +47,9 @@ class Recovery(unittest.TestCase):
   for key in ['HOLD_REASON_LABELS','SHORT_HOLD_LABELS']:
    self.ns[key]=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign)
                                     and any(isinstance(t,ast.Name) and t.id==key for t in n.targets)))
+  # CR-863: the key-intake reason set is a pure frozenset literal; exec only that assignment (inert).
+  exec(compile(ast.Module(body=[n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='KEY_INTAKE_HOLD_REASONS' for t in n.targets)],type_ignores=[]),'trusted-recovery-consts','exec'),{'frozenset':frozenset},self.ns)
+  assert self.ns['KEY_INTAKE_HOLD_REASONS']
   self.ns['SITE']='https://benchmarkheaven.com'
   self.ns['native_owner']=SimpleNamespace(STRANDS_E2B_ORDER='0616c39d-e505-4365-b9e8-db157fc67539',is_strands_e2b_order=lambda value: str(value).lower().strip('{}')=='0616c39d-e505-4365-b9e8-db157fc67539')  # CR-811 exact-order fence; inert stub
   self.ns['native_api_measurement_completed']=lambda *a:False  # CR-820: fixtures are not reviewed native API completions; covered in test_measured_release.py
