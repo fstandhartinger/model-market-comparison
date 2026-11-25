@@ -166,11 +166,11 @@ class PrePreparationTests(unittest.TestCase):
         return {"id": "27387658-7b43-4ac0-bcc7-716b12f5cec7", "access_type": access_type, "model_name": "Jini 27B",
                 "access_instructions": access}
 
-    def run_hook(self, row, probe_result, linked_key=False):
+    def run_hook(self, row, probe_result, linked_key=None):
         linked = {"side_effect": linked_key} if isinstance(linked_key, Exception) else {"return_value": linked_key}
         with mock.patch.object(he, "fetch_openrouter_models") as fetch, \
                 mock.patch.object(he, "probe_api_access", return_value=probe_result) as probe, \
-                mock.patch.object(ap, "linked_submission_has_key", **linked) as self.linked, \
+                mock.patch.object(ap, "linked_submission_key_ref", **linked) as self.linked, \
                 mock.patch.object(ap, "update_row", return_value=True) as update:
             held = ap.host_pre_preparation(row["id"], row, self.job, self.state)
         return held, fetch, probe, update
@@ -224,7 +224,7 @@ class PrePreparationTests(unittest.TestCase):
         # b80901aa (24 Nov 2026): the key sat encrypted in the linked /submit row while the pickup asked the customer for it.
         held, _fetch, _probe, update = self.run_hook(self.row(JINI_TEXT),
                                                      {"result": "key_required", "http_status": 401, "at": "t"},
-                                                     linked_key=True)
+                                                     linked_key="f79c7f78")
         self.assertTrue(held)
         update.assert_not_called()  # no customer hold: the 48 h clock keeps running, this is our work
         self.linked.assert_called_once_with(self.row(JINI_TEXT)["id"])
@@ -232,7 +232,19 @@ class PrePreparationTests(unittest.TestCase):
         self.assertFalse(self.state["operational_hold"]["transient"])
         self.assertIn("api_key_in_linked_submission", ap.HOLD_REASON_LABELS)
         self.assertFalse((self.job / "review/CHANGES-REQUESTED.json").exists())
-        self.assertIn("bh-submission key-export", (self.job / "STATE.md").read_text())
+        self.assertEqual(self.state["operational_hold"]["submission_ref"], "f79c7f78")
+        note = (self.job / "STATE.md").read_text()
+        self.assertIn("bh-submission key-export f79c7f78", note)
+        self.assertNotIn("replace it", note)
+
+    def test_linked_key_wins_over_pasted_text_and_the_note_says_to_replace_it(self):
+        text = JINI_TEXT.replace("JEV_API_KEY=", "JEV_API_KEY=mx_" + "Q7" * 15)
+        held, _fetch, _probe, update = self.run_hook(self.row(text), {"result": "key_required", "http_status": 401},
+                                                     linked_key="f79c7f78")
+        self.assertTrue(held)
+        update.assert_not_called()
+        self.assertEqual(self.state["operational_hold"]["reason"], "api_key_in_linked_submission")
+        self.assertIn("replace it with the structured JSON", (self.job / "STATE.md").read_text())
 
     def test_linked_key_lookup_error_holds_nothing_and_mails_nothing(self):
         with self.assertRaises(ap.PickupError):
@@ -243,7 +255,7 @@ class PrePreparationTests(unittest.TestCase):
 
     def test_linked_key_is_not_looked_up_without_a_key_required_probe(self):
         for result in ({"result": "keyless_ok", "at": "t"}, {"result": "unknown"}):
-            self.run_hook(self.row(JINI_TEXT), result, linked_key=True)
+            self.run_hook(self.row(JINI_TEXT), result, linked_key="f79c7f78")
             self.linked.assert_not_called()
 
     def test_unknown_probe_outcome_changes_nothing(self):
@@ -254,29 +266,30 @@ class PrePreparationTests(unittest.TestCase):
 
 class LinkedSubmissionKeyTests(unittest.TestCase):
     RID = "b80901aa-5eb3-44b4-8722-078f89204d4a"
+    SUB = "f79c7f78-926f-475a-b1f4-4813479944d2"
 
     def lookup(self, output):
         with mock.patch.object(ap, "sql", return_value=output) as sql:
-            return ap.linked_submission_has_key(self.RID), sql.call_args.args[0]
+            return ap.linked_submission_key_ref(self.RID), sql.call_args.args[0]
 
-    def test_true_only_for_an_explicit_true(self):
-        self.assertTrue(self.lookup('{"has_key" : true}')[0])
-        self.assertFalse(self.lookup('{"has_key" : false}')[0])
-        self.assertFalse(self.lookup('{"has_key" : null}')[0])
-        self.assertFalse(self.lookup("")[0])  # no linked submission row
+    def test_ref_only_for_an_explicit_true(self):
+        self.assertEqual(self.lookup(json.dumps({"has_key": True, "ref": self.SUB}))[0], "f79c7f78")
+        self.assertIsNone(self.lookup(json.dumps({"has_key": False, "ref": self.SUB}))[0])
+        self.assertIsNone(self.lookup(json.dumps({"has_key": None, "ref": self.SUB}))[0])
+        self.assertIsNone(self.lookup("")[0])  # no linked submission row
+        self.assertIsNone(self.lookup(json.dumps({"has_key": True, "ref": "x; rm -rf /"}))[0])
 
-    def test_reads_only_a_boolean_for_this_order(self):
-        _value, statement = self.lookup('{"has_key" : true}')
-        self.assertIn("api_key_ciphertext IS NOT NULL", statement)
-        self.assertNotRegex(statement, r"SELECT[^(]*\bs\.api_key_ciphertext\b\s*(,|FROM)")
+    def test_reads_only_a_boolean_and_the_row_id_for_this_order(self):
+        _value, statement = self.lookup(json.dumps({"has_key": True, "ref": self.SUB}))
+        self.assertIn("COALESCE(s.api_key_ciphertext, '') <> ''", statement)  # empty string = no key, as export_key
+        self.assertEqual(statement.count("api_key_ciphertext"), 1)
         self.assertIn(f"r.id='{self.RID}'::uuid", statement)
         self.assertIn("s.id = r.model_submission_id", statement)
 
     def test_bad_request_id_never_reaches_sql(self):
-        with mock.patch.object(ap, "sql") as sql, self.assertRaises(Exception):
-            ap.linked_submission_has_key("x' OR TRUE --")
+        with mock.patch.object(ap, "sql") as sql, self.assertRaises(ap.PickupError):
+            ap.linked_submission_key_ref("x' OR TRUE --")
         sql.assert_not_called()
-
 
 if __name__ == "__main__":
     unittest.main()
