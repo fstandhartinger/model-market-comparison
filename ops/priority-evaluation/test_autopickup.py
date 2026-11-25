@@ -2676,6 +2676,67 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         self.assertEqual(fx.notes, [])
         self.assertFalse(any("operational" in b.lower() or "measurement owner" in b for b in fx.boards))
 
+    def test_key_intake_hold_escalates_with_the_import_step_and_clears_once_the_key_is_private(self):
+        # CR-863 (b80901aa): the customer's key is already with us; the hold names the exact import step, keeps the
+        # clock running, and clears by itself once access_instructions carries the structured key.
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', access_type='api_endpoint', "
+               f"access_instructions='API: https://example.invalid/v1/systemone' WHERE id='{rid}'")
+        state = ap.load_state(rid)
+        ap.set_operational_hold(state, "api_key_in_linked_submission", transient=False, submission_ref="f79c7f78")
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "api_key_in_linked_submission")
+        self.assertIn("bh-submission key-export f79c7f78", fx.boards[-1])
+        self.assertNotIn("measurement owner", fx.boards[-1])
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+        # Dry run never clears.
+        key_json = json.dumps({"endpoint": "https://example.invalid/v1/systemone", "api_key": "k" * 24})
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='{key_json}' WHERE id='{rid}'")
+        fx.dry_run = True
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIsNotNone(ap.load_state(rid).get("operational_hold"))
+        fx.dry_run = False
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIsNone(ap.load_state(rid).get("operational_hold"))
+        self.assertGreater(len(fx.started), starts)
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+
+    def test_key_handoff_is_not_muted_by_an_earlier_handoff_and_a_key_never_clears_other_holds(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        key_json = json.dumps({"endpoint": "https://example.invalid/v1/systemone", "api_key": "k" * 24})
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', access_type='api_endpoint', "
+               f"access_instructions='{key_json}' WHERE id='{rid}'")
+        _set_operational_hold(rid, "fetch_source_failed", transient=False)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "fetch_source_failed")  # a key clears only key holds
+        self.assertIn("measurement owner", fx.boards[-1])
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='API: https://example.invalid/v1/systemone' WHERE id='{rid}'")
+        _set_operational_hold(rid, "api_key_in_linked_submission", transient=False)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn("needs a key import", fx.boards[-1])
+        # A key without an endpoint does not clear the hold.
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='{json.dumps({'api_key': 'k' * 24})}' WHERE id='{rid}'")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "api_key_in_linked_submission")
+
+    def test_key_intake_hold_stays_while_the_key_is_not_yet_private(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', access_type='api_endpoint', "
+               f"access_instructions='{json.dumps({'endpoint': 'https://example.invalid/v1/systemone'})}' WHERE id='{rid}'")
+        _set_operational_hold(rid, "api_key_needs_private_intake", transient=False)
+        for _ in range(2):
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "api_key_needs_private_intake")
+        self.assertIn("needs a key import", fx.boards[-1])
+
     def test_transient_hold_exhaustion_sends_one_urgent_card_and_board_11(self):
         rid = insert_order()
         fx = FakeEffects()

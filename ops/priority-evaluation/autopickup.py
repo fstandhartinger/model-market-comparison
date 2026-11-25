@@ -2169,6 +2169,7 @@ HOLD_REASON_LABELS = {
     "customer_reply": ("we are waiting for the customer's reply", "wir warten auf die Antwort des Kunden"),
     "customer_request": ("the customer asked to pause the evaluation", "der Kunde hat um eine Pause der Messung gebeten"),
     "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
+    "api_key_in_linked_submission": ("the API endpoint needs a key that the customer already gave in the encrypted submit field; an agent must import it into private intake", "der API-Endpunkt braucht einen Schlüssel, den der Kunde schon im verschlüsselten Formularfeld angegeben hat; ein Agent muss ihn in die private Ablage übernehmen"),
     "api_key_needs_private_intake": ("the API endpoint needs a key and the order text seems to contain one; an agent must move it into private intake", "der API-Endpunkt braucht einen Schlüssel und der Auftragstext scheint einen zu enthalten; ein Agent muss ihn in die private Ablage übernehmen"),
     "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
     "release_result_rejected": ("the prepared result failed the independent recomputation and an agent must fix it", "das vorbereitete Ergebnis hat die unabhängige Nachrechnung nicht bestanden und ein Agent muss es korrigieren"),
@@ -2209,7 +2210,13 @@ SHORT_HOLD_LABELS = {
     "source_access_recovered_pending_review": "source and test approval need review",
     "source_link_normalized_pending_v16_review": "the corrected source link needs review",
     "evaluation_exhausted": "automatic evaluation attempts failed",
+    "api_key_in_linked_submission": "the customer's submitted API key must be imported",
+    "api_key_needs_private_intake": "a pasted API key must move into private intake",
 }
+
+# Owner holds for a customer key that is already with us: they clear by themselves on the next cycle once the key is in
+# private host intake (structured access_instructions with api_key), with no clock change (CR-863).
+KEY_INTAKE_HOLD_REASONS = frozenset({"api_key_in_linked_submission", "api_key_needs_private_intake"})
 
 
 def card_context_line(row: dict[str, Any], status: str) -> str:
@@ -2327,14 +2334,26 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                              record["job"], thread=BOARD_HANDOFF_THREAD):
                 entry = board_entry_id(effects)
                 finish_ok(state, "native_owner_handoff", now, **({"entry": entry} if entry is not None else {}))
-    elif not step_done(state, "operational_handoff"):
-        if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
-                         f"{reason}. Payment deadline "
-                         f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
-                         f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
-                         "Use the pinned runtime/review contract; never reuse another order's run.",
-                         wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
-            finish_ok(state, "operational_handoff", now)
+    elif not step_done(state, handoff_step := ("key_intake_handoff" if reason in KEY_INTAKE_HOLD_REASONS
+                                                else "operational_handoff")):
+        # CR-863: the key-import handoff has its own step, so an earlier or later handoff of another hold never mutes it.
+        if reason in KEY_INTAKE_HOLD_REASONS:
+            # CR-863: say exactly what to do; "measurement owner / runtime contract" sent owners to the runner instead.
+            ref = (state.get("operational_hold") or {}).get("submission_ref")
+            text = (f"Fast-lane order {order_ref(rid)} needs a key import ({reason}): the customer's API key is already "
+                    "with us. Move it into private host intake: "
+                    + (f"`bh-submission key-export {ref} <private file>`, then " if isinstance(ref, str) and ref else "")
+                    + "write access_instructions as JSON with endpoint and api_key (never print it). The next pickup "
+                    f"cycle clears the hold and starts the evaluation. Payment deadline {deadline_for(row).isoformat()} "
+                    f"continues; no customer mail is needed. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.")
+        else:
+            text = (f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
+                    f"{reason}. Payment deadline "
+                    f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
+                    f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
+                    "Use the pinned runtime/review contract; never reuse another order's run.")
+        if effects.board(text, wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
+            finish_ok(state, handoff_step, now)
     if covered:
         return  # a live native owner with more than 12 h left (3 h once measured) owns the hold; no urgent card
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
@@ -2529,6 +2548,15 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                 else:
                     operational_escalate(row, state, effects, now, reason, exhausted=True)
                     return
+            elif reason in KEY_INTAKE_HOLD_REASONS and not getattr(effects, "dry_run", False) \
+                    and (key_access := redacted_access(row.get("access_instructions")))["credential"] == "held_privately_host_only" \
+                    and key_access["endpoint"]:
+                # CR-863: the owner imported the key into private host intake; the hold ends and the evaluation starts.
+                state.pop("operational_hold", None)
+                state.get("steps", {}).pop("key_intake_handoff", None)  # a later key hold gets its own handoff again
+                save_state(state)
+                append_state(job_directory(rid, JOB_ROOT), f"\n\nKey intake hold {reason} cleared at {iso(now)}: the API key is "
+                                                            "now held privately on the host; the evaluation starts.\n")
             elif reason == "official_method_retired_requires_admission" and not getattr(effects, "dry_run", False) \
                     and v16_reentry(row, state, now):
                 pass  # CR-857: custody's reservations changed since this order's last v16-admit attempt; the hold is cleared
@@ -6974,8 +7002,9 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
 
     The preparer is read-only and offline, so the host records a dated OpenRouter price snapshot and, for an
     API order without a host-held key, one credential-free synthetic probe. A key the endpoint demands but the
-    order lacks goes straight to the customer change request instead of burning three preparations; text that
-    seems to carry a pasted key becomes an agent intake hold. No preparation attempt is consumed here."""
+    order lacks goes to an owner hold when the linked /submit row already holds the customer's encrypted key (CR-863),
+    else straight to the customer change request instead of burning three preparations; text that seems to carry a
+    pasted key becomes an agent intake hold. Both owner holds clear by themselves once the key is in private intake. No preparation attempt is consumed here."""
     try:
         host_evidence.fetch_openrouter_models(job_dir)
     except OSError as exc:
@@ -6995,6 +7024,22 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
         return False
     if probe.get("result") != "key_required":
         return False
+    submission_ref = linked_submission_key_ref(rid)
+    if submission_ref:
+        # CR-863: the customer already gave the key in the encrypted /submit field (b80901aa, 24 Nov 2026: the change
+        # request asked for a key the customer had already given). Our work, so the 48 h clock keeps running and the
+        # owner imports it through the bh-submission key-export custody path; no customer mail. The hold escalates
+        # like every non-transient operational hold (owner handoff, urgent alert).
+        set_operational_hold(state, "api_key_in_linked_submission", transient=False, submission_ref=submission_ref)
+        pasted = (" The order's access text also seems to carry a key: replace it with the structured JSON."
+                  if host_evidence.raw_text_has_key_like(row.get("access_instructions")) else "")
+        append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key, and the order's "
+                              f"linked /submit row {submission_ref} already holds the customer's encrypted key. Owner step: "
+                              f"`bh-submission key-export {submission_ref} <private file>`, then write access_instructions "
+                              "as JSON with endpoint and api_key (never print it); the next pickup cycle clears this hold "
+                              "and starts the evaluation. No customer change request; no preparation attempt was used."
+                              f"{pasted}\n")
+        return True
     if host_evidence.raw_text_has_key_like(row.get("access_instructions")):
         set_operational_hold(state, "api_key_needs_private_intake", transient=False)
         append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key and the order's "
@@ -7003,6 +7048,21 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
         return True
     fail_api_key_missing(rid, job_dir, access["endpoint"], probe.get("http_status"))
     return True
+
+
+def linked_submission_key_ref(rid: str) -> str | None:
+    """The bh-submission ref (first 8 hex of model_submission_id) when the order's linked /submit row holds an
+    encrypted API key, else None.
+
+    Reads one boolean and the row id only, never the ciphertext. A database error propagates (PickupError), so the
+    pickup retries later instead of mailing the customer for a key we may already hold."""
+    value = sql_json(f"SELECT json_build_object('has_key', COALESCE(s.api_key_ciphertext, '') <> '', 'ref', s.id::text)::text "
+                     f"FROM {TABLE} AS r JOIN bh_model_submissions AS s ON s.id = r.model_submission_id "
+                     f"WHERE r.id='{request_id(rid)}'::uuid")
+    if not value or value.get("has_key") is not True:
+        return None
+    ref = value.get("ref")
+    return ref[:8] if isinstance(ref, str) and re.fullmatch(r"[0-9a-f]{8}-[0-9a-f-]{27}", ref) else None
 
 
 def fail_api_key_missing(rid: str, job_dir: Path, endpoint: str, status: object) -> None:
