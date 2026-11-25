@@ -1,0 +1,20 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code worker r239-v1821-critic, LeChonk)",
+ "reviewed_head": "b72aea66552124fd3f577e55d06ec5f9aab757c4",
+ "base": "b84a7aeee099f3d1d51eec511c715879f1e9ebeb",
+ "bundle_sha256": "da52c6b69b3ae233c20d949cb371b225c3cfcf988d20f7eb90f93309df934942",
+ "scope": "Rebase delta (range-diff e31b8a007..3c405740 vs b84a7aee..b72aea66), interaction with the 31 main commits e31b8a007..b84a7aee (sitemap, next.config, release list, live board, all-data, ImageJev v0.4 feed/page/crawl, JSON-LD), data integrity of the final bytes (manifest file pins, predecessor sha, 352 carried rows, six new rows, rank wording, review state), validator and focused tests plus 118 related test files run read-only in a private /tmp checkout. No build, flip, freeze or seal.",
+ "musts": [],
+ "notes": [
+  "Range-diff: the only change vs 3c405740 is context in the next.config.mjs hunk. main's '/image-jev-bench/v0.4' outputFileTracingIncludes entry is kept, and the alldata entry adds only the v1.8.21 alldata + publication paths. app/sitemap.ts differs from main only by the v1821 import, the visibility flag and the filter clause; main's readImageJevSitemapPaths and /image-jev-bench/v0.4 PAGES entry are intact.",
+  "Data: all six manifest file sha256 pins match the bytes. predecessor.publication_sha256 8b90522a…ada60 equals sha256 of the v1.8.20 publication on main. 358 = 352 + 6 rows. Exactly one carried row differs (gemini-decision-1, fields underlying + disclosure), and it matches TEXT-EXCEPTIONS before/after text and sha256 exactly. Change: adds ' v0.4-A Reasoning (separate scale)' and replaces 'requested, no date.' with 'measured 23 Nov 2026, see /image-jev-bench/v0.4.'. board/n_ranked (324) are unchanged. All six new rows: ranked=false, rank=null, listing=unranked, and they have no rank/top/best wording. Review is PENDING (engine PENDING, receipt null).",
+  "Interaction (positive): the new gemini-decision-1 disclosure links /image-jev-bench/v0.4, which main added in CR-850/CR-862. data/imagejev-v04.json on main is data_kind=measured with the gemini-decision-1 row, so the link resolves to a real measured page. The release note says the same.",
+  "Interaction (ordering): open PR #705/CR-852 (head 59932a61, not on main) adds a per-version archive board map that ends at v1.8.20. Whichever of CR-852 / CR-861 merges second must add v1.8.21 there (the finalize RESULT already records this). It does not block this candidate.",
+  "Tests: 85 of 118 related test files exit 0. They include jevbench-v1821-release (5/5), jevbench-v1821-topics-base (1/1), cr-257-v1821-min-samples, cr-205, cr-254-base-model-display (CR-850 crawl), imagejev-v04-feed, v1820-release, v1820-alldata-regeneration, v1637-release, and jevbench-feed-live-board (4/4, 484 s alone). No assertion failures anywhere.",
+  "Tests not completed: 32 files that replay the full live board timed out at 170-585 s under parallel load, with every finished subtest passing. They are the cr-257 v1811-v1820 min-samples files, alldata-regeneration v1812-v1819, seo, seo-routes, sitemap-releases-redirects, alldata-live, breakdowns-every-listed-row and a few older release files. With review PENDING, readJevbenchV1821ForBoard returns null (the validator asserts this), so the board path equals main's. Recommended flip-gate step (not a MUST for this candidate): run these files to completion (serially, roughly 8 min each) after the verdict flip, because the board then includes v1.8.21.",
+  "Not runnable without a production build (not allowed in this slice): benchmark-model-links and imagejev-v04-page. Both start 'next start' and fail only with 'Could not find a production build'.",
+  "validate_v1821.mjs: PASS, 19 negative controls. It rewrites receipts/VALIDATOR.json, and the bytes stayed identical (git status clean)."
+ ],
+ "date": "2026-11-25T13:28:20Z"
+}
