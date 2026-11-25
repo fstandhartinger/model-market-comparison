@@ -1,0 +1,596 @@
+{
+ "carried_rows": 352,
+ "carried_rows_equal_except": [
+  {
+   "after": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench v0.4-A Reasoning (separate scale): measured 23 Nov 2026, see /image-jev-bench/v0.4.",
+   "after_sha256": "9f571e919e32c008a3c35ae91067c600c4a81bf2aff56bcdc4a20b6ef81a071b",
+   "before": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench: requested, no date.",
+   "before_sha256": "409602cf9edeed151cb86121aeb3e660a8c642795ff19b990a198aaf29d49654",
+   "key": "gemini-decision-1",
+   "path": "disclosure"
+  },
+  {
+   "after": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench v0.4-A Reasoning (separate scale): measured 23 Nov 2026, see /image-jev-bench/v0.4.",
+   "after_sha256": "9f571e919e32c008a3c35ae91067c600c4a81bf2aff56bcdc4a20b6ef81a071b",
+   "before": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench: requested, no date.",
+   "before_sha256": "409602cf9edeed151cb86121aeb3e660a8c642795ff19b990a198aaf29d49654",
+   "key": "gemini-decision-1",
+   "path": "underlying"
+  }
+ ],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "equating": {
+  "anchor_output_sha256": {
+   "decider-12b": "9f467fcd9e3948666d3345ac6d89c222819c67151e9f18fc7da3877f181b50ee",
+   "h2o-lightning-4b-v1.1": "76ee19dc9f74dffc4811e5eb79a05e781961dc34993866a195d4a5a59e2d2475",
+   "quyet-1-0-large": "60901344af432989a06f73ba6f0664e2c9c3a7f07dfad49f8dcb6dbacaf9ab42",
+   "torchcast-decision-27b": "5dfa234af9e35ce8f552bf84bde514c8de982cd07c257c2c13b8f6dea21aee5b"
+  },
+  "anchors": [
+   "decider-12b",
+   "h2o-lightning-4b-v1.1",
+   "quyet-1-0-large",
+   "torchcast-decision-27b"
+  ],
+  "anchors_not_used": "One of the five planned anchor systems could not be staged before any scored item; its pre-registered handling is to skip it with no retry, so the offset uses the four complete anchors.",
+  "applied_as": "published + offset on Intelligence and Calibration (clipped 0..100); Capability = mean of the equated axes; composites and sort views by the frozen score_v15.composite; confidence intervals as measured on the draw before equating (not shifted); published numbers kept in published_scores",
+  "bootstrap": {
+   "B": 1000,
+   "conservative": "all independent",
+   "primary": "paired public items + independent sealed, anchors resampled",
+   "seed": 16
+  },
+  "coverage_note": "anchor reference Intelligence-base 60.0-73.4; d1027 rows above ~78 on the reference scale are extrapolated",
+  "draw": "v1.6-regular-20261027",
+  "equate_tool_sha256": "c9604b9dc72fd23570b856a6f475c570c36958bef21204863369e81f11ac2b9d",
+  "files": {
+   "equating": {
+    "name": "EQUATING-STRONG4-D1027.json",
+    "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
+   }
+  },
+  "g_med": {
+   "new_draw_anchor_pool": -4.438035502660156,
+   "new_draw_rel": 2.573387642438244,
+   "reference": 2.573387642438244
+  },
+  "mean_instead_of_median": {
+   "C": -2.055450428516103,
+   "I": -2.609694629464121
+  },
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "n_anchors": 4,
+  "offset": {
+   "C": -1.8542447151797177,
+   "I": -2.884891186577587
+  },
+  "offset_basis": "median over anchors of (metric on v1.6.0 S u P) - (metric on d1027 S u P); applied by ADDING to a d1027 row (merged-board convention); I = post-penalty Intelligence at the reference G_med, C = Calibration",
+  "offset_ci95": {
+   "C": [
+    -5.447551660176162,
+    1.9718407968151896
+   ],
+   "I": [
+    -5.851030683979731,
+    1.0608488496147923
+   ]
+  },
+  "offset_ci95_independent_items": {
+   "C": [
+    -5.698741700420654,
+    1.8919272371911515
+   ],
+   "I": [
+    -8.253666488669571,
+    3.189140875897631
+   ]
+  },
+  "offset_info": {
+   "I_open": -7.105427357601002e-15,
+   "I_sealed": -5.582136051180097
+  },
+  "per_anchor_difference": {
+   "decider-12b": {
+    "C": -4.02419754778029,
+    "I_post_rel": -2.1607102631948862
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -0.48911473592468724,
+    "I_post_rel": -3.6090721099602874
+   },
+   "quyet-1-0-large": {
+    "C": -3.0430998789773867,
+    "I_post_rel": -4.452462390359102
+   },
+   "torchcast-decision-27b": {
+    "C": -0.6653895513820487,
+    "I_post_rel": -0.21653375434220834
+   }
+  },
+  "reference_output_sha256": {
+   "decider-12b": "8bce97638c4a20cf0a51d47559a3c5930749ea91a718bde6c04cb5cccc285456",
+   "h2o-lightning-4b-v1.1": "4b19dbf4aa30baf2cf003b507340ecd863328c7185dd03cbe92bd71c3f95fd7f",
+   "quyet-1-0-large": "b9f8d6aefccad03fe97de9fac1c05e8356c487cf99d386dc51351073094a8072",
+   "torchcast-decision-27b": "c399b8943a5b862eed2678422d8fa4a1687b67f084dd32e4711a2d2fb25516a4"
+  },
+  "scorer": {
+   "name": "score_v16",
+   "noul_method": "O1S",
+   "sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+  },
+  "sensitivity_leave_one_out": {
+   "decider-12b": {
+    "C": -0.6653895513820487,
+    "I": -3.6090721099602874
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -3.0430998789773867,
+    "I": -2.1607102631948862
+   },
+   "quyet-1-0-large": {
+    "C": -0.6653895513820487,
+    "I": -2.1607102631948862
+   },
+   "torchcast-decision-27b": {
+    "C": -3.0430998789773867,
+    "I": -3.6090721099602874
+   }
+  },
+  "status": "equated"
+ },
+ "exceptions": {
+  "text_only_sha256": "a9382ed94b9dcc03a0a79c1d3b8b3ce79855f8b2048c2aaff3ed6bda3f4e969c"
+ },
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "fe5cfb5d3505438753743cd7f07ba94ec9484820518047929d6532725e5e3524",
+  "history": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+  "history-carry": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+  "proof": "d22e44a54cb00cc97491a7d1ff796e0c87760374c8156e95299cc3b739bc78b1",
+  "results": "b53744ff468a57aea5eb7ac3861f74a0e38e6545a87d0e5174ab240f413a354a"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "basal-omni-2.0-mini-preview": {
+   "axes": {
+    "calibration": 82.09021307180137,
+    "cost": 79.0790159800477,
+    "intelligence": 55.890891574821765,
+    "speed": 91.04936974951954
+   },
+   "code_commit": "2c8a5783c1588a9e4aedfa27325d2677765dc00f",
+   "composite_ci95": {
+    "A": [
+     70.00688714578571,
+     76.45210769669396
+    ],
+    "B": [
+     64.38587360053765,
+     72.48407607466932
+    ],
+    "C": [
+     48.615893851240074,
+     76.32941285790838
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "architecture_class": "small",
+    "binding": "gpu",
+    "cost_all": 0.004981568814920555,
+    "family": "gemma",
+    "gpu_all": 0.004981568814920555,
+    "gpu_rate_per_m": 0.00750211410905144,
+    "input_tokens": 996033,
+    "list_all": 0.013280440000000001,
+    "n_items": 1500,
+    "output_tokens": 0,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.02,
+     "listing": "deepinfra:google/gemma-4-E4B-it",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.1
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 80585.75
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "Remek/basal-omni-2.0-mini-preview@2c8a5783c1588a9e4aedfa27325d2677765dc00f",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.02,
+    "listing": "deepinfra:google/gemma-4-E4B-it",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.1
+   },
+   "scored_input_sha256": "1cbbebefcea3871a878a434c018781d2dee7827a4f5ed3678da5ca18714ec4b4",
+   "treatment": "unranked"
+  },
+  "strands-decider-12b-gemma4-v2-2611": {
+   "axes": {
+    "calibration": 90.52188950453858,
+    "cost": 70.85279188927194,
+    "intelligence": 66.30520772883133,
+    "speed": 90.77108482480976
+   },
+   "code_commit": "41d5dc0d20a4deb2835690eb7529ee92463f6c9f",
+   "composite_ci95": {
+    "A": [
+     75.90494288682565,
+     79.0842116840519
+    ],
+    "B": [
+     72.43709173672555,
+     77.03904341852439
+    ],
+    "C": [
+     75.90494288682565,
+     79.0842116840519
+    ]
+   },
+   "cost": {
+    "active_b": 12,
+    "architecture_class": "small",
+    "binding": "gpu",
+    "cost_all": 0.00936641947360716,
+    "family": "gemma",
+    "gpu_all": 0.00936641947360716,
+    "gpu_rate_per_m": 0.02250634232715432,
+    "input_tokens": 622757,
+    "list_all": 0.02090806666666667,
+    "n_items": 1500,
+    "output_tokens": 1495,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.05,
+     "listing": "openrouter:google/gemma-3-12b-it (older list-price reference)",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.15
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 26861.916666666668
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "StrandsAgents/strands-decider-12B-gemma4-v2-2611@41d5dc0d20a4deb2835690eb7529ee92463f6c9f",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.05,
+    "listing": "openrouter:google/gemma-3-12b-it (older list-price reference)",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.15
+   },
+   "scored_input_sha256": "d0d84dde6bf30a97b70958aa3a244bd7e97d5e32e69b136916b7347a2a4ea1ae",
+   "treatment": "unranked"
+  },
+  "strands-decider-26b-a4b-gemma4-v2-2611": {
+   "axes": {
+    "calibration": 90.6835783479604,
+    "cost": 74.17447844293774,
+    "intelligence": 72.82003273011622,
+    "speed": 88.5148752416734
+   },
+   "code_commit": "6de21cc0600a5db0413de1aec05c034f6e17540b",
+   "composite_ci95": {
+    "A": [
+     78.92782684860167,
+     81.70476185777103
+    ],
+    "B": [
+     76.54118912934419,
+     80.63612218272475
+    ],
+    "C": [
+     78.92782684860167,
+     81.70476185777103
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "architecture_class": "moe",
+    "binding": "gpu",
+    "cost_all": 0.007258564136028254,
+    "family": "gemma",
+    "gpu_all": 0.007258564136028254,
+    "gpu_rate_per_m": 0.017441427827291512,
+    "input_tokens": 622757,
+    "list_all": 0.037664420000000004,
+    "n_items": 1500,
+    "output_tokens": 1495,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.09,
+     "listing": "google/gemma-4-26b-a4b-it",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.3
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 34662.5
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611@6de21cc0600a5db0413de1aec05c034f6e17540b",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.09,
+    "listing": "google/gemma-4-26b-a4b-it",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.3
+   },
+   "scored_input_sha256": "d83a721c277deb042d93ce61e8826baa02cd34b9ef94579604e09623a572813c",
+   "treatment": "unranked"
+  },
+  "strands-decider-31b-gemma4-v2-2611": {
+   "axes": {
+    "calibration": 95.57160590384873,
+    "cost": 58.116726168138875,
+    "intelligence": 85.29026597879758,
+    "speed": 86.81236063573198
+   },
+   "code_commit": "5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e",
+   "composite_ci95": {
+    "A": [
+     77.29216071004845,
+     79.03445944408342
+    ],
+    "B": [
+     78.08517525372909,
+     80.75585886005273
+    ],
+    "C": [
+     77.29216071004845,
+     79.03445944408342
+    ]
+   },
+   "cost": {
+    "active_b": 31,
+    "architecture_class": "dense",
+    "binding": "gpu",
+    "cost_all": 0.02489482786677858,
+    "family": "gemma",
+    "gpu_all": 0.02489482786677858,
+    "gpu_rate_per_m": 0.05981917847306515,
+    "input_tokens": 622757,
+    "list_all": 0.03770428666666666,
+    "n_items": 1500,
+    "output_tokens": 1495,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.09,
+     "listing": "google/gemma-4-31b-it",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.33999999999999997
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 10106.516129032258
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "StrandsAgents/strands-decider-31B-gemma4-v2-2611@5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.33999999999999997
+   },
+   "scored_input_sha256": "60c42b2b28bb595951cbbb1b75b170b7e3a82be848d07419e03ac6e0197ca10e",
+   "treatment": "unranked"
+  },
+  "strands-decider-e2b-gemma4-v2-2611": {
+   "axes": {
+    "calibration": 83.38881579520674,
+    "cost": 87.9786819653602,
+    "intelligence": 38.084548888715,
+    "speed": 93.9081456856735
+   },
+   "code_commit": "a879714f3b0f2eb9c4eff6dde89e04ee01d44862",
+   "composite_ci95": {
+    "A": [
+     30.110229174440224,
+     50.241871893062815
+    ],
+    "B": [
+     25.754183041846414,
+     44.656306668237974
+    ],
+    "C": [
+     20.909881371139047,
+     34.89018881462695
+    ]
+   },
+   "cost": {
+    "active_b": 2,
+    "architecture_class": "small",
+    "binding": "gpu",
+    "cost_all": 0.002515999793650794,
+    "family": "gemma",
+    "gpu_all": 0.002515999793650794,
+    "gpu_rate_per_m": 0.006045634920634921,
+    "input_tokens": 622757,
+    "list_all": null,
+    "n_items": 1500,
+    "output_tokens": 1495,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": null,
+     "listing": null,
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": null
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 100000
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "StrandsAgents/strands-decider-E2B-gemma4-v2-2611@a879714f3b0f2eb9c4eff6dde89e04ee01d44862",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": null,
+    "listing": null,
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": null
+   },
+   "scored_input_sha256": "2999b30133f9d9a2e8fa91a70d5f0269ac195d4f42981847c6792d8df34ae9ac",
+   "treatment": "unranked"
+  },
+  "strands-decider-e4b-gemma4-v2-2611": {
+   "axes": {
+    "calibration": 88.58732350497466,
+    "cost": 85.16642953086182,
+    "intelligence": 56.32968667958862,
+    "speed": 92.63219460758367
+   },
+   "code_commit": "1717bca732ba4ef8c8c531fbc9875fafaf858811",
+   "composite_ci95": {
+    "A": [
+     74.04735972729343,
+     79.31139633941254
+    ],
+    "B": [
+     67.84446933389401,
+     74.71414480042412
+    ],
+    "C": [
+     52.59250133539358,
+     79.28283549803275
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "architecture_class": "small",
+    "binding": "gpu",
+    "cost_all": 0.003122139824535719,
+    "family": "gemma",
+    "gpu_all": 0.003122139824535719,
+    "gpu_rate_per_m": 0.00750211410905144,
+    "input_tokens": 622757,
+    "list_all": 0.008403093333333334,
+    "n_items": 1500,
+    "output_tokens": 1495,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.02,
+     "listing": "deepinfra:google/gemma-4-E4B-it",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.1
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 80585.75
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "StrandsAgents/strands-decider-E4B-gemma4-v2-2611@1717bca732ba4ef8c8c531fbc9875fafaf858811",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.02,
+    "listing": "deepinfra:google/gemma-4-E4B-it",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.1
+   },
+   "scored_input_sha256": "3b7a5ee636e29d465df5ec93cdf5a83f03306ca5699727f73f89d7503cce27a8",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "8b90522a469758849ecc37ad40aa00cbb0873c82a837a70bca0eb764393ada60",
+  "revision": "v1.8.20"
+ },
+ "pricing_module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+ "publication_approval": {
+  "changes": [
+   "six new unranked rows; no score, category or board change for carried rows",
+   "carried-row text fix: gemini-decision-1 ImageJevBench disclosure -> v0.4-A measured line (board #81132); no score, cell, board or order change"
+  ],
+  "fairness_review_required": false,
+  "fresh_baseline": "v1.8.20",
+  "scope": "row-only: six new unranked rows on the 22 Nov draw; carried-row text-only fix on gemini-decision-1 disclosure/underlying (TEXT-EXCEPTIONS, sha-pinned, board #81132)",
+  "status": "GO (release owner jevbench-add-requests-20260919 lead, 24 Nov 2026: six unranked rows on the 22 Nov draw + the board-#81132 carried-row disclosure text fix; independent critic PASS r233-v1821-critic + scoped delta re-check PASS r233-v1821-critic-fix1)",
+  "top_five_effect": "unchanged"
+ },
+ "publication_review": {
+  "engine": "claude-opus-5-5 (Claude Code worker r239-v1821-critic, LeChonk)",
+  "receipt_sha256": "6906b5e6e784716dbb6a6d1d3f65f9ee96099f29b8fd47ea7473868d31cc7464",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "65231f9e666f65e22116dac43c58488b5a6199c46df804c2d8c1812617d6eb80",
+ "release": "v1.8.21",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": []
+}

@@ -3761,6 +3761,67 @@
             "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model_relation: finetune)."
           }
         ]
+      },
+      "strands-decider-e2b-gemma4-v2-2611": {
+        "label": "google/gemma-4-E2B-it",
+        "status": "self-reported",
+        "sources": [],
+        "note": "Base reported by the developer for the private checkpoint; no public model card is available."
+      },
+      "strands-decider-e4b-gemma4-v2-2611": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-E4B-gemma4-v2-2611/blob/1717bca732ba4ef8c8c531fbc9875fafaf858811/README.md",
+            "title": "Author model card",
+            "evidence": "The pinned model card declares base model google/gemma-4-E4B-it."
+          }
+        ]
+      },
+      "strands-decider-12b-gemma4-v2-2611": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-12B-gemma4-v2-2611/blob/41d5dc0d20a4deb2835690eb7529ee92463f6c9f/README.md",
+            "title": "Author model card",
+            "evidence": "The pinned model card declares base model google/gemma-4-12B-it."
+          }
+        ]
+      },
+      "strands-decider-26b-a4b-gemma4-v2-2611": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611/blob/6de21cc0600a5db0413de1aec05c034f6e17540b/README.md",
+            "title": "Author model card",
+            "evidence": "The pinned model card declares base model google/gemma-4-26B-A4B-it."
+          }
+        ]
+      },
+      "strands-decider-31b-gemma4-v2-2611": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StrandsAgents/strands-decider-31B-gemma4-v2-2611/blob/5a4ba7fa25c6a0f2979607c010b4ebea2d5d633e/README.md",
+            "title": "Author model card",
+            "evidence": "The pinned model card declares base model google/gemma-4-31B-it."
+          }
+        ]
+      },
+      "basal-omni-2.0-mini-preview": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Remek/basal-omni-2.0-mini-preview/blob/2c8a5783c1588a9e4aedfa27325d2677765dc00f/README.md",
+            "title": "Author model card",
+            "evidence": "The pinned model card declares base model google/gemma-4-E4B-it."
+          }
+        ]
       }
     },
     "imagejevbench": {

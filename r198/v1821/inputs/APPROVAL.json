@@ -1,0 +1,11 @@
+{
+ "changes": [
+  "six new unranked rows; no score, category or board change for carried rows",
+  "carried-row text fix: gemini-decision-1 ImageJevBench disclosure -> v0.4-A measured line (board #81132); no score, cell, board or order change"
+ ],
+ "fairness_review_required": false,
+ "fresh_baseline": "v1.8.20",
+ "scope": "row-only: six new unranked rows on the 22 Nov draw; carried-row text-only fix on gemini-decision-1 disclosure/underlying (TEXT-EXCEPTIONS, sha-pinned, board #81132)",
+ "status": "GO (release owner jevbench-add-requests-20260919 lead, 24 Nov 2026: six unranked rows on the 22 Nov draw + the board-#81132 carried-row disclosure text fix; independent critic PASS r233-v1821-critic + scoped delta re-check PASS r233-v1821-critic-fix1)",
+ "top_five_effect": "unchanged"
+}

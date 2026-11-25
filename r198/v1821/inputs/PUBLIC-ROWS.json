@@ -1,0 +1,91 @@
+{
+ "basal-omni-2.0-mini-preview": {
+  "author": "Remek Kinas (Remigiusz Kinas; Hugging Face Remek, GitHub rkinas)",
+  "disclosure": "Free-queue preview evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. pin 2c8a5783 (board pin 258a6280 differs in README.md only); GGUF and MLX variants are other systems, not this row; engine --mode eager only, bf16; basal v2.8.1 exists and was not used (only change: ModelOpt/FP8 refusal, irrelevant to this bf16 checkpoint); training data undisclosed; author figures self-reported; dependency stack per model card (torch 2.11.0+cu128, [media] installed, media off); 5 of 1,500 items (0.33 %) read one way (two-way limit 4,096 tokens); below the 5 % row-text threshold; no 422s, no other errors; run complete 1,500/1,500; cost is an estimate on the GPU-time leg; self-hosted latency adjustment x2 + 0.15 s (assumption, not measured); draw v1.6-regular-20261122 anchor-runs-pending: G_med carried from v1.8.18, offset 0 (same equating disclosure as starlord-4b-v2.0-preview).",
+  "disclosures": [
+   "pin 2c8a5783 (board pin 258a6280 differs in README.md only)",
+   "GGUF and MLX variants are other systems, not this row",
+   "engine --mode eager only, bf16; basal v2.8.1 exists and was not used (only change: ModelOpt/FP8 refusal, irrelevant to this bf16 checkpoint)",
+   "training data undisclosed; author figures self-reported",
+   "dependency stack per model card (torch 2.11.0+cu128, [media] installed, media off)",
+   "5 of 1,500 items (0.33 %) read one way (two-way limit 4,096 tokens); below the 5 % row-text threshold",
+   "no 422s, no other errors; run complete 1,500/1,500",
+   "cost is an estimate on the GPU-time leg",
+   "self-hosted latency adjustment x2 + 0.15 s (assumption, not measured)",
+   "draw v1.6-regular-20261122 anchor-runs-pending: G_med carried from v1.8.18, offset 0 (same equating disclosure as starlord-4b-v2.0-preview)"
+  ],
+  "display": "basal-omni-2.0-mini-preview (Remek Kinas, Gemma-4-E4B-it, typed-decision readout, self-hosted)",
+  "endpoint_condition": "github.com/rkinas/basal@6c1bba625bd7 (v2.8.0), --mode eager, bf16",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": null,
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator.",
+  "repo": "https://huggingface.co/Remek/basal-omni-2.0-mini-preview"
+ },
+ "strands-decider-12b-gemma4-v2-2611": {
+  "author": "StrandsAgents (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 12B",
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-12B-gemma4-v2-2611"
+ },
+ "strands-decider-26b-a4b-gemma4-v2-2611": {
+  "author": "StrandsAgents (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 26B-A4B",
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-26B-A4B-gemma4-v2-2611"
+ },
+ "strands-decider-31b-gemma4-v2-2611": {
+  "author": "StrandsAgents (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 31B",
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-31B-gemma4-v2-2611"
+ },
+ "strands-decider-e2b-gemma4-v2-2611": {
+  "author": "StrandsAgents (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider E2B (Gemma 4) v2",
+  "endpoint_condition": "Author's Strands Decider v2 runtime, unchanged, evaluator-hosted offline with pinned weights. The checkpoint repository is private; the checkpoint name and revision are disclosed without a public repository link.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "repo": null
+ },
+ "strands-decider-e4b-gemma4-v2-2611": {
+  "author": "StrandsAgents (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw. Not yet equated: anchor runs on this draw are pending, so this row is not yet equated against the 27 Oct draw. The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "display": "Strands Decider v2 E4B",
+  "endpoint_condition": "author's strands-decider code @ecdb3314 (python -m strands_decider.cli serve, transformers, bf16), unchanged",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "The runtime returned HTTP 200 for 1,495 requests and refused five items with HTTP 422. The five refused items count as wrong answers; all 1,500 items remain in the denominator. The refusal responses do not establish a specific cause.",
+  "repo": "https://huggingface.co/StrandsAgents/strands-decider-E4B-gemma4-v2-2611"
+ }
+}
