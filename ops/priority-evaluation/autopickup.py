@@ -2169,6 +2169,7 @@ HOLD_REASON_LABELS = {
     "customer_reply": ("we are waiting for the customer's reply", "wir warten auf die Antwort des Kunden"),
     "customer_request": ("the customer asked to pause the evaluation", "der Kunde hat um eine Pause der Messung gebeten"),
     "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
+    "api_key_in_linked_submission": ("the API endpoint needs a key that the customer already gave in the encrypted submit field; an agent must import it into private intake", "der API-Endpunkt braucht einen Schlüssel, den der Kunde schon im verschlüsselten Formularfeld angegeben hat; ein Agent muss ihn in die private Ablage übernehmen"),
     "api_key_needs_private_intake": ("the API endpoint needs a key and the order text seems to contain one; an agent must move it into private intake", "der API-Endpunkt braucht einen Schlüssel und der Auftragstext scheint einen zu enthalten; ein Agent muss ihn in die private Ablage übernehmen"),
     "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
     "release_result_rejected": ("the prepared result failed the independent recomputation and an agent must fix it", "das vorbereitete Ergebnis hat die unabhängige Nachrechnung nicht bestanden und ein Agent muss es korrigieren"),
@@ -6995,6 +6996,16 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
         return False
     if probe.get("result") != "key_required":
         return False
+    if linked_submission_has_key(rid):
+        # CR-LINKEDKEY: the customer already gave the key in the encrypted /submit field (b80901aa, 24 Nov 2026: the
+        # change request asked for a key the customer had already given). Our work, so the 48 h clock keeps running and the owner
+        # imports it through the bh-submission key-export custody path; no customer mail, no Florian card.
+        set_operational_hold(state, "api_key_in_linked_submission", transient=False)
+        append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key, and the order's "
+                              "linked /submit row already holds the customer's encrypted key. An agent must import it "
+                              "into private host intake (bh-submission key-export) before any preparation; no customer "
+                              "change request, no preparation attempt was used.\n")
+        return True
     if host_evidence.raw_text_has_key_like(row.get("access_instructions")):
         set_operational_hold(state, "api_key_needs_private_intake", transient=False)
         append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key and the order's "
@@ -7003,6 +7014,17 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
         return True
     fail_api_key_missing(rid, job_dir, access["endpoint"], probe.get("http_status"))
     return True
+
+
+def linked_submission_has_key(rid: str) -> bool:
+    """True when the order's linked /submit row (model_submission_id) holds an encrypted API key.
+
+    Reads one boolean only, never the ciphertext. A database error propagates (PickupError), so the pickup retries
+    later instead of mailing the customer for a key we may already hold."""
+    value = sql_json(f"SELECT json_build_object('has_key', s.api_key_ciphertext IS NOT NULL)::text "
+                     f"FROM {TABLE} AS r JOIN bh_model_submissions AS s ON s.id = r.model_submission_id "
+                     f"WHERE r.id='{request_id(rid)}'::uuid")
+    return bool(value) and value.get("has_key") is True
 
 
 def fail_api_key_missing(rid: str, job_dir: Path, endpoint: str, status: object) -> None:
