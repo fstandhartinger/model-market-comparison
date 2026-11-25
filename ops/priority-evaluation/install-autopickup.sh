@@ -101,7 +101,7 @@ install -m 700 "$SRC/jevbench-priority-mail-watch.py" "$WATCH"
 [ "$(sha256sum < "$SRC/jevbench-priority-mail-watch.py")" = "$(sha256sum < "$WATCH")" ] \
   || { echo "mail watcher install binding mismatch" >&2; exit 1; }
 for f in autopickup-prompt-template.md autopickup-review-prompt-template.md autopickup-confirmation-template.txt \
-         autopickup-result-public-template.txt autopickup-result-measured-template.txt autopickup-result-private-template.txt autopickup-refund-template.txt autopickup-refusal-template.txt autopickup-review-passed-template.txt autopickup-change-request-template.txt autopickup-delay-template.txt autopickup-intake-approved-template.txt autopickup-intake-declined-template.txt; do
+         autopickup-result-public-template.txt autopickup-result-measured-template.txt autopickup-result-private-template.txt autopickup-refund-template.txt autopickup-refusal-template.txt autopickup-review-passed-template.txt autopickup-change-request-template.txt autopickup-change-request-tariff-template.txt autopickup-delay-template.txt autopickup-intake-approved-template.txt autopickup-intake-declined-template.txt; do
   install -m 600 "$SRC/$f" "$SHARE/$f"
 done
 for u in jevbench-priority-autopickup.service jevbench-priority-autopickup.timer \
