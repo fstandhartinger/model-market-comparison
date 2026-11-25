@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-25T00:35:21.098Z",
+  "collected_at": "2026-11-25T05:30:17.313Z",
   "window": {
     "start_date": "2026-11-18",
     "end_date": "2026-11-24"
@@ -201,7 +201,7 @@
       "chute_id": "06550a65-2052-55fa-9bbb-2bdf4d423ac5",
       "name": "[private]",
       "date": "2026-11-24",
-      "total_requests": 71,
+      "total_requests": 72,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -553,7 +553,7 @@
       "chute_id": "8493bc2d-e0e8-5eb5-9f12-3291134dda23",
       "name": "[private]",
       "date": "2026-11-24",
-      "total_requests": 12733,
+      "total_requests": 12734,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -697,7 +697,7 @@
       "chute_id": "b3ffa387-35f9-5483-9901-2b1ffc93919a",
       "name": "[private]",
       "date": "2026-11-24",
-      "total_requests": 36,
+      "total_requests": 37,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -7256,23 +7256,23 @@
   "provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-18&end_date=2026-11-24",
-    "collected_at": "2026-11-25T00:35:21.098Z",
+    "collected_at": "2026-11-25T05:30:17.313Z",
     "basis": "self_reported"
   },
   "ratio_provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-18&end_date=2026-11-24",
-    "collected_at": "2026-11-25T00:35:21.098Z",
+    "collected_at": "2026-11-25T05:30:17.313Z",
     "basis": "derived",
     "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
     "scope": "Global Chutes token-positive chute/day usage, not a coding-agent-only cohort."
   },
-  "response_sha256": "b1143ec0b0b185845ba1b9abd108a880ef37c836067ad63c0701a4d1a48a1003",
+  "response_sha256": "9e70ce22093415b393e9bc719d72f107a713ea7cc42b93e9e04bf4fa532e81da",
   "attempts": [
     {
       "source": "Chutes LLM usage statistics",
       "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-18&end_date=2026-11-24",
-      "collected_at": "2026-11-25T00:35:21.098Z",
+      "collected_at": "2026-11-25T05:30:17.313Z",
       "status": "available",
       "http_status": 200
     }

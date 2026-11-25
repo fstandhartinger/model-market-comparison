@@ -58,9 +58,9 @@
       "context_length": 262144,
       "quantization": "int4",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.65,
+        "input_per_1m_usd": 0.7625,
         "output_per_1m_usd": 3.55,
-        "cache_read_per_1m_usd": 0.17,
+        "cache_read_per_1m_usd": 0.1925,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -140,7 +140,7 @@
       }
     }
   ],
-  "response_sha256": "c5381893c7483e59568d79892bd80b2a1b67103a99795f19cba1d01be0206d13",
+  "response_sha256": "591c1e067d06987d74e81337ebd7c589b146c3980b4b21a81d1614bf98f65483",
   "skipped": [],
   "diff": {
     "added": [],
@@ -151,7 +151,7 @@
   "availability": {
     "state": "list_prices_withdrawn_by_source",
     "observed_since": "2026-11-05",
-    "checked_at": "2026-11-25T00:35:35.260Z",
+    "checked_at": "2026-11-25T05:30:29.904Z",
     "url": "https://www.inceptron.io/models",
     "note": "Inceptron's models page lists the models without prices; its pricing page points to the models page. Direct prices are not published until they reappear."
   }

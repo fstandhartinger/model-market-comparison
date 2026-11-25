@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, version_guard",
+      "evidence": "version_guard requires 'the problem must stay in the stated four-problem deck', but SOURCE 3 (SPEC.md, updated 2026-11-09) states 'deck stays at three since 2026-11-09' and that problem 04 was retired 2026-11-09; SOURCE 2 leaderboard.json 'problems' lists exactly three problems (01, 02, 03). A changed task set cannot silently reuse the identity under c1.",
+      "repair": "Update version_guard to the current three-problem deck (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode) per SPEC.md and leaderboard.json."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes make claims about problem 04 that the current sources contradict or do not support: 'Opus 5 reaches 196.10% on 04', the muse 'bug' cell on 04 (0.2056), and a 'reward_hack' deepseek-claude/deepseek-v4-pro cell on 04. SOURCE 2 contains no problem 04 (retired; SOURCE 3/SOURCE 5 confirm retirement 2026-11-09), and deepseek-v4-pro's served 02/03 verdicts are 'clean'/'interesting' with no reward_hack flag.",
+      "repair": "Remove or clearly mark as historical pre-retirement the problem-04 references, or drop them; current served data has no problem 04."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not execute owner hash/transport checks; owner handles those separately.",
+    "version_status 'published' relies on the maintainer publishing the hardware/release identity 'RTX PRO 6000' (SOURCE 2 hardware.name, SOURCE 3 harness paths) as the board's release identifier; the pages contain no literal 'release' token, which is acceptable since our vocabulary need not appear in maintainer text.",
+    "Row contains no fresh numeric observation fields to verify beyond identity/metric/lifecycle; scoring rule, latency-anchored standing rule for 02, and peak_fraction-as-context-column in notes are consistent with SOURCE 3 wording."
+  ],
+  "missing_evidence": []
+}

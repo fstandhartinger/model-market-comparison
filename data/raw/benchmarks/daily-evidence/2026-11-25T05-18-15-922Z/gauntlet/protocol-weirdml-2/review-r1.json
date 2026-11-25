@@ -1,0 +1,41 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "weirdml::2 / description, scoring.metric (c1)",
+      "evidence": "Row claims '17 tasks', '5 iterations per run' and metric 'Average Max Accuracy'. SOURCE 1 excerpt describes only 'WeirdML v3' with '11 complex hand-made tasks' and a different scoring rule (80% normalized area under curve + 20% final value). The excerpt contains no v2 protocol text, so the claimed v2 task set and scoring cannot be verified against primary evidence.",
+      "repair": "Obtain and verify the WeirdML v2 protocol page (linked from SOURCE 1 as 'WeirdML v2') and transcribe the exact v2 task count, iterations and scoring rule; do not fill from memory."
+    },
+    {
+      "id": "F2",
+      "severity": "blocker",
+      "location": "weirdml::2 / version, version_guard (c1)",
+      "evidence": "Row states version '2'. SOURCE 1's protocol text is for v3 and only mentions v2 via a 'Previous versions' link; the excerpt cannot establish that the served results payload corresponds to published version 2 of the benchmark identity described in the row.",
+      "repair": "Verify continuity between the row's identity 'weirdml::2' / version '2' and the maintainer's current v2 materials from the linked v2 page before asserting results."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "weirdml::2 / status, superseded_by (c2)",
+      "evidence": "Row states status 'active' and superseded_by null. SOURCE 1 presents 'WeirdML v3' as the current board and lists v2 under 'Previous versions: WeirdML v2', indicating v2 has been replaced going forward. SOURCE 2's nonzero activity (9 changed values) is evidence the maintainer still reports the served field, but per criteria it cannot establish methodology/version continuity and the excerpt does not show whether the linked v2 page itself is still refreshed.",
+      "repair": "Verify the linked v2 page: if v2 is retired/replaced going forward, set status 'retained' and set superseded_by to the registry id for v3; if the v2 page still actively publishes, document the evidence. Do not leave the current claim unverified."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unit/range check under c1: served 'avg_acc' scale (162 values, 1.729... to 93.57...) fits the row's unit 'percent' and range [0,100]; no mismatch on this point.",
+    "version_status 'published' is plausible if the maintainer publishes a v2 release identifier on the linked v2 page, which is not in the packet; the v3 page's version naming does not settle it.",
+    "Owner hash verification, transport and qualification checks are executed separately by the owner and were not run by this reviewer.",
+    "SOURCE 2 and SOURCE 3 are this run's generated summaries of the captured payload, not maintainer text; used only for the scale and activity judgements permitted by c1/c2."
+  ],
+  "missing_evidence": [
+    "weirdml::2: the primary WeirdML v2 protocol text (task count, iteration count, scoring rule, release identifier) is absent from the packet; the only protocol excerpt is for v3."
+  ]
+}

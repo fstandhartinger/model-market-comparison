@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "1ae198671ec493331b2f67864657ae1b9f76c2fee4c08d01b4231c44d77f2e09",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail","vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline","vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently verify the artifact file SHA-256 or per-row canonical hashes; packet-provided owner hashes are accepted as binding per instructions.",
+    "published_at is null in all rows; the README contains no explicit publication date, so only retrieved_at (2026-11-25T05:29:25.312927+00:00) is verifiable; treated as absence, not error.",
+    "Protocol string paraphrases the README Best Practices (temperature 0.6, TopP 0.95, TopK 20, MinP 0; 32,768 output length, 81,920 for highly challenging tasks); footnote assigns 81,920 to reasoning/coding/PolyMATH, so agent-benchmark length attribution is a wording judgment, not a value change.",
+    "Vendor self-reported basis and column choice (last column, Qwen3-235B-A22B-Thinking-2507) verified against the table; numeric equality holds: 71.9, 58 (58.0), 45.6."
+  ],
+  "missing_evidence": []
+}

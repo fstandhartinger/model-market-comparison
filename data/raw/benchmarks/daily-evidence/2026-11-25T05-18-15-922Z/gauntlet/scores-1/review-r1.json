@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "179cc40548c2a7504783d75bdefa485b47e72f43441a5d1bae5c71e8b59737a7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or file SHA-256 hashes; relied on owner-provided canonical hashes for binding. Transport/qualification checks (producer receipt) executed by owner, not verified by me.",
+    "Row 2 value 68 vs source text '68.0%' is numerically equal per criterion c1 (trailing zeros do not change the score); verified as numeric equality, not text equality.",
+    "published_at is null in both rows; the source page shows a post date of December 9, 2025 but the artifact does not transcribe it into published_at; the criterion does not require publication date transcription beyond source date fields, so treated as acceptable. Noted as minor ambiguity only.",
+    "Harness is null with protocol explicitly noting the SWE-bench Verified harness is not specified in source; this is an accurate transcription, not a missing value."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row researchclawbench::40-tasks field version_status=\"published\"",
+      "evidence": "Neither SOURCE 1 (page), SOURCE 2 (app.js), nor SOURCE 3 (README) publishes a release identifier for the board. README describes a fixed set of 40 tasks/10 domains (badges 'Tasks-40', domains table, '40 tasks total') and news entries, but no maintainer-published version number for the board that '40-tasks' could copy. Per c2, 'published' requires the maintainer to publish a release identifier that the row's version copies; a page publishing none supports 'snapshot', and 'snapshot' is a mismatch only when a release identifier is published.",
+      "repair": "Change version_status from \"published\" to \"snapshot\" (with version as the dated snapshot identity per registry convention), or supply primary evidence of a maintainer-published release identifier for this board that \"40-tasks\" transcribes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row claims the page's default view is Pass@1 with Pass@5 taking the best of five attempts; README (SOURCE 3) only records that Pass@5 leaderboard results were added 2026-07-01, which does not explicitly establish the default view. Not a numeric mismatch; noted as unverifiable from the excerpt.",
+    "Row claims coverage on 2026-09-21 was 33–40 of 40 tasks with mean cost per task kept in each row's protocol; these per-row details are not in the packet and were not judged as claims of fresh measurement.",
+    "Row's claims that page says '100 = surpasses it' (confirmed in SOURCE 1 frontier text) and README '70+' (confirmed in SOURCE 3) were verified; other guard clauses (exact 40 task ids, leaderboard.json keys) cannot be fully verified from the bounded excerpts, but neither source contradicts them.",
+    "Hash integrity, transport and qualification checks are owner-executed; I cannot recompute SHA-256 values, including per-row binding hashes or output_sha256 in the producer receipt."
+  ],
+  "missing_evidence": []
+}

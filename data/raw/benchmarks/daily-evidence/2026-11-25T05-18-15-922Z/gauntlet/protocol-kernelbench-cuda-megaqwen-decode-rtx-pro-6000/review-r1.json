@@ -1,0 +1,34 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, version_guard",
+      "evidence": "version_guard: 'the problem must stay in the stated four-problem deck'. SOURCE 3 SPEC.md: 'deck stays at three since 2026-11-09' and 'Problem 04 ... was retired 2026-11-09'; SOURCE 2 leaderboard.json 'problems' lists exactly three entries; SOURCE 5 excluded runs repeatedly cite 'problem 04 retired 2026-11-09'. The guard contradicts the current protocol.",
+      "repair": "Rewrite the guard to reference the current three-problem deck (01, 02, 03) instead of a four-problem deck."
+    },
+    {
+      "id": "f2",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.notes",
+      "evidence": "notes claim the ranked list 'still holds' the muse/muse-spark-1.3 [ultra] `bug` cell on 04 (0.2056) and that 'Opus 5 reaches 196.10% on 04'. SOURCE 2 leaderboard.json contains no problem 04 (retired per SOURCE 3/SOURCE 5); muse's only served cells are 01/02/03 (03 = 0.0333, interesting). These 04 claims are unverifiable against the captured payload and conflict with the retired-deck evidence.",
+      "repair": "Remove or re-anchor the problem-04 examples (muse 0.2056, Opus 5 196.10%, reward_hack deepseek-v4-pro on 04) to cells that exist on the current board, or explicitly mark them as pre-retirement history."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "c1: row unit 'percent of roofline' and range [0,null] agree with the served value scale per SOURCE 7 summary (29 finite values, lowest 0.97, highest 8.12), and unbounded upper is never contradicted; but SOURCE 7 is this run's own generated read, admissible only for the scale judgment, not for metric meaning.",
+    "SOURCE 7's stated served scale (0.97–8.12) does not equal the raw leaderboard.json peak_fraction extremes visible in SOURCE 2 (0.0097–1.3619 across all problems); I cannot reconcile which payload read produced the summary, but per c1 only the row's unit/range vs the summary scale is judged here.",
+    "version_status 'published' rests on the maintainer publishing the board identifier (hardware 'RTX_PRO_6000' in SOURCE 5, 'problems-rtxpro6000' in SOURCE 3 harness path) which version 'rtx-pro-6000' plausibly copies; exact identifier formatting is our normalization.",
+    "status 'active' supported by SOURCE 6 (11 model rows with peak_fraction added today, 0 removed); per c2 this is affirmative evidence for active and settles nothing about methodology.",
+    "superseded_by null is consistent: no protocol text names a successor for this CUDA board ('KernelBench Multi soon' in SOURCE 4 is not a named successor board).",
+    "Hashes, transport and qualification checks are owner-executed; I cannot run them, which is a limitation, not missing evidence."
+  ],
+  "missing_evidence": []
+}
