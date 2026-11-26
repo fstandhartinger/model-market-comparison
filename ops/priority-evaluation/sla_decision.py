@@ -2,8 +2,7 @@
 
 At SLA_DECISION_HOURS (36, was 40 until 22 Nov 2026) after payment (48-hour clock minus pauses) an open
 order asks Florian once for an exact Telegram button: "Send delay note" (one fixed-template delay email to the
-customer, dated with ONE concrete date that is planned when the card is built, stored on the card as delay_eta and
-named in its caption: the order owner's ETA when one is valid, else max(deadline + 24 h, now + 24 h)),
+customer, with the valid owner ETA shown on the card, or a status update without an ETA if the owner has none),
 "Refund in full" (identical to the refund card's approval) or "No action". A text reply, an
 expired card or any other signal is never a decision. Built on the refund_approval.py
 mechanism: exact callback keys, his private chat only, 24-hour expiry.
@@ -56,6 +55,10 @@ def owner_managed(row: dict) -> bool:
 
 
 MAX_CARDS = 3  # an expired card is asked again at most twice; then the order waits for an operator
+STATUS_ONLY = "status_only"
+# Older pickup versions infer a promised +24 h date from a missing date. If code is rolled back while a
+# status-only card is open, the expired marker makes the old sender hold it instead of adding a date.
+STATUS_ONLY_RECORDED_ETA = "1970-01-01T00:00:00+00:00"
 
 
 # the ↳ line on the card once its decision is recorded (notify settle, board #41061)
@@ -77,24 +80,24 @@ STRAY_REASONS = ("delivered", "decided_elsewhere", "order_changed")
 CLOSEOUT_TRIES = 12  # close-out steps after a final decision are retried each cycle, at most this often (~1 h)
 
 
-def caption(row: dict, deadline: str, delay_eta: datetime | None = None) -> str:
-    """The card text. `delay_eta` is the one date advance() planned and stored on the card; the delay note mails exactly
-    that date. A caller without it (a preview, a test) gets the date planned for now."""
+def caption(row: dict, deadline: str, delay_eta: datetime | None = None, *, eta_planned: bool = False) -> str:
+    """Show the persisted plan. A preview without a plan looks up the current owner ETA."""
     if owner_managed(row):
         raise ValueError("40h decision is owner-managed; no generic ETA card")
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "den vollen Betrag"
     from autopickup import ETA_FORMAT, decision_context_line, eur_phrase, plan_delay_eta, utcnow
     eur = (eur_phrase(amount) or "").replace("about ", "ca. ")
-    if delay_eta is None:
-        delay_eta = plan_delay_eta(row, utcnow())[0]  # reads only the owner-eta file, which it survives unreadable
-    date = delay_eta.strftime(ETA_FORMAT)
+    if delay_eta is None and not eta_planned:
+        delay_eta = plan_delay_eta(row, utcnow())[0]
+    delay_choice = (f"neuer Termin {delay_eta.strftime(ETA_FORMAT)}" if delay_eta is not None
+                    else "Statusmail ohne neuen Termin")
     context = decision_context_line(row, f"Kein Ergebnis {SLA_DECISION_HOURS} h nach Zahlung für {{customer}}, {{model}}: "
                                          f"Verspätungsmail oder Rückzahlung{f' ({eur})' if eur else ''}?"
                                     ).replace(" für the customer,", " für den Kunden,")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             "- Vorschlag: Verspätungsmail.\n"
-            f"  Effect: Verspätungsmail (empfohlen) = neuer Termin {date}, kostenlos. "
+            f"  Effect: Verspätungsmail (empfohlen) = {delay_choice}, kostenlos. "
             f"Zurückzahlen = {money} zurück, endgültig. Nichts tun = nichts geht raus.\n"
             f"  Why: Der Kunde wartet seit {SLA_DECISION_HOURS} h; die Frist endet {deadline}.\n"
             "  Steps:\n  1. Tippe Verspätungsmail, Zurückzahlen oder Nichts tun.\n"
@@ -111,15 +114,15 @@ def _parse_eta(value: object) -> datetime | None:
 
 
 def card_delay_eta(root: Path, rid: str) -> tuple[datetime | None, str]:
-    """The date this order's card names and its delay note mails: (date, "owner"|"default"). (None, "default") for a
-    card sent before the date was stored (the 40 h era) or an unreadable card file; the caller then uses what that
-    card's caption said, deadline + 24 h."""
+    """Read the date bound to the card, or the explicit status-only plan. Preserve pre-ETA cards' existing fallback."""
     try:
         state = json.loads((root / f"{uuid.UUID(rid)}.json").read_text())
     except (OSError, ValueError):
         return None, "default"
     if not isinstance(state, dict):
         return None, "default"
+    if state.get("delay_eta_source") == STATUS_ONLY:
+        return None, STATUS_ONLY
     return _parse_eta(state.get("delay_eta")), "owner" if state.get("delay_eta_source") == "owner" else "default"
 
 
@@ -141,6 +144,8 @@ def open_card_eta(root: Path, rid: str, now: float, legacy: datetime) -> datetim
         if isinstance(expires, (int, float)) and now > expires:
             return None  # the next cycle re-asks with a fresh card, which reads the owner ETA
     elif decision != "delay_note":
+        return None
+    if state.get("delay_eta_source") == STATUS_ONLY:
         return None
     return _parse_eta(state.get("delay_eta")) or legacy
 
@@ -583,14 +588,14 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
             history.append({k: state.get(k) for k in ("card", "message_id", "created_at", "expires_at", "decision")})
             state = {"request_id": rid, "kind": state["kind"], "history": history, **_new_card(state.get("card", 1))}
         if state["notification"] == "pending":
-            # One concrete date per card, planned each time the card is (re)built until it is sent: the caption names
-            # it and the delay note mails exactly it (CR-835 M1).
+            # Freeze exactly what the card offers, so a later ETA edit cannot change this mail.
             from autopickup import plan_delay_eta
             delay_eta, source = plan_delay_eta(row, datetime.fromtimestamp(now, timezone.utc))
-            state.update(delay_eta=delay_eta.isoformat(timespec="seconds"), delay_eta_source=source)
+            state.update(delay_eta=delay_eta.isoformat(timespec="seconds") if delay_eta is not None else STATUS_ONLY_RECORDED_ETA,
+                         delay_eta_source=source)
         ra.atomic(path, state)
         if state["notification"] == "pending":
-            _send_card(state, path, caption(row, deadline, delay_eta), now)
+            _send_card(state, path, caption(row, deadline, delay_eta, eta_planned=True), now)
         if not state.get("message_id"):
             return "pending" if state["notification"] == "pending" else "unknown"
         if not state.get("buttons_attached"):
