@@ -2739,6 +2739,12 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         self.assertEqual(len(fx.started), starts)
         self.assertIn("needs its intake owner", fx.boards[-1])
         self.assertIn("sent no customer change request", fx.boards[-1])
+        self.assertIn(f"jevbench-autopickup hold {rid} --reason customer_access", fx.boards[-1])  # critic S1
+        with tempfile.TemporaryDirectory() as home:  # critic N3: the handoff addresses the approver (hermetic HOME)
+            (Path(home) / "jobs/fastlane-sla-20261004").mkdir(parents=True)
+            (Path(home) / "jobs/fastlane-sla-20261004/PROMPT.md").write_text("x")
+            with mock.patch.object(ap, "HOME", Path(home)):
+                self.assertEqual(ap.wake_owner(row(rid), ap.load_state(rid)), "fastlane-sla-20261004")
         self.assertNotIn("already with us", fx.boards[-1])
         self.assertNotIn("measurement owner", fx.boards[-1])
         self.assertIsNone(row(rid)["customer_hold_started_at"])

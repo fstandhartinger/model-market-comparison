@@ -294,6 +294,12 @@ class PrePreparationTests(unittest.TestCase):
         self.assertEqual(self.state["operational_hold"]["reason"], "api_key_in_linked_submission")
         self.approver.assert_not_called()
 
+    def test_pasted_key_wins_over_the_approved_private_route(self):
+        text = JINI_TEXT.replace("JEV_API_KEY=", "JEV_API_KEY=mx_" + "Q7" * 15)
+        self.run_hook(self.row(text), {"result": "key_required", "http_status": 401}, approver="fastlane-sla-20261004")
+        self.assertEqual(self.state["operational_hold"]["reason"], "api_key_needs_private_intake")
+        self.approver.assert_not_called()
+
     def test_approver_lookup_error_holds_nothing_and_requests_nothing(self):
         with self.assertRaises(ap.PickupError):
             self.run_hook(self.row(JINI_TEXT), {"result": "key_required", "http_status": 401},

@@ -2344,11 +2344,14 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
         if reason == "api_private_approved_needs_owner":
             # CR-867: the intake approver knew the endpoint is private and owns the access plan (APUS 9d598cb6/af455634).
             text = (f"Fast-lane order {order_ref(rid)} is paid and needs its intake owner ({reason}): you approved this "
-                    "private API endpoint at intake, it answers 401 without a key, and no key is held. Follow your intake "
-                    "plan: either get a revocable evaluation key into private host intake (write access_instructions as "
+                    "private API endpoint at intake, it answers 401/403 without a key, and no key is held. Follow your "
+                    "intake plan: get a revocable evaluation key into private host intake (write access_instructions as "
                     "JSON with endpoint and api_key, never print it; the next pickup cycle clears this hold and starts "
-                    "the evaluation) or fulfil the order the agreed way and record the delivery. The pickup sent no "
-                    "customer change request. Payment deadline "
+                    "the evaluation), or fulfil the order the agreed way and record the delivery. If the plan needs a "
+                    "key from the customer: check `bh-submission` first (a key sent later through /submit is not "
+                    f"re-detected while this hold is open), else set `jevbench-autopickup hold {rid} --reason "
+                    "customer_access` (pauses the clock) and send the key request through the approved transactional "
+                    "mail path. The pickup sent no customer change request. Payment deadline "
                     f"{deadline_for(row).isoformat()} continues. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.")
         elif reason in KEY_INTAKE_HOLD_REASONS:
             # CR-863: say exactly what to do; "measurement owner / runtime contract" sent owners to the runner instead.
@@ -7016,8 +7019,10 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
     The preparer is read-only and offline, so the host records a dated OpenRouter price snapshot and, for an
     API order without a host-held key, one credential-free synthetic probe. A key the endpoint demands but the
     order lacks goes to an owner hold when the linked /submit row already holds the customer's encrypted key (CR-863),
-    else straight to the customer change request instead of burning three preparations; text that seems to carry a
-    pasted key becomes an agent intake hold. Both owner holds clear by themselves once the key is in private intake. No preparation attempt is consumed here."""
+    else, when an agent approved the order at intake with the private-API finding, to an owner hold for that approver
+    (CR-867), else straight to the customer change request instead of burning three preparations; text that seems to
+    carry a pasted key becomes an agent intake hold. All these owner holds clear by themselves once the key is in private
+    intake. No preparation attempt is consumed here."""
     try:
         host_evidence.fetch_openrouter_models(job_dir)
     except OSError as exc:
