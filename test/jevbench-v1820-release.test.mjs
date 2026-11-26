@@ -25,7 +25,7 @@ test('v1.8.20 registers the 22 Nov draw as anchor-runs-pending with offset 0 and
  // The 27 Oct entry and every earlier draw are untouched.
  const before=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws.slice(0,4);
  assert.deepEqual(before.map(x=>x.draw),['v1.6-fastlane-20261009','v1.6-regular-20261010-a2','v1.6-regular-20261012','v1.6-regular-20261027']);
- assert.equal(before[3].latest_release,'v1.8.19');assert.equal(before[3].status,'equated');
+ assert.equal(before[3].latest_release,'v1.8.22');assert.equal(before[3].status,'equated');
  const row=load('v1.8.20','results').systems.find(x=>x.key===V1820_NEW_KEYS[0]);
  assert.equal(row.draw.id,d.draw);assert.deepEqual(row.draw.offset,{I:0,C:0});assert.equal(row.draw.status,'anchor-runs-pending');assert.equal(row.draw.release,'v1.8.20');
  assert.equal(row.published_scores,undefined);assert.equal(row.v16.equated,null);

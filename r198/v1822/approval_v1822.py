@@ -13,7 +13,6 @@ def check_approval(W,proof):
  ex=json.loads((W/'r198/v1822/inputs/TEXT-EXCEPTIONS.json').read_text())
  assert ex==[], 'v1.8.22 permits no carried-system changes'
  assert new['not_measured']==[r for r in old['not_measured'] if r['key']!='mica-v01-4b']
- for e in ex), 'v1.8.22 permits only the ImageJevBench disclosure text fix on gemini-decision-1'
  for e in ex:
   assert by[e['key']][e['path']]==e['after']
   for f in ['before','after']:assert hashlib.sha256(e[f].encode()).hexdigest()==e[f+'_sha256']
