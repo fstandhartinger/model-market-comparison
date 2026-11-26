@@ -1903,6 +1903,52 @@ class EvaluateTests(DatabaseTestCase):
         self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
         self.assertIn("completed", ap.load_state(rid)["pickup_handoff"]["close_reason"])
 
+    def test_n159_pickup_plus_customer_hold_in_one_cycle_leaves_no_open_eval_handoff(self):
+        # N159 (af455634, 26 Nov): the pickup posted its handoff and set a customer_changes hold in the same cycle;
+        # the evaluation unit never ran and the entry escalated to the deputy.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        real = ap.advance_change_request
+        def hold_then_advance(row_, state, job_dir, effects, now):
+            ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now(), customer_hold_reason='customer_changes' "
+                   f"WHERE id='{rid}'")
+            return real(load_row_or(row_), state, job_dir, effects, now)
+        def load_row_or(row_):
+            return ap.load_row(rid) or row_
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}), \
+                mock.patch.object(ap, "advance_change_request", side_effect=hold_then_advance):
+            ap.cycle(fx)
+        state = ap.load_state(rid)
+        self.assertEqual(state["pickup_handoff"]["to"], ap.owner_for(rid))
+        self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
+        self.assertIn("waits for customer changes", state["pickup_handoff"]["close_reason"])
+
+    def test_n159_operational_hold_owned_by_another_live_job_closes_the_pickup_handoff(self):
+        # N159: one native owner covering two orders holds the second order under its own name.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)
+        owner = "fastlane-native-0ther123"
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            state = ap.load_state(rid)
+            ap.set_operational_hold(state, "unsupported_measurement_backend", transient=False, owner=owner)
+            ap.save_state(state)
+            folder = Path(home) / "jobs" / owner
+            folder.mkdir(parents=True)
+            (folder / "STATE.md").write_text(f"# owner\n- covers {rid[:8]}\n- FINAL DONE\n")
+            with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+                self.assertFalse(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+            self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)  # a finished owner owns nothing
+            (folder / "STATE.md").write_text(f"# owner\n- covers {rid[:8]}\n- working\n")
+            with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+                self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
+        reason = ap.load_state(rid)["pickup_handoff"]["close_reason"]
+        self.assertIn("@" + owner, reason)
+        self.assertLessEqual(len(reason), 200)
+
     def test_cr758_close_is_bounded_and_needs_a_valid_entry(self):
         rid = insert_order()
         fx = FakeEffects()
