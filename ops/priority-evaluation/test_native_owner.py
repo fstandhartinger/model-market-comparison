@@ -103,20 +103,22 @@ class OwnerFolderTests(unittest.TestCase):
         with mock.patch.object(no.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "", "job-start: no such job folder")):
             self.assertFalse(no.launch(self.home, Path("/bin/job-start")))
 
-    def test_image_orders_use_measured_delivery_before_publication(self) -> None:
-        for visibility, template in (
-            ("public", "autopickup-result-measured-template.txt"),
-            ("private", "autopickup-result-private-template.txt"),
-        ):
-            with self.subTest(visibility=visibility):
-                order = {"benchmarks": ["imagejevbench"], "visibility": visibility}
-                prompt = no.prompt_text(RID, order, reason="unsupported_measurement_backend",
-                                        deadline="2026-11-28T00:00:00Z", order_dir=self.home)
-                self.assertIn(template, prompt)
-                self.assertIn(f"MAIL_PAID_ORDER_RESULT={RID}", prompt)
-                self.assertIn(f"record-delivery {RID}", prompt)
-                self.assertIn("Send the result email while the PR is pending", prompt)
-                self.assertNotIn("precedent deliver.py", prompt)
+    def test_native_orders_use_measured_delivery_before_publication(self) -> None:
+        templates = {"public": "autopickup-result-measured-template.txt",
+                     "private": "autopickup-result-private-template.txt"}
+        for benchmarks in (["jevbench"], ["imagejevbench"], ["jevbench", "imagejevbench"]):
+            for visibility, template in templates.items():
+                with self.subTest(benchmarks=benchmarks, visibility=visibility):
+                    order = {"benchmarks": benchmarks, "visibility": visibility, "model_name": "Example model"}
+                    prompt = no.prompt_text(RID, order, reason="unsupported_measurement_backend",
+                                            deadline="2026-11-28T00:00:00Z", order_dir=self.home)
+                    self.assertIn(template, prompt)
+                    self.assertIn(f"MAIL_PAID_ORDER_RESULT={RID}", prompt)
+                    self.assertIn(f"record-delivery {RID}", prompt)
+                    self.assertIn("Send the result email while the PR is pending", prompt)
+                    self.assertIn("single-line text from the order record", prompt)
+                    self.assertNotIn(order["model_name"], prompt)
+                    self.assertNotIn("precedent deliver.py", prompt)
 
 
 class EnsureOwnerTests(unittest.TestCase):
