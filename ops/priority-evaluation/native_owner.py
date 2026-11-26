@@ -463,23 +463,20 @@ Retain the exact-run custody word, network cut and the on-pod archive and manife
                       "new order-scoped supplement following the existing *_runtime_supplement.py modules (exact order id, "
                       "digest-pinned base, SHA-256-pinned public wheels, offline build), and delete any "
                       "CATALOGUE-REQUEST.json / CATALOGUE-OVERLAY.json from the bundle before the freeze.")
-    if "imagejevbench" in (order.get("benchmarks") or []):
-        template = ("autopickup-result-measured-template.txt" if order.get("visibility") == "public"
-                    else "autopickup-result-private-template.txt")
-        delivery = f"""5. As soon as the scores for all ordered benchmarks are independently recomputed, give the
+    template = ("autopickup-result-measured-template.txt" if order.get("visibility") == "public"
+                else "autopickup-result-private-template.txt")
+    delivery = f"""5. As soon as the scores for all ordered benchmarks are independently recomputed, give the
    verified aggregate and its SHA-256 to the transactional mail owner. Use the installed
    `~/.local/share/priority-evaluation/{template}` and the subject
-   `Benchmark Heaven evaluation order {ref}: your result`. Include the benchmark version and verified scores,
-   with provisional placements and no ranks for public orders. Use the approved single-send
+   `Benchmark Heaven evaluation order {ref}: your result`. In the result lines, include the model name as
+   single-line text from the order record, the benchmark version, and independently verified scores and axes
+   when available. Use the provisional-placement wording for public orders. Omit ranks. Use the approved single-send
    `mail_tool.py send gmail` path with `MAIL_PAID_ORDER_RESULT={rid}`. Check Sent and the sent audit for
    that exact subject and recipient, run the author-message guard on the exact text, and dry-run before sending.
    After the one audited send, run `~/bin/jevbench-autopickup record-delivery {rid} --subject "<exact subject>" --artifact-sha256 <verified aggregate sha256> --sent-at <audited UTC timestamp>`.
 6. For a public order, separately hand the verified aggregate to the release owner on #11. The release owner
    can queue the PR while delivery proceeds. Send the result email while the PR is pending. After publication,
    verify the row on both hosts and post the live proof on #11. Post the measurement and delivery receipts on #9 + #11."""
-    else:
-        delivery = """5. Hand off to the JevBench release owner on #11 for the public row (if the order is public).
-6. Deliver with the precedent deliver.py path (author-message-guard on the exact text, no ranks). Post #9 + #11."""
     return f"""# Paid fast-lane order {ref} — native measurement owner (started automatically)
 
 You own this order end to end until the customer result is delivered (DELIVERED + RESULT.md + FINAL DONE).
