@@ -1899,6 +1899,17 @@ def pickup_handoff_close_reason(row: dict[str, Any], state: dict[str, Any], effe
         entry = handed.get("entry")
         where = f" in entry #{entry}" if isinstance(entry, int) and not isinstance(entry, bool) else f" on #{BOARD_HANDOFF_THREAD}"
         return f"native owner job {record['job']} took over order {ref}; re-addressed to @{record['job']}{where}"
+    # N159 (26 Nov 2026, af455634): a hold set in the pickup cycle, or a hand-routed operational hold whose owner is
+    # another job (one native owner covering two orders), left the pickup handoff open until the deputy escalation.
+    # The evaluation service never runs a held order, so the hold owner owns it.
+    operational = state.get("operational_hold")
+    owner = operational.get("owner") if isinstance(operational, dict) else None
+    if isinstance(owner, str) and owner != owner_for(rid) and hold_owner_live(owner, rid, utcnow()):
+        return (f"order {ref} is on operational hold ({str(operational.get('reason') or 'unspecified')[:60]}); "
+                f"re-addressed to the hold owner @{owner}")
+    if row.get("customer_hold_started_at") and row.get("status") in ("paid", "review_passed"):
+        return (f"order {ref} waits for customer changes ({str(row.get('customer_hold_reason') or 'hold')[:40]}); "
+                f"the pickup change-request path owns it, the evaluation service has nothing to run")
     # CR-758 review S2: "running" only: evaluate() sets it after its gate and source fetch, so the unit really
     # took the order; a unit that is merely activating can still exit in seconds and leave the order unowned.
     if row.get("evaluation_status") == "running" and not effects.dry_run \
