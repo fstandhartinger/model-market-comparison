@@ -7459,8 +7459,8 @@ def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
     if problem:
         raise PickupError(problem)
     atomic_write(owner_eta_path(rid), json.dumps({"eta": iso(eta), "set_at": iso(now)}, indent=2, sort_keys=True) + "\n")
-    return (f"Order {order_ref(rid)}: owner ETA {eta.strftime(ETA_FORMAT)} stored. The SLA decision card names it when it "
-            "is built; the customer hears it only if Florian taps Send delay note on that card.")
+    return (f"Order {order_ref(rid)}: owner ETA {eta.strftime(ETA_FORMAT)} stored. A newly built SLA decision card can "
+            "name it. An open card keeps the wording it already showed.")
 
 
 def migrate_source_recovery_projection(journal_path: Path, journal: dict[str, Any], row: dict[str, Any],

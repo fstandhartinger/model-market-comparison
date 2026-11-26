@@ -3986,7 +3986,7 @@ class Sla36EtaTests(DatabaseTestCase):
         self.assertIn(f"set-eta {rid}", early)
         self.assertIn("record your real ETA now", early)
         late = ap.sla_handoff(row(rid), 36)
-        self.assertIn("card for this order is out now", late)
+        self.assertIn("offers the owner ETA, if available, or a status update", late)
         self.assertNotIn("Set it before the card is built", late)
 
     def test_an_owner_eta_set_after_the_card_never_reaches_the_mail(self):  # M1 (critic probe 1), without Telegram
@@ -4193,7 +4193,7 @@ class Sla36CardFlowTests(DatabaseTestCase):
         self.assertIn("Statusmail ohne neuen Termin", self.captions[0])
         self.assertNotIn("neuer Termin", self.captions[0])
         eta = (datetime.now(timezone.utc) + timedelta(hours=30)).replace(microsecond=0)
-        ap.set_eta(rid, ap.iso(eta))
+        self.assertIn("An open card keeps the wording it already showed.", ap.set_eta(rid, ap.iso(eta)))
         self.tap(rid)
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertEqual(len(fx.mails), 1)
@@ -4203,6 +4203,24 @@ class Sla36CardFlowTests(DatabaseTestCase):
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertEqual(len(fx.mails), 1)
         self.assertIsNone(row(rid)["refund_decision"])
+
+    def test_expired_status_only_card_reasks_with_a_valid_owner_eta(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        first = self.card(rid)
+        self.assertEqual(first["delay_eta_source"], "status_only")
+        eta = datetime.fromtimestamp(first["expires_at"] + 5 * 3600, timezone.utc)
+        ap.set_eta(rid, ap.iso(eta))
+        expired = datetime.fromtimestamp(first["expires_at"] + 1, timezone.utc)
+        with mock.patch.object(ap, "utcnow", return_value=expired):
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        second = self.card(rid)
+        self.assertEqual((second["card"], second["delay_eta"], second["delay_eta_source"]),
+                         (2, ap.iso(eta), "owner"))
+        self.assertIn(f"neuer Termin {self.fmt(eta)}", self.captions[-1])
+        self.assertEqual(fx.mails, [])
 
     def test_an_owner_eta_set_before_the_card_is_named_and_mailed(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")

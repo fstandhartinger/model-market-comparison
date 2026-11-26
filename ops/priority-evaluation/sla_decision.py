@@ -113,10 +113,6 @@ def _parse_eta(value: object) -> datetime | None:
     return parsed.astimezone(timezone.utc) if parsed.tzinfo else None
 
 
-def _is_status_only(state: dict) -> bool:
-    return state.get("delay_eta_source") == STATUS_ONLY and state.get("delay_eta") == STATUS_ONLY_RECORDED_ETA
-
-
 def card_delay_eta(root: Path, rid: str) -> tuple[datetime | None, str]:
     """Read the date bound to the card, or the explicit status-only plan. Preserve pre-ETA cards' existing fallback."""
     try:
@@ -125,7 +121,7 @@ def card_delay_eta(root: Path, rid: str) -> tuple[datetime | None, str]:
         return None, "default"
     if not isinstance(state, dict):
         return None, "default"
-    if _is_status_only(state):
+    if state.get("delay_eta_source") == STATUS_ONLY:
         return None, STATUS_ONLY
     return _parse_eta(state.get("delay_eta")), "owner" if state.get("delay_eta_source") == "owner" else "default"
 
@@ -149,7 +145,7 @@ def open_card_eta(root: Path, rid: str, now: float, legacy: datetime) -> datetim
             return None  # the next cycle re-asks with a fresh card, which reads the owner ETA
     elif decision != "delay_note":
         return None
-    if _is_status_only(state):
+    if state.get("delay_eta_source") == STATUS_ONLY:
         return None
     return _parse_eta(state.get("delay_eta")) or legacy
 
