@@ -6026,6 +6026,34 @@ class RecordDeliveryTests(DatabaseTestCase):
     def record(self, rid, subject, stamp, sha=None):
         return ap.record_delivery(rid, subject, sha or self.SHA, self.at(stamp))
 
+    def test_native_image_measured_mail_records_while_public_pr_is_pending(self):
+        rid = insert_order(benchmarks="{imagejevbench}")
+        state = ap.load_state(rid)
+        state["native_owner"] = {"job": ap.native_owner.owner_name(rid)}
+        pending_pr = {"status": "queued", "pr_number": 123}
+        state["public_release"] = pending_pr
+        ap.save_state(state)
+        current = row(rid)
+        subject, body = ap.measured_result_message(current, {"results": [{
+            "benchmark": "imagejevbench", "version": "v0.3.0", "score": 64.25,
+            "public_url": "https://benchmarkheaven.com/image-jev-bench",
+        }]})
+        self.assertEqual(subject, f"Benchmark Heaven evaluation order {ap.order_ref(rid)}: your result")
+        self.assertIn("64.25", body)
+        self.assertIn("Placements are provisional until the release review", body)
+
+        sent = datetime.now(timezone.utc).timestamp()
+        with mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", subject))):
+            self.assertIn("recorded", self.record(rid, subject, sent))
+            with self.assertRaises(ap.PickupError):
+                self.record(rid, subject, sent)
+
+        updated = row(rid)
+        self.assertEqual(updated["delivery_email_status"], "sent")
+        self.assertIsNotNone(updated["result_delivered_at"])
+        self.assertEqual(updated["release_status"], current["release_status"])
+        self.assertEqual(ap.load_state(rid)["public_release"], pending_pr)
+
     def test_audited_on_time_send_completes_and_stops_the_refund_card(self):
         rid = insert_order(paid_ago="40 hours", received_ago="40 hours")
         subject, sent = "Re: Strands result", self.ago(1)
