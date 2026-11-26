@@ -414,6 +414,19 @@ def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = 
 
 def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, order_dir: Path) -> str:
     ref = rid[:8]
+    image_preflight = ""
+    if "imagejevbench" in (order.get("benchmarks") or []):
+        image_preflight = """
+## Scored native ImageJevBench input
+
+Copy custody's reviewed `paid_image_input.py` into the per-order kit root and include it in the kit
+checksum list before review and custody authorization. For the archive-based native controller, use the installed
+`~/.local/share/priority-evaluation/native-image-launch-preflight.patch` as the controller delta.
+Use the same bound staging directory and archive, manifest, file and item pins that the scored stage uses.
+Custody checks the package before issuing the word. In the scored launcher, run the local preflight before
+reserving or creating a provider instance and proceed only on PASS. The public smoke has no sealed input.
+Retain the exact-run custody word, network cut and the on-pod archive and manifest checks.
+"""
     entry = match_supplement(order)
     why = ("its runner generator found no supported runtime"
            if reason not in FAMILY_HOLD_REASONS else
@@ -481,7 +494,7 @@ Your board name also answers to @fastlane-eval-{ref}. Post on thread #11 that yo
 - Payment deadline (48 h, from the order record at start): {deadline}. Re-read paid_at before you plan.
 - The pickup keeps its own urgent card quiet while this job is live and more than 12 h remain. Keep STATE.md
   current and naming the order id {ref}; a stale or FINAL DONE job without delivery re-opens the urgent card.
-{supplement}
+{supplement}{image_preflight}
 
 ## Plan (keep every existing gate)
 1. Confirm the generator's reason from trusted-runner/RUNTIME.json and PRICING-REVIEW.md; do not redo a clean

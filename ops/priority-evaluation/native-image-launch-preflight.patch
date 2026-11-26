@@ -1,0 +1,21 @@
+--- a/measure_vone_image.py
++++ b/measure_vone_image.py
+@@ -1562,6 +1562,18 @@
+     if smoke_only and args.imagejev_input_dir:
+         raise SystemExit("--smoke-only takes no --imagejev-input-dir (no sealed input in a smoke)")
+     if not smoke_only and not args.imagejev_input_dir:
+         raise SystemExit("--imagejev-input-dir is required")
++    if not smoke_only:
++        validator = subprocess.run(
++            ["/usr/bin/python3", "-I", "-B", str(HERE / "paid_image_input.py"),
++             str(args.imagejev_input_dir), IMAGEJEV["input_tar_sha256"],
++             str(IMAGEJEV["input_tar_bytes"]), IMAGEJEV["input_sums_sha256"],
++             str(IMAGEJEV["file_count"]), str(IMAGEJEV["items"])],
++            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
++        )
++        if validator.returncode != 0 or validator.stdout != "PASS\n":
++            raise SystemExit("ImageJevBench input preflight: FAIL")
++        print("ImageJevBench input preflight: PASS", flush=True)
++
+     label = (SMOKE_LABEL_PREFIX + str(int(args.launch_epoch))) if smoke_only else RUN_LABEL
+     out_dir = (JOB_ROOT / label / "out") if smoke_only else OUT_DIR

@@ -56,6 +56,19 @@ class RegistryTests(unittest.TestCase):
         self.assertFalse(no.runtime_declares_unsupported({"jevbench": {"backend": "gpu_pod"}}))
         self.assertFalse(no.runtime_declares_unsupported(None))
 
+    def test_native_image_preflight_is_distributed_and_prompted(self) -> None:
+        here = Path(__file__).resolve().parent
+        patch = "native-image-launch-preflight.patch"
+        self.assertTrue((here / patch).is_file())
+        self.assertIn(patch, (here / "install-autopickup.sh").read_text(encoding="utf-8"))
+        kwargs = {"reason": "unsupported_measurement_backend", "deadline": "d", "order_dir": here}
+        image = no.prompt_text(RID, {"benchmarks": ["imagejevbench"]}, **kwargs)
+        text = no.prompt_text(RID, {"benchmarks": ["jevbench"]}, **kwargs)
+        self.assertIn(patch, image)
+        self.assertIn("before\nreserving or creating a provider instance", image)
+        self.assertIn("Custody checks the package before issuing the word", image)
+        self.assertNotIn(patch, text)
+
     def test_generator_hint_only_for_registered_repos(self) -> None:
         self.assertIn("torchcast", no.generator_hint({"model_link": "https://huggingface.co/torchcast-ai/torchcast-decision-4b"}))
         self.assertEqual(no.generator_hint({"model_link": "https://huggingface.co/x/y"}), "")
