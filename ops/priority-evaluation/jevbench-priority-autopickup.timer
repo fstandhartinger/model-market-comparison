@@ -1,9 +1,9 @@
 [Unit]
-Description=Fast-lane order pickup every 5 minutes
+Description=Fast-lane order pickup every minute
 
 [Timer]
-OnCalendar=*-*-* *:00/5:00 UTC
-AccuracySec=30s
+OnCalendar=*-*-* *:*:00 UTC
+AccuracySec=1s
 Persistent=true
 Unit=jevbench-priority-autopickup.service
 
