@@ -1,0 +1,27 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "13ed23d56ae529b88067a6904fe1921d62c3996a54e1a285b5811292b3027383",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail", "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline", "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom", "c1"],
+  "errors_found": 3,
+  "findings": [
+    {"id": "f1", "severity": "major", "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail source.published_at", "evidence": "Row sets published_at=null; criterion c1 requires a verified source date. README in packet contains no publication date, only retrieved_at 2026-11-26T05:29:37.621857+00:00. Values 71.9 vs locator '| TAU2-Retail | 64.9 | 71.0 | **76.3** | 71.3 | - | 40.4 | 71.9 |' match the Qwen3-235B-A22B-Thinking-2507 column exactly.", "repair": "Populate a verified source publication date from the primary source or record the captured-date basis explicitly per artifact schema; if no date exists in the source, document that per the schema rather than null."},
+    {"id": "f2", "severity": "major", "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline source.published_at", "evidence": "Row sets published_at=null; criterion c1 requires a verified source date. Value 58 vs locator '| TAU2-Airline | 60.0 | 59.0 | **70.0** | 60.0 | - | 30.0 | 58.0 |' numerically equal (58.0=58); correct last-column mapping.", "repair": "Populate verified source date or document absence per schema; do not leave unexplained null."},
+    {"id": "f3", "severity": "major", "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom source.published_at", "evidence": "Row sets published_at=null; criterion c1 requires a verified source date. Value 45.6 vs locator '| TAU2-Telecom | 33.3 | 42.0 | **60.5** | 37.4 | - | 21.9 | 45.6 |' matches exactly.", "repair": "Populate verified source date or document absence per schema; do not leave unexplained null."}
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row canonical SHA-256 or artifact file hash; relied on owner-supplied per-row hashes and bound rows by id.",
+    "Could not re-verify hash of the gz evidence file; row source.sha256 matches the sha256 stamped on all three supplied SOURCE blocks, which supports transcription binding but is not independent execution.",
+    "Airline value serialized as 58 vs source cell '58.0' — accepted under c1 numeric-equality rule (trailing zeros do not change the value).",
+    "Rows take the last table column (Qwen3-235B-A22B-Thinking-2507), consistent with the row's declared subject; protocol strings faithfully restate the README footnote about 32,768/81,920 output lengths and Best Practices sampling parameters (Temperature 0.6, TopP 0.95, TopK 20, MinP 0). Whether TAU2 agent tasks count as 'highly challenging' (81,920) is ambiguous in the README; artifact wording mirrors the source, so treated as faithful transcription.",
+    "self_reported basis is consistent with vendor-published README table; no harness field is claimed by the source and none is asserted in the rows.",
+    "comparison_key=null on all rows; unknown configurations do not create comparison keys, consistent with c1."
+  ],
+  "missing_evidence": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail: source publication date absent from packet (published_at=null, README states no date)",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline: source publication date absent from packet (published_at=null, README states no date)",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom: source publication date absent from packet (published_at=null, README states no date)"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "2.1",
-  "collected_at": "2026-11-25",
+  "collected_at": "2026-11-26",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
@@ -24,6 +24,32 @@
   ],
   "completeness_note": "Complete v2.1 benchmarkRows only. v1.4, v1.5 and v2.0 remain separate dated snapshots (v1.4 feeds the unchanged Composite); versions use different components and must never be combined or compared as one scale.",
   "rows": [
+    {
+      "source_id": "e00a520b90336304cd56ead289bb59f2",
+      "model_name": "Beam 1.0",
+      "harness": "Mirror",
+      "score": 0.154770250896058,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.0475626262626263,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.376344086021506,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.0404040404040404,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
     {
       "source_id": "eb55a750b7784b3f03c16efc3c39e1ff",
       "model_name": "GPT-6.2 Sol (Max)",
@@ -332,32 +358,6 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.111111111111111,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "e00a520b90336304cd56ead289bb59f2",
-      "model_name": "Beam 1.0",
-      "harness": "Mirror",
-      "score": 0.154770250896058,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v2.0",
-          "score": 0.0475626262626263,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.376344086021506,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.0404040404040404,
           "weight": 0.333333333333333
         }
       ]

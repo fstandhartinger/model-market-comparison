@@ -1,0 +1,32 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, version_guard",
+      "evidence": "version_guard states 'the problem must stay in the stated four-problem deck', but SPEC.md (SOURCE 3) says 'deck stays at three since 2026-11-09' and 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09'; SOURCE 2 leaderboard.json lists exactly three problems (01, 02, 03). A changed task set cannot silently reuse the identity (c1).",
+      "repair": "Rewrite version_guard to reference the current three-problem deck (01 glm52_fused_moe, 02 deepseek_nsa, 03 megaqwen_decode) and note problem 04 was retired 2026-11-09."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes cite current cross-check cells on problem 04: 'the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)', 'the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04', and 'Opus 5 reaches 196.10% on 04'. SOURCE 2 contains no problem 04 and none of these values; SOURCE 3/5 confirm problem 04 was retired 2026-11-09. These retained claims describe a retired task set as present on the live board.",
+      "repair": "Remove or explicitly date-stamp the problem-04 references as pre-retirement context (e.g. 'until the 2026-11-09 retirement'), so no current cross-check claim rests on cells the board no longer publishes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "c1 metric/unit/range: row's stated mapping (peak_fraction × 100 as the context column for problem 02 under SPEC.md's latency-anchored standing rule) matches SOURCE 3, and SOURCE 7's served-value scale (23 values, min 2.51, max 136.19) matches leaderboard fractions ×100 (0.0251 min, 1.3619 max), so unit 'percent of roofline' and range [0,null] (unbounded upper) agree with the served scale. The claim that peak_fraction is a percentage of a roofline for problem 02, while SPEC calls the roofline ceiling 'structurally unreadable' there, rests on the row's own choice to publish the context column; judged only on scale, it is consistent.",
+    "c2 version_status 'published': the maintainer publishes 'RTX_PRO_6000' as the hardware identifier (SOURCE 5, SOURCE 2 hardware.name), which the version copies; no dated release identifier for the board appears in the packet, so 'published' vs 'snapshot' depends on reading the hardware identifier as the maintainer's release identifier for the board.",
+    "Hash binding, transport and qualification checks are owner-executed; I cannot run them; not treated as missing evidence.",
+    "Notes' claims about excluded cells on 03 (kinetic suspect 0.0622, present in SOURCE 2 ranked_passes) were verified; claims about cells on 01/04 elsewhere in notes were only spot-checkable where the payload contains them."
+  ],
+  "missing_evidence": []
+}

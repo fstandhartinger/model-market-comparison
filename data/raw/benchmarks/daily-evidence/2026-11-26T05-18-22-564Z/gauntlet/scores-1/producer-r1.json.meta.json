@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-11-26T05:37:52.238Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.18,
+    "context": 1048576,
+    "aa_intelligence_index": 24.1,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 24.1,
+        "estimated_from_v4": 34.3
+      }
+    ]
+  },
+  "input_sha256": "039d1fa37076f67bd3ef0178bf014949fa907091f6866e56bb6d8d8012ff0186",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-26T05:34:41.180Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 25944
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 5977,
+    "completion_tokens": 3005,
+    "total_tokens": 8982,
+    "cost": 0.00117059481,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001182419,
+      "upstream_inference_prompt_cost": 0.000280919,
+      "upstream_inference_completions_cost": 0.0009015
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2804,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Wafer",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-26T05:38:10.945Z",
+  "output_sha256": "cd6c68a47b1a4fceee37c3e2d89b01a9a587e66843a70479d5b457e210c391d9"
+}

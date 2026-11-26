@@ -64564,6 +64564,48 @@
       "review_row": "vendor:DeepSeek-V3:longbench::2",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-25T05-18-15-922Z/gauntlet/scores-4/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "observation_sha256": "23ac50a74b39ff96564b57229d9322e3debb1c2ed519d98d2342f21dc855dcfc",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-2/review-r1.json",
+      "review_sha256": "86c1a6b7d201635c0f943fb4dcebb8f4eff1637b4b52d1897d9e4b73cf047ed3",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-2/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-2/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "observation_sha256": "b348060c7de0262d3af05c45d1ded1609d240d71803e0b5e657e92683ede350c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-3/review-r1.json",
+      "review_sha256": "0a34f5232ec415615a693afd88ef2e1e9818dc16387d2a862f648f82295805cd",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-3/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-3/packet-r1.md#vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "c4368f00b5672e7ced48110898e8918d732c823e106d4b6028a7ffdd8975b4ec",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-4/review-r1.json",
+      "review_sha256": "4fe6fd7b24e7681d7334f11c125960e313be787fc4672442771f32b839802fd2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-4/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-26T05-18-22-564Z/gauntlet/scores-4/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
     }
   ]
 }
