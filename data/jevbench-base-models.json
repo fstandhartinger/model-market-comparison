@@ -4417,6 +4417,18 @@
             "evidence": "The card at the measured revision names google/gemma-4-31B-it in base_model metadata."
           }
         ]
+      },
+      "minimodels_vision_one": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/minimodels-ai/vision-one/blob/a3e9376db22e0b31474c1eb41233735f3aa05b22/README.md",
+            "title": "Author model card (evaluated revision)",
+            "evidence": "The card at the evaluated revision names no base checkpoint (no base_model metadata); config.json declares the Gemma 4 architecture (Gemma4ForConditionalGeneration)."
+          }
+        ],
+        "note": "Base model: not named by the author. Architecture Gemma 4 (Gemma4ForConditionalGeneration, 31B-class dimensions per config.json)."
       }
     }
   }
