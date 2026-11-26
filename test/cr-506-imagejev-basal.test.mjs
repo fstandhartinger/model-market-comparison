@@ -52,14 +52,14 @@ test('CR-506 basal-omni-1.0-ultra scores are the reviewed ones and the knock-on 
   const core = row.tracks.core, cu = row.tracks['computer-use'];
   near(core.capability, 60.55); near(core.axes.intelligence, 51.47); near(core.axes.calibration, 69.64); near(core.axes.speed, 82.94);
   near(row.score, 40.91); near(core.cost.usd_per_1000, 0.0846, 0.00005);
-  near(cu.capability_raw, 85.26); near(cu.composite.score, 50.34); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
-  assert.equal(release.ranking.filter((r) => r.ranked).length, 65); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  near(cu.capability_raw, 85.27); near(cu.composite.score, 50.34); // CR-866: computer-use equating knock-on +0.011 pp.
+  assert.equal(release.ranking.filter((r) => r.ranked).length, 66); // CR-866: Minimodels Vision One added (ranked #34).
   const byRank = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank);
   assert.deepEqual(byRank.slice(10, 13).map((r) => r.key), ['kushal_gemma4_31b_it_autoloops', KEY, 'celeris_1_decision']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   // the two rows that swap places because of the equating knock-on
   const rank = (k) => release.ranking.find((r) => r.key === k).rank;
-  assert.equal(rank('cua_s1_4b'), 37); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
-  assert.equal(rank('bonsai_2_27b_pq2_0'), 36); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(rank('cua_s1_4b'), 38); // CR-866: new ranked row at #34 moves #34 and below down one.
+  assert.equal(rank('bonsai_2_27b_pq2_0'), 37); // CR-866: new ranked row at #34 moves #34 and below down one.
 });
 
 test('CR-506 basal stays inside both caps; CR-536 H2O-31B updates both top fives and basal is #13 of 54 in capped Capability', () => {
@@ -76,7 +76,7 @@ test('CR-506 basal stays inside both caps; CR-536 H2O-31B updates both top fives
   assert.deepEqual([...cu].sort((a, b) => b.tracks['computer-use'].composite.score - a.tracks['computer-use'].composite.score).slice(0, 5).map((r) => r.key),
     ['kettei_fat', 'kettei_chub', 'h2o_lightning_4b_v141_image', 'wity_1', 'wity_1_off']);
   assert.deepEqual([...cu].sort((a, b) => b.tracks['computer-use'].capability_raw - a.tracks['computer-use'].capability_raw).slice(0, 5).map((r) => r.key),
-    ['gpt6_luna', 'h2o_lightning_31b_image', 'jev_1_14_images', 'kettei_fat', 'jev_1_13_images']);
+    ['gpt6_luna', 'jev_1_14_images', 'h2o_lightning_31b_image', 'kettei_fat', 'minimodels_vision_one']); // CR-866: new row enters; Jev 1.14.0 + images and v1.0.7 swap via the equating knock-on.
 });
 
 test('CR-506 basal-omni-1.0-ultra has aggregate-only category and answered-coverage cells; the TypeSafe-20 gap is a recorded temporary exception', async () => {

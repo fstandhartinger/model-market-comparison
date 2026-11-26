@@ -9,10 +9,10 @@ test('ImageJevBench v0.3.0 release data keeps the reviewed roster and top five',
   const a = JSON.parse(await read('../data/imagejev-v03.json'));
   assert.equal(a.revision, 'v0.3.0');
   assert.equal(a.status, 'released');
-  assert.equal(a.ranking.length, 68); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(a.ranking.length, 69); // CR-866: Minimodels Vision One added (ranked); field re-equated.
   assert.equal(a.carried.length, 2); // CR-333 dated-carry re-run: only the two JevAny rows remain (source unavailable)
   const ranked = a.ranking.filter((row) => row.ranked).sort((x, y) => x.rank - y.rank);
-  assert.equal(ranked.length, 65); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(ranked.length, 66); // CR-866: Minimodels Vision One added (ranked); field re-equated.
   assert.deepEqual(ranked.slice(0, 5).map((row) => row.key),
     ['kettei_fat', 'wity_1', 'h2o_lightning_4b_v141_image', 'imajev_4b', 'kettei_chub']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   assert.ok(a.ranking.every((row) => !('predictions' in row) && !('gold' in row)), 'aggregate-only rows');

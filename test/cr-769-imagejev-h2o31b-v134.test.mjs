@@ -11,7 +11,8 @@ test('CR-769: new weights get a distinct ranked image row; published v1.0.7 keep
  assert.equal(row.name,'H2O-Lightning-31B v1.3.4 @c35ed950 (image)');
  const prev=a.ranking.find(r=>r.key==='h2o_lightning_31b_image');assert.equal(prev.name,'H2O-Lightning-31B v1.0.7 (image)');
  // Only the display name may differ from the pinned carried row (disambiguation next to v1.3.4).
- assert.equal(createHash('sha256').update(JSON.stringify({...prev,name:'H2O-Lightning-31B (image)'})).digest('hex'),'351a6d15f81cae15a2b367b49544ef55648de54acd3bf10240bf64e8184b4dd9');
+ // CR-866: re-pinned after the next field refresh; only field_median_gap_pp and source_sha256 moved (scores, penalties, composites and rank pinned below).
+ assert.equal(createHash('sha256').update(JSON.stringify({...prev,name:'H2O-Lightning-31B (image)'})).digest('hex'),'1f3315a545cfdde348d5259d22eeeec620ad3319fb1d1f859fff2ca19fbfbb35');
  for(const rows of [imageJevBoardSystems(a),imageJevCompareRows(a)])assert.equal(rows.find(r=>r.key===key).rank,7);
  assert.equal(row.tracks.core.capability,80.3429262759744);
  assert.equal(row.tracks.core.composite.score,50.964947278496204);
@@ -36,7 +37,7 @@ test('CR-769: pinned provenance, serving changes, one-read coverage and standard
 });
 
 test('CR-769: carried score artifact dates survive aggregate rewrites',()=>{
- const carried=a.ranking.filter(r=>r.key!==key).map(r=>[r.key,r.last_measured_utc]).sort((x,y)=>x[0]<y[0]?-1:x[0]>y[0]?1:0);
+ const carried=a.ranking.filter(r=>r.key!==key&&r.key!=='minimodels_vision_one').map(r=>[r.key,r.last_measured_utc]).sort((x,y)=>x[0]<y[0]?-1:x[0]>y[0]?1:0);
  assert.equal(carried.length,67);
  assert.equal(createHash('sha256').update(JSON.stringify(carried)).digest('hex'),'995f9dc1dfeb5b9389a6bd9b9c18993cef56477e2bde3fe15d62022a21ba39ac');
  assert.equal(row.last_measured_utc.slice(0,10),'2026-11-17');

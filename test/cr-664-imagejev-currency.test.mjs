@@ -29,7 +29,7 @@ test('CR-664: the newer-version rows promise no landing date and claim no measur
 
 test('CR-664: currency section remains on the live v0.3 board after CR-769 addition', () => {
   assert.equal(a.revision, 'v0.3.0');
-  assert.equal(a.ranking.length, 68);
+  assert.equal(a.ranking.length, 69); // CR-866
   assert.equal(a.ranking.find(r => r.key === 'sage_1_4_images').rank, 8);
 });
 
@@ -54,7 +54,7 @@ test('CR-664: two Jev alias strings remain reversible after CR-769 field refresh
     jev_1_13_images: [/Jev 1\.13\.0 \(TypeSafe's stable release when measured;[^)]*\) with images\./, "Jev 1.13.0 (TypeSafe's stable release, alias jev-latest) with images."],
     jev_1_14_images: [/Jev 1\.14\.0 \(TypeSafe's newest release, available since 14 Oct 2026; the aliases[^)]*\) with images\./, "Jev 1.14.0 (TypeSafe's newest release, available since 14 Oct 2026, alias jev-preview) with images."],
   };
-  const rows = JSON.parse(JSON.stringify(a.ranking)).filter(r => r.key !== 'h2o_lightning_4b_v141_d7f1_image');
+  const rows = JSON.parse(JSON.stringify(a.ranking)).filter(r => r.key !== 'h2o_lightning_4b_v141_d7f1_image' && r.key !== 'minimodels_vision_one'); // CR-866: pre-existing rows only
   for (const [k, [re, orig]] of Object.entries(revert)) {
     const r = rows.find(x => x.key === k);
     assert.match(r.measurement_source, re);
@@ -65,5 +65,6 @@ test('CR-664: two Jev alias strings remain reversible after CR-769 field refresh
   assert.equal(prev.name, 'H2O-Lightning-31B v1.0.7 (image)');
   prev.name = 'H2O-Lightning-31B (image)';
   const hash = createHash('sha256').update(JSON.stringify(rows)).digest('hex');
-  assert.equal(hash, 'c379e552448e323d3e059c1bbe34b8119cc631ec3beb391eebe4f8acd73e565e');
+  // CR-866: re-pinned after the new-ranked-row field refresh (equating-driven fields, ranks and source hashes only).
+  assert.equal(hash, '8dab446be146c843b60381fd5e8d0b34213fdf82695d1262650987cb083dde09');
 });

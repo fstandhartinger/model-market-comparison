@@ -29,7 +29,7 @@ test('CR-599: same-weight second read has scores and no rank in artifact and boa
 });
 
 test('CR-599: published reread stays unranked through the later new-weights field refresh', () => {
-  const existing = a.ranking.filter(r => r.key !== key);
+  const existing = a.ranking.filter(r => r.key !== key && r.key !== 'minimodels_vision_one'); // CR-866: rows that existed before the new ranked row
   assert.equal(existing.length, 67);
   // CR-769 display fix: only the v1.0.7 predecessor's display name changed; hash with it swapped back keeps the pin.
   assert.equal(existing.find(r => r.key === 'h2o_lightning_31b_image').name, 'H2O-Lightning-31B v1.0.7 (image)');
@@ -38,7 +38,8 @@ test('CR-599: published reread stays unranked through the later new-weights fiel
   // CR-769: re-pinned after the normal new-weights field refresh; all rows use current field metadata; predecessor and reread scores stay unchanged.
   // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
   // The alias-reversal pin in cr-664 is refreshed with the same later field update.
-  assert.equal(hash, '295864de68b3e6c352a1480159d6a75e62998a095154fb6274de3893d0729e2b');
+  // CR-866: re-pinned after the next normal field refresh (new ranked row); only equating-driven fields, ranks and source hashes moved (verify-release proof).
+  assert.equal(hash, '877f19440f9440a5ab34c4c2fae92abd0b9a93154a07de2500ce89591f4ec869');
   assert.equal(existing.filter(r => r.ranked).length, 65);
 });
 
