@@ -2725,6 +2725,29 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
         self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "api_key_in_linked_submission")
 
+    def test_approved_private_hold_hands_off_to_the_approver_and_clears_once_the_key_is_private(self):
+        # CR-867 (APUS 9d598cb6/af455634): the intake approver owns the access plan; no customer hold, own handoff text.
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', access_type='api_endpoint', "
+               f"access_instructions='API: https://example.invalid/v1/systemone' WHERE id='{rid}'")
+        state = ap.load_state(rid)
+        ap.set_operational_hold(state, "api_private_approved_needs_owner", transient=False, owner="fastlane-sla-20261004")
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+        self.assertIn("needs its intake owner", fx.boards[-1])
+        self.assertIn("sent no customer change request", fx.boards[-1])
+        self.assertNotIn("already with us", fx.boards[-1])
+        self.assertNotIn("measurement owner", fx.boards[-1])
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+        key_json = json.dumps({"endpoint": "https://example.invalid/v1/systemone", "api_key": "k" * 24})
+        ap.sql(f"UPDATE {ap.TABLE} SET access_instructions='{key_json}' WHERE id='{rid}'")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIsNone(ap.load_state(rid).get("operational_hold"))
+        self.assertGreater(len(fx.started), starts)
+
     def test_key_intake_hold_stays_while_the_key_is_not_yet_private(self):
         rid = insert_order()
         fx = FakeEffects()
