@@ -166,11 +166,13 @@ class PrePreparationTests(unittest.TestCase):
         return {"id": "27387658-7b43-4ac0-bcc7-716b12f5cec7", "access_type": access_type, "model_name": "Jini 27B",
                 "access_instructions": access}
 
-    def run_hook(self, row, probe_result, linked_key=None):
+    def run_hook(self, row, probe_result, linked_key=None, approver=None):
         linked = {"side_effect": linked_key} if isinstance(linked_key, Exception) else {"return_value": linked_key}
+        owner = {"side_effect": approver} if isinstance(approver, Exception) else {"return_value": approver}
         with mock.patch.object(he, "fetch_openrouter_models") as fetch, \
                 mock.patch.object(he, "probe_api_access", return_value=probe_result) as probe, \
                 mock.patch.object(ap, "linked_submission_key_ref", **linked) as self.linked, \
+                mock.patch.object(ap, "approved_private_intake_owner", **owner) as self.approver, \
                 mock.patch.object(ap, "update_row", return_value=True) as update:
             held = ap.host_pre_preparation(row["id"], row, self.job, self.state)
         return held, fetch, probe, update
@@ -258,6 +260,53 @@ class PrePreparationTests(unittest.TestCase):
             self.run_hook(self.row(JINI_TEXT), result, linked_key="f79c7f78")
             self.linked.assert_not_called()
 
+    def test_agent_approved_private_endpoint_becomes_an_owner_hold_not_a_customer_change_request(self):
+        # APUS 9d598cb6/af455634 (26 Nov 2026): intake said "we never ask for API keys in the form", an agent approved the
+        # private endpoint with its own plan, and right after payment the pickup drafted a change request asking for a key.
+        held, _fetch, _probe, update = self.run_hook(self.row(JINI_TEXT),
+                                                     {"result": "key_required", "http_status": 401, "at": "t"},
+                                                     approver="fastlane-sla-20261004")
+        self.assertTrue(held)
+        update.assert_not_called()  # no customer hold: the 48 h clock keeps running
+        self.approver.assert_called_once_with(self.row(JINI_TEXT)["id"])
+        hold = self.state["operational_hold"]
+        self.assertEqual(hold["reason"], "api_private_approved_needs_owner")
+        self.assertFalse(hold["transient"])
+        self.assertEqual(hold["owner"], "fastlane-sla-20261004")  # wake_owner addresses the approver
+        self.assertIn("api_private_approved_needs_owner", ap.HOLD_REASON_LABELS)
+        self.assertIn("api_private_approved_needs_owner", ap.SHORT_HOLD_LABELS)
+        self.assertIn("api_private_approved_needs_owner", ap.KEY_INTAKE_HOLD_REASONS)  # clears once the key is private
+        self.assertFalse((self.job / "review/CHANGES-REQUESTED.json").exists())
+        self.assertIn("fastlane-sla-20261004", (self.job / "STATE.md").read_text())
+
+    def test_approved_private_endpoint_without_a_valid_approver_name_still_holds_without_owner(self):
+        held, _fetch, _probe, update = self.run_hook(self.row(JINI_TEXT), {"result": "key_required", "http_status": 401},
+                                                     approver="")
+        self.assertTrue(held)
+        update.assert_not_called()
+        self.assertEqual(self.state["operational_hold"]["reason"], "api_private_approved_needs_owner")
+        self.assertNotIn("owner", self.state["operational_hold"])
+        self.assertFalse((self.job / "review/CHANGES-REQUESTED.json").exists())
+
+    def test_linked_key_wins_over_the_approved_private_route(self):
+        self.run_hook(self.row(JINI_TEXT), {"result": "key_required", "http_status": 401},
+                      linked_key="f79c7f78", approver="fastlane-sla-20261004")
+        self.assertEqual(self.state["operational_hold"]["reason"], "api_key_in_linked_submission")
+        self.approver.assert_not_called()
+
+    def test_pasted_key_wins_over_the_approved_private_route(self):
+        text = JINI_TEXT.replace("JEV_API_KEY=", "JEV_API_KEY=mx_" + "Q7" * 15)
+        self.run_hook(self.row(text), {"result": "key_required", "http_status": 401}, approver="fastlane-sla-20261004")
+        self.assertEqual(self.state["operational_hold"]["reason"], "api_key_needs_private_intake")
+        self.approver.assert_not_called()
+
+    def test_approver_lookup_error_holds_nothing_and_requests_nothing(self):
+        with self.assertRaises(ap.PickupError):
+            self.run_hook(self.row(JINI_TEXT), {"result": "key_required", "http_status": 401},
+                          approver=ap.PickupError("database operation failed"))
+        self.assertNotIn("operational_hold", self.state)
+        self.assertFalse((self.job / "review/CHANGES-REQUESTED.json").exists())
+
     def test_unknown_probe_outcome_changes_nothing(self):
         held, _fetch, _probe, update = self.run_hook(self.row(JINI_TEXT), {"result": "unknown"})
         self.assertFalse(held)
@@ -289,6 +338,36 @@ class LinkedSubmissionKeyTests(unittest.TestCase):
     def test_bad_request_id_never_reaches_sql(self):
         with mock.patch.object(ap, "sql") as sql, self.assertRaises(ap.PickupError):
             ap.linked_submission_key_ref("x' OR TRUE --")
+        sql.assert_not_called()
+
+
+class ApprovedPrivateIntakeOwnerTests(unittest.TestCase):
+    RID = "af455634-f05b-48f5-98f6-7ed5bfa1d7c5"
+
+    def lookup(self, output):
+        with mock.patch.object(ap, "sql", return_value=output) as sql:
+            return ap.approved_private_intake_owner(self.RID), sql.call_args.args[0]
+
+    def test_owner_only_for_an_approved_api_private_intake(self):
+        approved = {"code": "api_private", "approved": True, "by": "fastlane-sla-20261004"}
+        self.assertEqual(self.lookup(json.dumps(approved))[0], "fastlane-sla-20261004")
+        self.assertEqual(self.lookup(json.dumps({**approved, "by": None}))[0], "")
+        self.assertEqual(self.lookup(json.dumps({**approved, "by": "x; rm -rf /"}))[0], "")
+        self.assertIsNone(self.lookup(json.dumps({**approved, "approved": False}))[0])
+        self.assertIsNone(self.lookup(json.dumps({**approved, "code": "image_open_weights"}))[0])
+        self.assertIsNone(self.lookup(json.dumps({**approved, "code": None}))[0])
+        self.assertIsNone(self.lookup("")[0])
+
+    def test_reads_only_intake_fields_for_this_order(self):
+        _value, statement = self.lookup(json.dumps({"code": "api_private", "approved": True, "by": "a-b-c"}))
+        self.assertIn("r.intake_check->>'code'", statement)
+        self.assertIn(f"r.id='{self.RID}'::uuid", statement)
+        self.assertNotIn("access_instructions", statement)
+        self.assertNotIn("api_key", statement)
+
+    def test_bad_request_id_never_reaches_sql(self):
+        with mock.patch.object(ap, "sql") as sql, self.assertRaises(ap.PickupError):
+            ap.approved_private_intake_owner("x' OR TRUE --")
         sql.assert_not_called()
 
 

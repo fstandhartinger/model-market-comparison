@@ -2171,6 +2171,7 @@ HOLD_REASON_LABELS = {
     "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
     "api_key_in_linked_submission": ("the API endpoint needs a key that the customer already gave in the encrypted submit field; an agent must import it into private intake", "der API-Endpunkt braucht einen Schlüssel, den der Kunde schon im verschlüsselten Formularfeld angegeben hat; ein Agent muss ihn in die private Ablage übernehmen"),
     "api_key_needs_private_intake": ("the API endpoint needs a key and the order text seems to contain one; an agent must move it into private intake", "der API-Endpunkt braucht einen Schlüssel und der Auftragstext scheint einen zu enthalten; ein Agent muss ihn in die private Ablage übernehmen"),
+    "api_private_approved_needs_owner": ("an agent approved this private API endpoint at intake and now owns getting the evaluation key or the agreed result", "ein Agent hat diesen privaten API-Endpunkt bei der Annahme freigegeben und kümmert sich jetzt um den Messschlüssel oder das vereinbarte Ergebnis"),
     "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
     "release_result_rejected": ("the prepared result failed the independent recomputation and an agent must fix it", "das vorbereitete Ergebnis hat die unabhängige Nachrechnung nicht bestanden und ein Agent muss es korrigieren"),
 }
@@ -2212,11 +2213,14 @@ SHORT_HOLD_LABELS = {
     "evaluation_exhausted": "automatic evaluation attempts failed",
     "api_key_in_linked_submission": "the customer's submitted API key must be imported",
     "api_key_needs_private_intake": "a pasted API key must move into private intake",
+    "api_private_approved_needs_owner": "the intake owner must arrange the private endpoint access",
 }
 
 # Owner holds for a customer key that is already with us: they clear by themselves on the next cycle once the key is in
 # private host intake (structured access_instructions with api_key), with no clock change (CR-863).
-KEY_INTAKE_HOLD_REASONS = frozenset({"api_key_in_linked_submission", "api_key_needs_private_intake"})
+# CR-867: the owner hold for an agent-approved private endpoint clears the same way once the key is private.
+KEY_INTAKE_HOLD_REASONS = frozenset({"api_key_in_linked_submission", "api_key_needs_private_intake",
+                                     "api_private_approved_needs_owner"})
 
 
 def card_context_line(row: dict[str, Any], status: str) -> str:
@@ -2337,7 +2341,19 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
     elif not step_done(state, handoff_step := ("key_intake_handoff" if reason in KEY_INTAKE_HOLD_REASONS
                                                 else "operational_handoff")):
         # CR-863: the key-import handoff has its own step, so an earlier or later handoff of another hold never mutes it.
-        if reason in KEY_INTAKE_HOLD_REASONS:
+        if reason == "api_private_approved_needs_owner":
+            # CR-867: the intake approver knew the endpoint is private and owns the access plan (APUS 9d598cb6/af455634).
+            text = (f"Fast-lane order {order_ref(rid)} is paid and needs its intake owner ({reason}): you approved this "
+                    "private API endpoint at intake, it answers 401/403 without a key, and no key is held. Follow your "
+                    "intake plan: get a revocable evaluation key into private host intake (write access_instructions as "
+                    "JSON with endpoint and api_key, never print it; the next pickup cycle clears this hold and starts "
+                    "the evaluation), or fulfil the order the agreed way and record the delivery. If the plan needs a "
+                    "key from the customer: check `bh-submission` first (a key sent later through /submit is not "
+                    f"re-detected while this hold is open), else set `jevbench-autopickup hold {rid} --reason "
+                    "customer_access` (pauses the clock) and send the key request through the approved transactional "
+                    "mail path. The pickup sent no customer change request. Payment deadline "
+                    f"{deadline_for(row).isoformat()} continues. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.")
+        elif reason in KEY_INTAKE_HOLD_REASONS:
             # CR-863: say exactly what to do; "measurement owner / runtime contract" sent owners to the runner instead.
             ref = (state.get("operational_hold") or {}).get("submission_ref")
             text = (f"Fast-lane order {order_ref(rid)} needs a key import ({reason}): the customer's API key is already "
@@ -7003,8 +7019,10 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
     The preparer is read-only and offline, so the host records a dated OpenRouter price snapshot and, for an
     API order without a host-held key, one credential-free synthetic probe. A key the endpoint demands but the
     order lacks goes to an owner hold when the linked /submit row already holds the customer's encrypted key (CR-863),
-    else straight to the customer change request instead of burning three preparations; text that seems to carry a
-    pasted key becomes an agent intake hold. Both owner holds clear by themselves once the key is in private intake. No preparation attempt is consumed here."""
+    else, when an agent approved the order at intake with the private-API finding, to an owner hold for that approver
+    (CR-867), else straight to the customer change request instead of burning three preparations; text that seems to
+    carry a pasted key becomes an agent intake hold. All these owner holds clear by themselves once the key is in private
+    intake. No preparation attempt is consumed here."""
     try:
         host_evidence.fetch_openrouter_models(job_dir)
     except OSError as exc:
@@ -7046,8 +7064,37 @@ def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: di
                               "access text seems to contain one. An agent must move it into private host intake "
                               "before any preparation; no preparation attempt was used.\n")
         return True
+    approver = approved_private_intake_owner(rid)
+    if approver is not None:
+        # CR-867 (APUS 9d598cb6/af455634, 26 Nov 2026): the intake form told this customer "we never ask for API keys in
+        # the form; our team will check your endpoint", and an agent approved the order knowing the endpoint is private.
+        # A change request asking for a key right after payment contradicts that promise and the approver's plan, so the
+        # approver owns the next step. Our work: no customer hold, the 48 h clock keeps running, no customer mail.
+        extra = {"owner": approver} if approver else {}
+        set_operational_hold(state, "api_private_approved_needs_owner", transient=False, **extra)
+        append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key, none is held, and "
+                              "an agent approved this private endpoint at intake"
+                              + (f" ({approver})" if approver else "") + ". Owner step: get a revocable evaluation key into "
+                              "private host intake (access_instructions as JSON with endpoint and api_key, never print "
+                              "it) or fulfil the order the agreed way. No customer change request; no preparation "
+                              "attempt was used.\n")
+        return True
     fail_api_key_missing(rid, job_dir, access["endpoint"], probe.get("http_status"))
     return True
+
+
+def approved_private_intake_owner(rid: str) -> str | None:
+    """CR-867: "" or the approving agent's job name when an agent approved this order at intake with the private-API
+    finding (intake_check code api_private), else None.
+
+    Reads the intake code, approval time and approver only. A database error propagates (PickupError), so the pickup
+    retries later instead of sending the customer a change request the intake already ruled out."""
+    value = sql_json(f"SELECT json_build_object('code', r.intake_check->>'code', 'approved', r.intake_approved_at IS NOT NULL, "
+                     f"'by', r.intake_approved_by)::text FROM {TABLE} AS r WHERE r.id='{request_id(rid)}'::uuid")
+    if not value or value.get("code") != "api_private" or value.get("approved") is not True:
+        return None
+    by = value.get("by")
+    return by if isinstance(by, str) and OWNER_JOB_RE.fullmatch(by) else ""
 
 
 def linked_submission_key_ref(rid: str) -> str | None:
