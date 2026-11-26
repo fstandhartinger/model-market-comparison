@@ -1,0 +1,158 @@
+{
+ "full_hashes_verified_before_read": {
+  "r247/decibel/DECIBEL30B-SCORES-R247.json": "120dfe75e6ac219b3f9791a15866b7109cf9334ebb74e361b5b0505f4535cdd9",
+  "r247/turion/TURION4B-SCORES-R247.json": "b1fb015bf3c69eb69f20f626487908574bdd70b15b3718148d78c73a3aec0e28",
+  "r247/wepm/WEPM4B-SCORES-R247.json": "b2d40a1a8bff3940678fd1bdcd11ba4a51107e86dbf4cf726f10b3d12f08c19d",
+  "r251/apus/NON-COST-SUMMARY-apus-reflex2-1.json": "a1f7f115cd478a680152ddda313cbbaa298663261514787fefd9f19c95a194a8",
+  "r251/apus/NON-COST-SUMMARY-apus-reflex2-2.json": "76267763f31ce3f9e49f8cbff733f715991f66c7a2e07c6817f9a82213253c3e",
+  "r251/apus/score/REGISTRY.json": "75d1cc6c8545535ba487ed86ac10790e2306b6ee0f27f444350a28d76d8b3ebc",
+  "r251/apus/score/out-v17-share/jevbench-v1.6.0-results.json": "b0582e629d94f1e9a885e1c73f1ccc6b8422d68eb061a67c75afa7dbd60231a7",
+  "r253/synaps/SYNAPS27-SCORES-R253.json": "5556a31538e47aa8d482ad8c2038b2258a46d91671e4e0f59349339f666c67d1",
+  "r254/mica/MICA01-SCORES-R254.json": "12fab53a891b8a23f27f14fd7bbf5306934b7c0bf979b560f60f66fa0c93db98",
+  "r256/decision-4b-v16/DECISION-4B-V16-SCORES-R256.json": "7f28a8828836c1174de403ad74c143b81e04f2de0992b537176255e0fc92e625"
+ },
+ "rows": {
+  "apus-reflex2-1": {
+   "A": null,
+   "artifact_sha256": "a1f7f115cd478a680152ddda313cbbaa298663261514787fefd9f19c95a194a8",
+   "equated": {
+    "calibration": 88.61500999123031,
+    "capability": 80.28528859964894,
+    "how": "d1027 is anchor-equated (4 anchors); displayed value = raw + frozen offset, clipped 0..100, the same rule every d1027 row on the live board uses",
+    "intelligence": 71.95556720806755,
+    "is_equated": true,
+    "offset": {
+     "C": -1.8542447151797177,
+     "I": -2.884891186577587
+    },
+    "offset_ci95": {
+     "C": [
+      -5.447551660176162,
+      1.9718407968151896
+     ],
+     "I": [
+      -5.851030683979731,
+      1.0608488496147923
+     ]
+    },
+    "raw_ci95_not_shifted": {
+     "C": [
+      87.15476764004183,
+      91.3860491698107
+     ],
+     "I": [
+      70.09950018722868,
+      78.67637834761932
+     ],
+     "capability": [
+      79.30333938515369,
+      84.19667590605998
+     ]
+    },
+    "source": "v1.8.19 addendum proof.equating (unchanged in live v1.8.21)"
+   },
+   "raw_status": {
+    "200": 1500
+   },
+   "usd_per_1000": null
+  },
+  "apus-reflex2-2": {
+   "A": null,
+   "artifact_sha256": "76267763f31ce3f9e49f8cbff733f715991f66c7a2e07c6817f9a82213253c3e",
+   "equated": {
+    "calibration": 89.46945150388125,
+    "capability": 82.2030101494339,
+    "how": "d1027 is anchor-equated (4 anchors); displayed value = raw + frozen offset, clipped 0..100, the same rule every d1027 row on the live board uses",
+    "intelligence": 74.93656879498654,
+    "is_equated": true,
+    "offset": {
+     "C": -1.8542447151797177,
+     "I": -2.884891186577587
+    },
+    "offset_ci95": {
+     "C": [
+      -5.447551660176162,
+      1.9718407968151896
+     ],
+     "I": [
+      -5.851030683979731,
+      1.0608488496147923
+     ]
+    },
+    "raw_ci95_not_shifted": {
+     "C": [
+      88.0259461471193,
+      92.04679100728913
+     ],
+     "I": [
+      73.29345264245099,
+      81.70702515308587
+     ],
+     "capability": [
+      81.57543591393697,
+      86.17140833856166
+     ]
+    },
+    "source": "v1.8.19 addendum proof.equating (unchanged in live v1.8.21)"
+   },
+   "raw_status": {
+    "200": 1495,
+    "422": 5
+   },
+   "usd_per_1000": null
+  },
+  "decibel-30b-a3b-v0": {
+   "A": 47.53324421429385,
+   "artifact_sha256": "120dfe75e6ac219b3f9791a15866b7109cf9334ebb74e361b5b0505f4535cdd9",
+   "raw_status": {
+    "200": 1495,
+    "422": 5
+   },
+   "usd_per_1000": 0.006190742037976662
+  },
+  "decision-4b-v16": {
+   "A": 63.826352894131944,
+   "artifact_sha256": "7f28a8828836c1174de403ad74c143b81e04f2de0992b537176255e0fc92e625",
+   "raw_status": {
+    "200": 1500
+   },
+   "usd_per_1000": 0.006948810033345587
+  },
+  "mica-v01-4b": {
+   "A": 30.492155609460635,
+   "artifact_sha256": "12fab53a891b8a23f27f14fd7bbf5306934b7c0bf979b560f60f66fa0c93db98",
+   "raw_status": {
+    "200": 1495,
+    "422": 5
+   },
+   "usd_per_1000": 0.004368900225528832
+  },
+  "synaps-decision-1.0-27b-preview": {
+   "A": 68.59194043137414,
+   "artifact_sha256": "5556a31538e47aa8d482ad8c2038b2258a46d91671e4e0f59349339f666c67d1",
+   "raw_status": {
+    "200": 1500
+   },
+   "usd_per_1000": 0.03402173385114387
+  },
+  "turion-jev-4b": {
+   "A": 43.79518579976182,
+   "artifact_sha256": "b1fb015bf3c69eb69f20f626487908574bdd70b15b3718148d78c73a3aec0e28",
+   "raw_status": {
+    "200": 1495,
+    "422": 5
+   },
+   "usd_per_1000": 0.011459988622511174
+  },
+  "wepocketmodel1.0-4b": {
+   "A": 50.79004612985754,
+   "artifact_sha256": "b2d40a1a8bff3940678fd1bdcd11ba4a51107e86dbf4cf726f10b3d12f08c19d",
+   "raw_status": {
+    "200": 1495,
+    "422": 5
+   },
+   "usd_per_1000": 0.0038123971973366526
+  }
+ },
+ "status": "PASS"
+}

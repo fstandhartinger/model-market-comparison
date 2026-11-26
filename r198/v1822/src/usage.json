@@ -1,0 +1,146 @@
+{
+ "apus-reflex2-1": {
+  "cost_all": null,
+  "ref": {
+   "authority": "unpriced hosted API"
+  }
+ },
+ "apus-reflex2-2": {
+  "cost_all": null,
+  "ref": {
+   "authority": "unpriced hosted API"
+  }
+ },
+ "decibel-30b-a3b-v0": {
+  "active_b": 3,
+  "architecture_class": "moe",
+  "binding": "gpu",
+  "cost_all": 0.006190742037976662,
+  "family": "qwen",
+  "gpu_all": 0.006190742037976662,
+  "gpu_rate_per_m": 0.015909705139435223,
+  "input_tokens": 583676,
+  "list_all": null,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": null,
+   "listing": null,
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": null
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 37999.666666666664
+ },
+ "decision-4b-v16": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.006948810033345587,
+  "family": "qwen",
+  "gpu_all": 0.006948810033345587,
+  "gpu_rate_per_m": 0.009826306250524048,
+  "input_tokens": 1060746,
+  "list_all": 0.021214919999999998,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.030000000000000002,
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.15
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 61525.0
+ },
+ "mica-v01-4b": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.004368900225528832,
+  "family": "qwen",
+  "gpu_all": 0.004368900225528832,
+  "gpu_rate_per_m": 0.009826306250524048,
+  "input_tokens": 666919,
+  "list_all": 0.013338380000000004,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.030000000000000002,
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.15
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 61525.0
+ },
+ "synaps-decision-1.0-27b-preview": {
+  "active_b": 27,
+  "architecture_class": "dense",
+  "binding": "gpu",
+  "cost_all": 0.03402173385114387,
+  "family": "qwen",
+  "gpu_all": 0.03402173385114387,
+  "gpu_rate_per_m": 0.05139534915102373,
+  "input_tokens": 991442,
+  "list_all": 0.28060376,
+  "n_items": 1500,
+  "output_tokens": 1500,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.42,
+   "listing": "qwen/qwen3.8-27b",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 3.0
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 11763.0
+ },
+ "turion-jev-4b": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.011459988622511174,
+  "family": "qwen",
+  "gpu_all": 0.011459988622511174,
+  "gpu_rate_per_m": 0.009826306250524048,
+  "input_tokens": 1749384,
+  "list_all": 0.03498768000000001,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.030000000000000002,
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.15
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 61525.0
+ },
+ "wepocketmodel1.0-4b": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "binding": "gpu",
+  "cost_all": 0.0038123971973366526,
+  "family": "qwen",
+  "gpu_all": 0.0038123971973366526,
+  "gpu_rate_per_m": 0.009826306250524048,
+  "input_tokens": 581968,
+  "list_all": 0.011639360000000001,
+  "n_items": 1500,
+  "output_tokens": 0,
+  "ref": {
+   "authority": "frozen market reference and v1.8 GPU-time min",
+   "in": 0.030000000000000002,
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "out": 0.15
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "throughput": 61525.0
+ }
+}

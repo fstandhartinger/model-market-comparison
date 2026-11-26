@@ -1275,10 +1275,15 @@
         "note": "No verified public base-model disclosure recorded for this unmeasured evaluated variant."
       },
       "mica-v01-4b": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded for this unmeasured evaluated variant."
+        "label": "Qwen/Qwen3.5-4B",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3.5-4B in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/sky7350/Mica-v0.1-4B"
+          }
+        ],
+        "status": "disclosed"
       },
       "openjev-razorback16": {
         "label": "undisclosed",
@@ -3822,6 +3827,61 @@
             "evidence": "The pinned model card declares base model google/gemma-4-E4B-it."
           }
         ]
+      },
+      "decibel-30b-a3b-v0": {
+        "label": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3-Omni-30B-A3B-Instruct in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/decagon-ai/Decibel-30B-A3B-v0"
+          }
+        ],
+        "status": "disclosed"
+      },
+      "decision-4b-v16": {
+        "label": "Qwen/Qwen3.5-4B",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3.5-4B in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/flymy-ai/decision-4b-v1.6"
+          }
+        ],
+        "status": "disclosed"
+      },
+      "synaps-decision-1.0-27b-preview": {
+        "label": "Qwen/Qwen3.8-27B",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3.8-27B in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/Synaptivo/Synaps-Decision-1.0-27B-Preview"
+          }
+        ],
+        "status": "disclosed"
+      },
+      "turion-jev-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3.5-4B in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/turion-ai/turion-jev-4b"
+          }
+        ],
+        "status": "disclosed"
+      },
+      "wepocketmodel1.0-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "sources": [
+          {
+            "evidence": "Base Qwen/Qwen3.5-4B in the frozen evaluated configuration.",
+            "title": "Pinned model card and reviewed submission",
+            "url": "https://huggingface.co/tencent/WePocketModel1.0-4B"
+          }
+        ],
+        "status": "disclosed"
       }
     },
     "imagejevbench": {

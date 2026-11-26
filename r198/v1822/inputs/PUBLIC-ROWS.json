@@ -1,0 +1,148 @@
+{
+ "apus-reflex2-1": {
+  "author": "APUS (submitter)",
+  "disclosure": "All 1,500 requests returned HTTP 200. Five long-context answers took longer than the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200. Five long-context answers took longer than the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator.",
+   "Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank."
+  ],
+  "display": "APUS-Reflex2.1",
+  "endpoint_condition": "Hosted API with native option probabilities.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": null,
+  "notes": "All 1,500 requests returned HTTP 200. Five long-context answers took longer than the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank.",
+  "repo": null
+ },
+ "apus-reflex2-2": {
+  "author": "APUS (submitter)",
+  "disclosure": "1,495 of 1,500 requests returned HTTP 200; the endpoint refused five long inputs. They count as wrong answers and all 1,500 items remain in the denominator. Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank.",
+  "disclosures": [
+   "1,495 of 1,500 requests returned HTTP 200; the endpoint refused five long inputs. They count as wrong answers and all 1,500 items remain in the denominator.",
+   "Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank."
+  ],
+  "display": "APUS_Reflex2.2",
+  "endpoint_condition": "Hosted API with native option probabilities.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "1,495 of 1,500 requests returned HTTP 200; the endpoint refused five long inputs. They count as wrong answers and all 1,500 items remain in the denominator. Hosted API. Not priced: no public tariff or parameter count was stated, so there is no cost axis, composite score or rank.",
+  "repo": null
+ },
+ "decibel-30b-a3b-v0": {
+  "author": "Decagon (decagon-ai)",
+  "disclosure": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points). Weights Apache-2.0; author-reported training data includes non-commercially licensed (e.g. CC BY-NC-SA) and share-alike/ODbL sources; check data licences before commercial use. All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points).",
+   "Weights Apache-2.0; author-reported training data includes non-commercially licensed (e.g. CC BY-NC-SA) and share-alike/ODbL sources; check data licences before commercial use.",
+   "All 1,500 items remain in the denominator.",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "Decibel-30B-A3B-v0 (Decagon, Qwen3-Omni-30B-A3B thinker fine-tune, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points). Weights Apache-2.0; author-reported training data includes non-commercially licensed (e.g. CC BY-NC-SA) and share-alike/ODbL sources; check data licences before commercial use. All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/decagon-ai/Decibel-30B-A3B-v0"
+ },
+ "decision-4b-v16": {
+  "author": "FlyMyJev (flymy.ai)",
+  "disclosure": "All 1,500 requests returned HTTP 200 with native option probabilities. Weights Apache-2.0 with an explicit evaluation-and-publication permission. One forward pass covers up to 26 options; larger option sets would be read out in two levels (none occur in this draw). Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200 with native option probabilities.",
+   "Weights Apache-2.0 with an explicit evaluation-and-publication permission.",
+   "One forward pass covers up to 26 options; larger option sets would be read out in two levels (none occur in this draw).",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "Decision 4B v1.6 (FlyMyJev, rank-16 LoRA on Qwen3.5-4B, in-process adapter, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": null,
+  "notes": "All 1,500 requests returned HTTP 200 with native option probabilities. Weights Apache-2.0 with an explicit evaluation-and-publication permission. One forward pass covers up to 26 options; larger option sets would be read out in two levels (none occur in this draw). Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/flymy-ai/decision-4b-v1.6"
+ },
+ "mica-v01-4b": {
+  "author": "akivet (HF sky7350)",
+  "disclosure": "Five of 1,500 inputs exceeded this serving path's 8,192-token window and were refused before inference; they count as wrong answers and all 1,500 items remain in the denominator. Weights Apache-2.0 (Qwen3.5-4B base). Author-reported: half of the public hard set was used in recipe and LoRA-scale selection; item text was excluded from training. Measured latency includes the serving bridge's prompt and label parity checks, so its overhead differs from the earlier serving path. Probabilities use the author's repository calibration (temperature 1.124473). Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "Five of 1,500 inputs exceeded this serving path's 8,192-token window and were refused before inference; they count as wrong answers and all 1,500 items remain in the denominator.",
+   "Weights Apache-2.0 (Qwen3.5-4B base).",
+   "Author-reported: half of the public hard set was used in recipe and LoRA-scale selection; item text was excluded from training.",
+   "Measured latency includes the serving bridge's prompt and label parity checks, so its overhead differs from the earlier serving path.",
+   "Probabilities use the author's repository calibration (temperature 1.124473).",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "Mica v0.1 4B (akivet, LoRA on Qwen3.5-4B, BF16 GGUF via llama.cpp, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "Five of 1,500 inputs exceeded this serving path's 8,192-token window and were refused before inference; they count as wrong answers and all 1,500 items remain in the denominator. Weights Apache-2.0 (Qwen3.5-4B base). Author-reported: half of the public hard set was used in recipe and LoRA-scale selection; item text was excluded from training. Measured latency includes the serving bridge's prompt and label parity checks, so its overhead differs from the earlier serving path. Probabilities use the author's repository calibration (temperature 1.124473). Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/sky7350/Mica-v0.1-4B"
+ },
+ "synaps-decision-1.0-27b-preview": {
+  "author": "Synaptivo (GitHub PapeMati98)",
+  "disclosure": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. LoRA adapter on Qwen/Qwen3.8-27B. Author-reported: calibration on the author's own sets regressed after adaptation (ECE 0.0090 to 0.0213); no recalibration was applied here. Author's training data: 4,000 procedural synthetic items, no JevBench items. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator.",
+   "LoRA adapter on Qwen/Qwen3.8-27B.",
+   "Author-reported: calibration on the author's own sets regressed after adaptation (ECE 0.0090 to 0.0213); no recalibration was applied here.",
+   "Author's training data: 4,000 procedural synthetic items, no JevBench items.",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "Synaps-Decision-1.0-27B-Preview (Synaptivo, LoRA on Qwen3.8-27B merged into the base, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": null,
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule; all 1,500 items remain in the denominator. LoRA adapter on Qwen/Qwen3.8-27B. Author-reported: calibration on the author's own sets regressed after adaptation (ECE 0.0090 to 0.0213); no recalibration was applied here. Author's training data: 4,000 procedural synthetic items, no JevBench items. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/Synaptivo/Synaps-Decision-1.0-27B-Preview"
+ },
+ "turion-jev-4b": {
+  "author": "turion-ai",
+  "disclosure": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.002 Speed points). All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.002 Speed points).",
+   "All 1,500 items remain in the denominator.",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "Turion-JEV-4B (turion-ai, Qwen3.5-4B fine-tune, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.002 Speed points). All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/turion-ai/turion-jev-4b"
+ },
+ "wepocketmodel1.0-4b": {
+  "author": "Tencent (WeChat AI)",
+  "disclosure": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points). All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "disclosures": [
+   "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points).",
+   "All 1,500 items remain in the denominator.",
+   "Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending."
+  ],
+  "display": "WePocketModel1.0-4B (Tencent WeChat AI, Qwen3.5-4B based, learned decision slot, self-hosted)",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1495,
+   "422": 5
+  },
+  "licence": null,
+  "notes": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points). All 1,500 items remain in the denominator. Not yet equated to the reference scale; shown unranked while anchor runs for this draw are pending.",
+  "repo": "https://huggingface.co/tencent/WePocketModel1.0-4B"
+ }
+}
