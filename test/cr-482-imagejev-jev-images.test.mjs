@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const release = JSON.parse(await read('../data/imagejev-v03.json'));
@@ -67,8 +68,8 @@ test('CR-482 the page tags the preview rows and keeps the Jev reference wording 
 test('CR-482 every Jev + images row has aggregate-only category cells for all image types and use cases', () => {
   for (const key of KEYS) {
     const cells = release.categories.systems[key];
-    assert.equal(Object.keys(cells.capabilities).length, 14);
-    assert.equal(Object.keys(cells.usecases).length, 5);
+    assert.equal(Object.keys(cells.capabilities).length + withheldCells(release.categories, key, 'capabilities').length, 14);
+    assert.equal(Object.keys(cells.usecases).length + withheldCells(release.categories, key, 'usecases').length, 5);
     const total = Object.values(cells.usecases).reduce((n, c) => n + c[1], 0);
     assert.equal(total, 600);
   }

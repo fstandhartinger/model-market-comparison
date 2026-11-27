@@ -9,6 +9,8 @@ export type CompareCategories = {
   missingDims?: Record<string, Record<string, string>>;
   /** v1.8.10: live boards draw published cells under radarMinN as marked low-sample points. */
   drawLowN?: boolean;
+  /** ImageJevBench v0.3 sample floor (27 Nov 2026): per row and dimension, the withheld cells and the last measurement date. */
+  withheldNotes?: Record<string, Record<string, string>>;
 };
 export const JEVBENCH_CATEGORY_ARTIFACT: string;
 export const L3_EXPOSURE_NOTES: Record<string, string>;

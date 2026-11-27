@@ -56550,14 +56550,14 @@
   "n_systems": 69,
   "categories": {
     "revision": "v0.3.0",
-    "minN": 15,
+    "minN": 30,
     "radarMinN": 30,
     "metric": "Chance-corrected accuracy (0 = chance, 100 = perfect) over the category's items, public and sealed pooled. Not part of the score; compare systems within a category.",
     "labelling": "Image types are the item source families (fixed at generation, no model). Use cases are assigned per item family at generation time.",
     "rules": [
       "Errors count as wrong.",
       "Hosted APIs answer the A+P set (600 items), self-hosted systems S+P (1,500).",
-      "Each category cell records competence, scored items and completed supported responses. At least 30 completed responses are required to plot; errors remain counted wrong in the scored denominator."
+      "Each category cell records competence, scored items and completed supported responses. A cell is published only with at least 30 scored items and 30 completed responses; smaller cells are withheld and labelled with the row's last measurement date. Errors remain counted wrong in the scored denominator."
     ],
     "splitNames": [
       "public",
@@ -56834,11 +56834,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             87.6,
             199,
@@ -56934,11 +56929,6 @@
             70.71,
             132,
             120
-          ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
           ],
           "ui_screenshots": [
             94.3,
@@ -57036,11 +57026,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
-          ],
           "ui_screenshots": [
             90.62,
             199,
@@ -57136,11 +57121,6 @@
             52.53,
             132,
             132
-          ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
           ],
           "ui_screenshots": [
             53.77,
@@ -57238,11 +57218,6 @@
             132,
             120
           ],
-          "surface_inspection": [
-            75.44,
-            19,
-            19
-          ],
           "ui_screenshots": [
             75.21,
             199,
@@ -57338,11 +57313,6 @@
             84.85,
             132,
             132
-          ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
           ],
           "ui_screenshots": [
             83.25,
@@ -57440,11 +57410,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            71.93,
-            19,
-            19
-          ],
           "ui_screenshots": [
             78.89,
             199,
@@ -57540,11 +57505,6 @@
             67.68,
             132,
             132
-          ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
           ],
           "ui_screenshots": [
             85.93,
@@ -57642,11 +57602,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             96.98,
             199,
@@ -57742,11 +57697,6 @@
             84.85,
             132,
             132
-          ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
           ],
           "ui_screenshots": [
             90.28,
@@ -57844,11 +57794,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
-          ],
           "ui_screenshots": [
             91.96,
             199,
@@ -57944,11 +57889,6 @@
             84.34,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             95.31,
@@ -58046,11 +57986,6 @@
             132,
             120
           ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
-          ],
           "ui_screenshots": [
             89.61,
             199,
@@ -58146,11 +58081,6 @@
             21.21,
             132,
             132
-          ],
-          "surface_inspection": [
-            -19.3,
-            19,
-            19
           ],
           "ui_screenshots": [
             24.96,
@@ -58248,11 +58178,6 @@
             132,
             120
           ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
-          ],
           "ui_screenshots": [
             95.31,
             199,
@@ -58348,11 +58273,6 @@
             72.22,
             132,
             120
-          ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
           ],
           "ui_screenshots": [
             89.61,
@@ -58450,11 +58370,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            61.4,
-            19,
-            19
-          ],
           "ui_screenshots": [
             91.62,
             199,
@@ -58550,11 +58465,6 @@
             95.45,
             132,
             132
-          ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
           ],
           "ui_screenshots": [
             98.32,
@@ -58652,11 +58562,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            75.44,
-            19,
-            19
-          ],
           "ui_screenshots": [
             73.87,
             199,
@@ -58752,11 +58657,6 @@
             90.91,
             132,
             132
-          ],
-          "surface_inspection": [
-            85.96,
-            19,
-            19
           ],
           "ui_screenshots": [
             94.3,
@@ -58854,11 +58754,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
-          ],
           "ui_screenshots": [
             78.89,
             199,
@@ -58954,11 +58849,6 @@
             91.41,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             89.95,
@@ -59056,11 +58946,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
-          ],
           "ui_screenshots": [
             94.3,
             199,
@@ -59156,11 +59041,6 @@
             74.24,
             132,
             132
-          ],
-          "surface_inspection": [
-            64.91,
-            19,
-            19
           ],
           "ui_screenshots": [
             83.92,
@@ -59258,11 +59138,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            57.89,
-            19,
-            19
-          ],
           "ui_screenshots": [
             69.85,
             199,
@@ -59358,11 +59233,6 @@
             84.85,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             95.98,
@@ -59460,11 +59330,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
-          ],
           "ui_screenshots": [
             90.62,
             199,
@@ -59560,11 +59425,6 @@
             46.97,
             132,
             132
-          ],
-          "surface_inspection": [
-            26.32,
-            19,
-            19
           ],
           "ui_screenshots": [
             61.47,
@@ -59662,11 +59522,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
-          ],
           "ui_screenshots": [
             80.23,
             199,
@@ -59762,11 +59617,6 @@
             97.47,
             132,
             132
-          ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
           ],
           "ui_screenshots": [
             95.98,
@@ -59864,11 +59714,6 @@
             132,
             112
           ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
-          ],
           "ui_screenshots": [
             91.29,
             199,
@@ -59964,11 +59809,6 @@
             89.9,
             132,
             132
-          ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
           ],
           "ui_screenshots": [
             93.97,
@@ -60066,11 +59906,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             98.66,
             199,
@@ -60166,11 +60001,6 @@
             54.55,
             132,
             112
-          ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
           ],
           "ui_screenshots": [
             88.61,
@@ -60268,11 +60098,6 @@
             132,
             120
           ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
-          ],
           "ui_screenshots": [
             92.63,
             199,
@@ -60368,11 +60193,6 @@
             92.93,
             132,
             132
-          ],
-          "surface_inspection": [
-            89.47,
-            19,
-            19
           ],
           "ui_screenshots": [
             96.31,
@@ -60470,11 +60290,6 @@
             66,
             62
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             97.56,
             82,
@@ -60500,35 +60315,15 @@
             72,
             68
           ],
-          "dense_ui": [
-            85.87,
-            23,
-            23
-          ],
           "trap_charts": [
             91.45,
             38,
             38
           ],
-          "agent_safety": [
-            92.31,
-            26,
-            26
-          ],
-          "counting": [
-            46.79,
-            39,
-            26
-          ],
           "multi_panel": [
             76.46,
             40,
             35
-          ],
-          "multilingual": [
-            100.0,
-            14,
-            14
           ],
           "spatial": [
             37.93,
@@ -60571,11 +60366,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             94.31,
             82,
@@ -60601,20 +60391,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            36.59,
-            23,
-            23
-          ],
           "trap_charts": [
             39.25,
             38,
             38
-          ],
-          "agent_safety": [
-            69.23,
-            26,
-            26
           ],
           "counting": [
             4.27,
@@ -60625,11 +60405,6 @@
             37.5,
             40,
             40
-          ],
-          "multilingual": [
-            -4.76,
-            14,
-            14
           ],
           "spatial": [
             -26.44,
@@ -60672,11 +60447,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             95.93,
             82,
@@ -60702,20 +60472,10 @@
             72,
             71
           ],
-          "dense_ui": [
-            71.74,
-            23,
-            23
-          ],
           "trap_charts": [
             54.82,
             38,
             38
-          ],
-          "agent_safety": [
-            100.0,
-            26,
-            26
           ],
           "counting": [
             -12.39,
@@ -60726,11 +60486,6 @@
             68.33,
             40,
             40
-          ],
-          "multilingual": [
-            80.95,
-            14,
-            14
           ],
           "spatial": [
             -14.94,
@@ -60773,11 +60528,6 @@
             66,
             65
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             89.43,
             82,
@@ -60803,35 +60553,15 @@
             72,
             69
           ],
-          "dense_ui": [
-            85.87,
-            23,
-            23
-          ],
           "trap_charts": [
             84.43,
             38,
             38
           ],
-          "agent_safety": [
-            100.0,
-            26,
-            26
-          ],
-          "counting": [
-            51.71,
-            39,
-            27
-          ],
           "multi_panel": [
             96.67,
             40,
             40
-          ],
-          "multilingual": [
-            42.86,
-            14,
-            14
           ],
           "spatial": [
             56.32,
@@ -60874,11 +60604,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             100.0,
             82,
@@ -60904,20 +60629,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            65.58,
-            23,
-            23
-          ],
           "trap_charts": [
             75.66,
             38,
             38
-          ],
-          "agent_safety": [
-            92.31,
-            26,
-            26
           ],
           "counting": [
             58.12,
@@ -60928,11 +60643,6 @@
             81.88,
             40,
             40
-          ],
-          "multilingual": [
-            61.9,
-            14,
-            14
           ],
           "spatial": [
             24.14,
@@ -60975,11 +60685,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             93.5,
             82,
@@ -61005,20 +60710,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            42.75,
-            23,
-            23
-          ],
           "trap_charts": [
             70.61,
             38,
             38
-          ],
-          "agent_safety": [
-            74.36,
-            26,
-            26
           ],
           "counting": [
             11.32,
@@ -61029,11 +60724,6 @@
             68.13,
             40,
             40
-          ],
-          "multilingual": [
-            90.48,
-            14,
-            14
           ],
           "spatial": [
             -3.45,
@@ -61076,11 +60766,6 @@
             66,
             65
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             95.93,
             82,
@@ -61106,20 +60791,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            56.88,
-            23,
-            22
-          ],
           "trap_charts": [
             47.81,
             38,
             38
-          ],
-          "agent_safety": [
-            84.62,
-            26,
-            26
           ],
           "counting": [
             4.27,
@@ -61130,11 +60805,6 @@
             41.25,
             40,
             40
-          ],
-          "multilingual": [
-            23.81,
-            14,
-            10
           ],
           "spatial": [
             14.94,
@@ -61177,11 +60847,6 @@
             66,
             58
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             91.87,
             82,
@@ -61191,56 +60856,6 @@
             42.86,
             56,
             37
-          ],
-          "chart_reasoning": [
-            54.84,
-            31,
-            22
-          ],
-          "photo_docs": [
-            -7.81,
-            48,
-            16
-          ],
-          "small_text": [
-            -58.33,
-            72,
-            0
-          ],
-          "dense_ui": [
-            -6.52,
-            23,
-            7
-          ],
-          "trap_charts": [
-            21.93,
-            38,
-            19
-          ],
-          "agent_safety": [
-            -17.95,
-            26,
-            6
-          ],
-          "counting": [
-            -46.37,
-            39,
-            0
-          ],
-          "multi_panel": [
-            -31.25,
-            40,
-            8
-          ],
-          "multilingual": [
-            90.48,
-            14,
-            13
-          ],
-          "spatial": [
-            -33.33,
-            58,
-            0
           ]
         },
         "usecases": {
@@ -61248,11 +60863,6 @@
             9.79,
             200,
             87
-          ],
-          "count_inspect": [
-            -24.09,
-            46,
-            7
           ],
           "ui_agent_action": [
             52.8,
@@ -61277,11 +60887,6 @@
             80.3,
             132,
             120
-          ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
           ],
           "ui_screenshots": [
             98.99,
@@ -61379,11 +60984,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             91.62,
             199,
@@ -61479,11 +61079,6 @@
             87.37,
             132,
             132
-          ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
           ],
           "ui_screenshots": [
             93.63,
@@ -61581,11 +61176,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             95.98,
             199,
@@ -61681,11 +61271,6 @@
             76.26,
             132,
             116
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             96.31,
@@ -61783,11 +61368,6 @@
             132,
             120
           ],
-          "surface_inspection": [
-            43.86,
-            19,
-            19
-          ],
           "ui_screenshots": [
             66.5,
             199,
@@ -61884,20 +61464,10 @@
             132,
             78
           ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
-          ],
           "ui_screenshots": [
             -0.17,
             199,
             80
-          ],
-          "diagram_reasoning": [
-            -42.32,
-            141,
-            23
           ],
           "chart_reasoning": [
             36.67,
@@ -61984,11 +61554,6 @@
             92.93,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             96.31,
@@ -62086,20 +61651,10 @@
             132,
             78
           ],
-          "surface_inspection": [
-            -50.88,
-            19,
-            0
-          ],
           "ui_screenshots": [
             2.85,
             199,
             80
-          ],
-          "diagram_reasoning": [
-            -35.22,
-            141,
-            23
           ],
           "chart_reasoning": [
             41.11,
@@ -62186,11 +61741,6 @@
             77.27,
             132,
             132
-          ],
-          "surface_inspection": [
-            92.98,
-            19,
-            19
           ],
           "ui_screenshots": [
             83.92,
@@ -62288,11 +61838,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            8.77,
-            19,
-            19
-          ],
           "ui_screenshots": [
             30.99,
             199,
@@ -62388,11 +61933,6 @@
             96.46,
             132,
             132
-          ],
-          "surface_inspection": [
-            82.46,
-            19,
-            19
           ],
           "ui_screenshots": [
             96.65,
@@ -62490,11 +62030,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             100.0,
             82,
@@ -62520,20 +62055,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            80.07,
-            23,
-            23
-          ],
           "trap_charts": [
             68.64,
             38,
             38
-          ],
-          "agent_safety": [
-            100.0,
-            26,
-            26
           ],
           "counting": [
             12.61,
@@ -62544,11 +62069,6 @@
             63.12,
             40,
             40
-          ],
-          "multilingual": [
-            90.48,
-            14,
-            14
           ],
           "spatial": [
             -21.84,
@@ -62591,11 +62111,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             100.0,
             82,
@@ -62621,20 +62136,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            74.64,
-            23,
-            23
-          ],
           "trap_charts": [
             51.32,
             38,
             38
-          ],
-          "agent_safety": [
-            100.0,
-            26,
-            26
           ],
           "counting": [
             14.96,
@@ -62645,11 +62150,6 @@
             73.12,
             40,
             40
-          ],
-          "multilingual": [
-            100.0,
-            14,
-            14
           ],
           "spatial": [
             40.23,
@@ -62692,11 +62192,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             98.37,
             82,
@@ -62722,20 +62217,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            80.07,
-            23,
-            23
-          ],
           "trap_charts": [
             73.9,
             38,
             38
-          ],
-          "agent_safety": [
-            87.18,
-            26,
-            26
           ],
           "counting": [
             6.2,
@@ -62746,11 +62231,6 @@
             80.21,
             40,
             40
-          ],
-          "multilingual": [
-            100.0,
-            14,
-            14
           ],
           "spatial": [
             58.62,
@@ -62793,11 +62273,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             98.37,
             82,
@@ -62823,20 +62298,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            91.3,
-            23,
-            23
-          ],
           "trap_charts": [
             67.54,
             38,
             38
-          ],
-          "agent_safety": [
-            92.31,
-            26,
-            26
           ],
           "counting": [
             39.74,
@@ -62847,11 +62312,6 @@
             73.13,
             40,
             40
-          ],
-          "multilingual": [
-            90.48,
-            14,
-            14
           ],
           "spatial": [
             24.14,
@@ -62894,11 +62354,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             96.75,
             82,
@@ -62924,20 +62379,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            80.43,
-            23,
-            23
-          ],
           "trap_charts": [
             55.04,
             38,
             38
-          ],
-          "agent_safety": [
-            87.18,
-            26,
-            26
           ],
           "counting": [
             12.61,
@@ -62948,11 +62393,6 @@
             64.79,
             40,
             40
-          ],
-          "multilingual": [
-            33.33,
-            14,
-            14
           ],
           "spatial": [
             1.15,
@@ -62995,11 +62435,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             100.0,
             82,
@@ -63025,20 +62460,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            31.16,
-            23,
-            23
-          ],
           "trap_charts": [
             37.28,
             38,
             38
-          ],
-          "agent_safety": [
-            71.79,
-            26,
-            26
           ],
           "counting": [
             17.95,
@@ -63049,11 +62474,6 @@
             56.88,
             40,
             40
-          ],
-          "multilingual": [
-            100.0,
-            14,
-            14
           ],
           "spatial": [
             24.14,
@@ -63095,11 +62515,6 @@
             96.46,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             95.98,
@@ -63197,11 +62612,6 @@
             66,
             66
           ],
-          "surface_inspection": [
-            100.0,
-            7,
-            7
-          ],
           "ui_screenshots": [
             97.56,
             82,
@@ -63227,20 +62637,10 @@
             72,
             72
           ],
-          "dense_ui": [
-            80.07,
-            23,
-            23
-          ],
           "trap_charts": [
             79.39,
             38,
             38
-          ],
-          "agent_safety": [
-            100.0,
-            26,
-            26
           ],
           "counting": [
             43.38,
@@ -63251,11 +62651,6 @@
             86.25,
             40,
             40
-          ],
-          "multilingual": [
-            100.0,
-            14,
-            14
           ],
           "spatial": [
             37.93,
@@ -63297,11 +62692,6 @@
             98.48,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             100.0,
@@ -63399,11 +62789,6 @@
             132,
             132
           ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
-          ],
           "ui_screenshots": [
             100.0,
             199,
@@ -63499,11 +62884,6 @@
             94.44,
             132,
             132
-          ],
-          "surface_inspection": [
-            100.0,
-            19,
-            19
           ],
           "ui_screenshots": [
             100.0,
@@ -63790,6 +63170,693 @@
     "missing": {
       "h2o_lightning_4b_v141_d7f1_image": "not measured for this revision (temperature refit); ranked TS20 is on the @cc18ee33 row",
       "h2o_lightning_31b_v134_image": "TypeSafe-20 not measured for this revision"
+    },
+    "withheld": {
+      "kettei_fat": {
+        "last_measured_utc": "2026-10-16",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "wity_1": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "h2o_lightning_4b_v141_image": {
+        "last_measured_utc": "2026-10-27",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "imajev_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "kettei_chub": {
+        "last_measured_utc": "2026-10-16",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "h2o_lightning_31b_image": {
+        "last_measured_utc": "2026-10-22",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "h2o_lightning_31b_v134_image": {
+        "last_measured_utc": "2026-11-17",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "sage_1_4_images": {
+        "last_measured_utc": "2026-10-16",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "drex_max": {
+        "last_measured_utc": "2026-10-21",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "surogate_rune_26b_v3": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "kushal_gemma4_31b_it_autoloops": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "basal_omni_1_0_ultra": {
+        "last_measured_utc": "2026-10-17",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "celeris_1_decision": {
+        "last_measured_utc": "2026-10-16",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "imajev_9b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "h2o_lightning_4b_image": {
+        "last_measured_utc": "2026-10-12",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "wity_1_off": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "jev_omni": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jpt_9b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "neohorse_jev_4b": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jevify_gemma4_26b_a4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "autojev_27b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jpt_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jev_1_13_images": {
+        "last_measured_utc": "2026-10-14",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "seanliu_jev_vision_8b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jev_1_14_images": {
+        "last_measured_utc": "2026-10-14",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "shisa_de_1": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "clef_flash": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "clef": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gpt6_luna_decisions": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "winnow_12b_q8": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "image_hopper": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "omnijev_9b_v4_tzcfly": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "omnijev_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "minimodels_vision_one": {
+        "last_measured_utc": "2026-11-26",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "reflex_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gpt6_luna": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "counting",
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "bonsai_2_27b_pq2_0": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "cua_s1_4b": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "visual_jev_generic_baseline": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "decider_2b_vision": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "vjev_vision": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "visual_jev_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gpt56_luna": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "counting",
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "jevify_gemma4_e4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jpt_0p8b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "glance_qwen3vl_4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gemini31_flash_lite": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "dense_ui",
+            "agent_safety",
+            "multilingual",
+            "surface_inspection"
+          ]
+        }
+      },
+      "djev_v10_step160_snowicarus": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "imajev_2b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gevva_e4b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "liquid_d1_3b": {
+        "last_measured_utc": "2026-10-10",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "djev_distill_v4": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jevify_qwen3vl_2b_t2": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "omnijev_2b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gevva_e2b_multimodal": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jev_spatial": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "jevision": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "omnijev_0p8b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "playjev_0p8b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "liquid_d1_omni_600m": {
+        "last_measured_utc": "2026-10-10",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "djev_dev_bf16": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "diagram_reasoning",
+            "surface_inspection"
+          ]
+        }
+      },
+      "qevi_2b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "djev_spark_nvfp4": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "diagram_reasoning",
+            "surface_inspection"
+          ]
+        }
+      },
+      "openjev_4b_nli": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "openjev_4b_v5": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "gemini38_flash": {
+        "last_measured_utc": "2026-10-07",
+        "hosted": true,
+        "cells": {
+          "capabilities": [
+            "small_text",
+            "spatial",
+            "photo_docs",
+            "trap_charts",
+            "multi_panel",
+            "counting",
+            "dense_ui",
+            "agent_safety",
+            "chart_reasoning",
+            "multilingual",
+            "surface_inspection"
+          ],
+          "usecases": [
+            "count_inspect"
+          ]
+        }
+      },
+      "h2o_lightning_4b_v141_d7f1_image": {
+        "last_measured_utc": "2026-10-28",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "standard_one_3b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      },
+      "standard_one_8b": {
+        "last_measured_utc": "2026-10-06",
+        "hosted": false,
+        "cells": {
+          "capabilities": [
+            "surface_inspection"
+          ]
+        }
+      }
+    },
+    "withheld_basis": {
+      "floor": 30,
+      "hosted": "Florian 27 Nov 2026 (Telegram #20535): keep the hosted rows and their overall scores; withhold breakdown cells under 30 scored answers and show \"not re-measured since <last measurement date>\".",
+      "self_hosted": "Standing rule 12 Nov 2026 (DECISIONS jevbench-sufficient-samples-daily-factory-1112): no shown breakdown cell under 30. The self-hosted top-up awaits custody admission (board #89867); until then the cell is withheld with the same dated label."
     }
   },
   "warnings": [],

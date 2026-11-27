@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { imageJevBoardSystems, imageJevCompareRows } from '../lib/imagejev-board.mjs';
 import { withTs20 } from '../lib/imagejev-ts20.mjs';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 const read = p => JSON.parse(readFileSync(new URL(p, import.meta.url), 'utf8'));
 const a = read('../data/imagejev-v03.json');
 const key = 'h2o_lightning_4b_v141_d7f1_image';
@@ -73,7 +74,7 @@ test('CR-599: pinned provenance, full image coverage, refit disclosure and uncha
   assert.equal(cov.source.output_sha256, '1918cf93c071c43a921d0b7e1231683736826ba9e3e5ea5f2abee598e933642d');
   assert.equal(cov.source.public_score_sha256, row.source_sha256);
   for (const dim of ['capabilities', 'usecases']) {
-    assert.equal(Object.values(a.categories.systems[key][dim]).reduce((n, c) => n + c[1], 0), 1500);
+    assert.equal(scoredTotal(a.categories, key, dim, cov), 1500);
     for (const c of Object.values(cov.cells[dim])) assert.equal(c[0], c[1]);
   }
   const page = readFileSync(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
