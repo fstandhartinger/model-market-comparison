@@ -1,0 +1,59 @@
+{
+ "sieve-31b-v4": {
+  "author": "Sthanika AI",
+  "disclosure": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. Measured at revision 75146923. The later 464dc7f4 revision changed documentation and reported results; evaluated weights and serving files are identical. The head metadata calls the checkpoint Sieve-31B-v3.1. The evaluated v4 package uses its published head and a rank-32 adapter at scale 0.75. Choice is scored twice, with the second option order rotated by half the option count. Input token estimates count both passes. The scoring readout generates no output tokens. Serving context is 98,304 tokens. The author reports training at up to 16,384 tokens, so longer rows use extrapolation. No requests were refused. The tested package returns full-precision calibrated probabilities. It uses a global temperature of 1.167 and 22 category temperatures of 0.850 to 1.333 fitted on the author's calibration split. Score uses the same readout and the global temperature. The author trained on Choice and yes/no. The author reports using public Decision Index 0.3 results to select the second-stage skills. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator.",
+   "Measured at revision 75146923. The later 464dc7f4 revision changed documentation and reported results; evaluated weights and serving files are identical.",
+   "The head metadata calls the checkpoint Sieve-31B-v3.1. The evaluated v4 package uses its published head and a rank-32 adapter at scale 0.75.",
+   "Choice is scored twice, with the second option order rotated by half the option count. Input token estimates count both passes. The scoring readout generates no output tokens.",
+   "Serving context is 98,304 tokens. The author reports training at up to 16,384 tokens, so longer rows use extrapolation. No requests were refused.",
+   "The tested package returns full-precision calibrated probabilities. It uses a global temperature of 1.167 and 22 category temperatures of 0.850 to 1.333 fitted on the author's calibration split.",
+   "Score uses the same readout and the global temperature. The author trained on Choice and yes/no.",
+   "The author reports using public Decision Index 0.3 results to select the second-stage skills.",
+   "Not yet equated to the reference scale. Shown unranked while anchor runs are pending."
+  ],
+  "display": "Sieve-31B-v4",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": "apache-2.0 (model card; base Gemma terms also apply)",
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. Measured at revision 75146923. The later 464dc7f4 revision changed documentation and reported results; evaluated weights and serving files are identical. The head metadata calls the checkpoint Sieve-31B-v3.1. The evaluated v4 package uses its published head and a rank-32 adapter at scale 0.75. Choice is scored twice, with the second option order rotated by half the option count. Input token estimates count both passes. The scoring readout generates no output tokens. Serving context is 98,304 tokens. The author reports training at up to 16,384 tokens, so longer rows use extrapolation. No requests were refused. The tested package returns full-precision calibrated probabilities. It uses a global temperature of 1.167 and 22 category temperatures of 0.850 to 1.333 fitted on the author's calibration split. Score uses the same readout and the global temperature. The author trained on Choice and yes/no. The author reports using public Decision Index 0.3 results to select the second-stage skills. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "repo": "https://huggingface.co/sthanika-ai/Sieve-31B-v4"
+ },
+ "starlord-27b-v2-2-preview": {
+  "author": "xsdfasfgsa (Hugging Face)",
+  "disclosure": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 1.0. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Direct, in-process inference returns the unadjusted softmax. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator.",
+   "The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 1.0. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Direct, in-process inference returns the unadjusted softmax.",
+   "Not yet equated to the reference scale. Shown unranked while anchor runs are pending."
+  ],
+  "display": "Starlord-27B-v2.2-preview",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.8-27B",
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 1.0. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Direct, in-process inference returns the unadjusted softmax. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-27B-v2.2-preview"
+ },
+ "starlord-4b-v2.2-preview": {
+  "author": "xsdfasfgsa (Hugging Face)",
+  "disclosure": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 0.95, 0.80 and 1.20, respectively. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Score uses the adjusted distribution. Direct, in-process inference returns the unadjusted softmax. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "disclosures": [
+   "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator.",
+   "The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 0.95, 0.80 and 1.20, respectively. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Score uses the adjusted distribution. Direct, in-process inference returns the unadjusted softmax.",
+   "Not yet equated to the reference scale. Shown unranked while anchor runs are pending."
+  ],
+  "display": "Starlord-4B-v2.2-preview",
+  "endpoint_condition": "Self-hosted, pinned author serving configuration.",
+  "http_status": {
+   "200": 1500
+  },
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.5-4B (LICENSE-BASE)",
+  "notes": "All 1,500 requests returned HTTP 200. Five answers exceeded the 10 s decision limit and count as wrong answers under the share rule. All 1,500 items remain in the denominator. The measured HTTP server applies the model's JevBench-specific calibration after the logit readout. Choice, yes/no and Score temperatures are 0.95, 0.80 and 1.20, respectively. The server applies a 0.801 confidence floor to yes/no predictions, changing the selected answer only at an exact tie, where it chooses yes. Score uses the adjusted distribution. Direct, in-process inference returns the unadjusted softmax. Not yet equated to the reference scale. Shown unranked while anchor runs are pending.",
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-4B-v2.2-preview"
+ }
+}
