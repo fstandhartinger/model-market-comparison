@@ -30,7 +30,7 @@ CTX = 'c' * 64
 
 # Every supplement whose active() consults the registry, and the recipe shape its active() accepts.
 HTTP = 'http_typesafe'
-EXTENDED = ('cue_reflex', 'sieve', 'starlord', 'starlord_v2', 'wps_decision', 'karpo_decision', 'minimodels_decision',
+EXTENDED = ('cue_reflex', 'sieve', 'starlord', 'starlord_v2', 'starlord_v22', 'wps_decision', 'karpo_decision', 'minimodels_decision',
             'minimodels_hard_candy', 'quyet', 'jeva', 'krino', 'lychee', 'standardone', 'torchcast', 'chon')
 NOT_EXTENDED = ('ryotide',  # order-specific recovery flow with its own state checks and no BASE_IMAGE constant
                 'strands_decider_e2b',  # single-order (0616c39d) build with its own scoped pip check; added on main after CR-829, kept exact-order
@@ -799,7 +799,7 @@ class CliTests(TempCase):
         row = dict(self.LIVE, model_link='https://huggingface.co/xsdfasfgsa/starlord-4b-v9.9-preview', code_link=None)
         match, problem = self.cli.family_match(native_owner, fams['starlord_v2'], row)
         self.assertIsNone(problem)
-        self.assertEqual((match['kind'], match['families']), ('namespace-shared', ['starlord', 'starlord_v2']))
+        self.assertEqual((match['kind'], match['families']), ('namespace-shared', ['starlord', 'starlord_v2', 'starlord_v22']))
 
     def test_r2_S1_code_listed_order_is_refused(self):
         self.assertEqual(self.cli.code_listed_in('00000000-0000-0000-0000-000000000000'), [])

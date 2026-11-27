@@ -1200,6 +1200,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = starlord_v2_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import starlord_v22_runtime_supplement
+            if starlord_v22_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of Starlord-4B/27B-v2.2-preview's recorded stack on the official torch 2.9.0+cu128 image:
+                # the reviewed v2 transformers 5.3 overlay (cp311), the README's causal-conv1d 1.7.0 release wheel and flash-attn 2.8.3
+                # compiled from its pinned PyPI sdist; the customer's serve_systemone.py is mounted unchanged.
+                state['runtime_supplement'] = starlord_v22_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import karpo_decision_runtime_supplement
             if karpo_decision_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline overlay of Karpo-Decision-31B's recorded transformers 5.21 stack on the official

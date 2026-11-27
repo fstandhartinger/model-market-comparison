@@ -98,6 +98,11 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
                "huggingface.co/xsdfasfgsa/starlord-4b-v1.4-preview", "huggingface.co/xsdfasfgsa/starlord-4b-v1.5-preview",
                "huggingface.co/xsdfasfgsa/starlord-4b-v2.0-preview"),
      "precedents": ("fastlane-native-6b7af363", "fastlane-native-c5a084fa", "fastlane-native-cd7e038c", "fastlane-native-2d2f81c6")},
+    {"family": "starlord_v22", "module": "starlord_v22_runtime_supplement.py",
+     "repos": ("huggingface.co/xsdfasfgsa/starlord-4b-v2.2-preview", "huggingface.co/xsdfasfgsa/starlord-27b-v2.2-preview"),
+     # Exact-order native-owner routing only (ORDERS); not a pre-payment intake classification for repeat orders (CR-879).
+     "intake_admission": False,
+     "precedents": ("fastlane-native-b4539ae2", "fastlane-native-3613f4c1", "fastlane-native-6b7af363")},
     {"family": "minimodels_decision", "module": "minimodels_decision_runtime_supplement.py",
      "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
      "precedents": ("fastlane-native-f62aeab1",)},
