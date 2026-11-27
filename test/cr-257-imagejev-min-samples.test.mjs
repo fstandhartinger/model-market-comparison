@@ -20,7 +20,7 @@ test('every withheld cell carries the row\'s last measurement date on the compar
   const withheld = release.categories.withheld;
   assert.equal(Object.values(withheld).filter((w) => w.hosted).length, 15, 'the 15 hosted rows of card #20535');
   for (const [key, w] of Object.entries(withheld)) for (const dim of Object.keys(w.cells))
-    assert.match(notes[key][dim], /withheld, fewer than 30 scored answers; not re-measured since \d{1,2} [A-Z][a-z]{2} 2026$/, `${key}/${dim}`);
+    assert.match(notes[key][dim], /withheld, fewer than 30 completed answers; not re-measured since \d{1,2} [A-Z][a-z]{2} 2026$/, `${key}/${dim}`);
   assert.match(notes.kettei_fat.capabilities, /^Dense UIs, Agent safety, Multilingual, Surface inspection: .* since 16 Oct 2026$/);
 });
 
