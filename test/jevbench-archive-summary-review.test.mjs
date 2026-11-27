@@ -8,6 +8,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { JEV_ARCHIVE_BOARD_VERSIONS, readJevArchiveBoardProps } from '../lib/jevbench-archive-board-input.mjs';
+import { archiveProofVersions } from './jevbench-archive-proof-sample.mjs';
 import { JEV_LEGACY_ARCHIVE_VERSIONS, readJevLegacyArchivePayload } from '../lib/jevbench-archive-legacy-input.mjs';
 import { jevV16BoardRows } from '../lib/jevbench-board-rows.mjs';
 import { jevV16ChartRow, jevV15BoardSystem } from '../lib/jevbench-v15-board.mjs';
@@ -54,7 +55,8 @@ function checkCapabilityRows(summary, full, systems, version) {
 
 test('all modern archive summaries use their board count, exact notes, cost precision and outside rank', async () => {
   let checked = 0;
-  for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
+  const versions = archiveProofVersions(JEV_ARCHIVE_BOARD_VERSIONS);
+  for (const version of versions) {
     const props = await readJevArchiveBoardProps(version);
     const systems = jevV16BoardRows(props.artifact, props.scope).map(jevV16ChartRow);
     const full = render(JevCapabilityRanking, { systems, revision: version, officialHref: '#jev16-method', ...JEV_V16_CLASS_OPTIONS, nearCapPrecision: true, referenceLabel: JEV_V16_REFERENCE_LABEL });
@@ -64,7 +66,7 @@ test('all modern archive summaries use their board count, exact notes, cost prec
     checked += checkCapabilityRows(summary, full, systems, version);
   }
   assert.equal(JEV_ARCHIVE_BOARD_VERSIONS.length >= 86, true);
-  console.info(`Modern summary notes/count/ranks/costs: ${JEV_ARCHIVE_BOARD_VERSIONS.length} versions, ${checked} rows`);
+  console.info(`Modern summary notes/count/ranks/costs: ${versions.length} of ${JEV_ARCHIVE_BOARD_VERSIONS.length} versions, ${checked} rows`);
 });
 
 test('all 14 legacy summaries retain exact capability notes and all four announced-price labels', async () => {

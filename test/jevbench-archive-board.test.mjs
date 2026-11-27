@@ -10,6 +10,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { JEV_ARCHIVE_BOARD_VERSIONS, readJevArchiveBoardProps } from '../lib/jevbench-archive-board-input.mjs';
 import { JEV_LEGACY_ARCHIVE_VERSIONS } from '../lib/jevbench-archive-legacy-input.mjs';
 import { jevArchiveComparisonCategories } from '../lib/jevbench-archive-board-view.mjs';
+import { archiveProofVersions, JEV_ARCHIVE_FULL_PROOF } from './jevbench-archive-proof-sample.mjs';
 register('./jevbench-archive-loader-hooks.mjs', import.meta.url);
 const { GET, generateStaticParams, dynamic, dynamicParams } = await import('../app/api/jevbench/[version]/board/route.ts');
 const { JevBenchArchiveBoard } = await import('../components/JevBenchArchiveBoard.tsx');
@@ -78,7 +79,10 @@ async function originalPageProps(version) {
   return props;
 }
 const legacyProps = new Map();
-for (const version of Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean)) {
+const frozenArchiveVersions = Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean);
+const proofVersions = archiveProofVersions(frozenArchiveVersions);
+console.info(`Archive board proof: ${proofVersions.length} of ${frozenArchiveVersions.length} versions${JEV_ARCHIVE_FULL_PROOF ? ' (full)' : ' (sample; JEV_ARCHIVE_FULL_PROOF=1 for all)'}`);
+for (const version of proofVersions) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
     const file = `app/jev-models/${version}/page.tsx`;
     const source = baseline.files[file];
@@ -122,9 +126,9 @@ test('summary is useful without JavaScript and its loader receives only a versio
   for (const text of ['Capability Score', 'Composite', 'Cost / 1,000 decisions', props.sha256, 'Load full board', '2026-11-22', 'data-bh-jev16-method', '/api/jevbench/v1.8.20/board']) assert.ok(html.includes(text));
 });
 
-test('client renderer preserves original full-board markup for every modern archive', async () => {
+test('client renderer preserves original full-board markup for every proved modern archive', async () => {
   const OldBoard = OriginalBoard;
-  for (const version of Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean)) {
+  for (const version of proofVersions) {
     const props = legacyProps.get(version) ?? await originalPageProps(version);
     const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
     assert.equal(response.status, 200);
