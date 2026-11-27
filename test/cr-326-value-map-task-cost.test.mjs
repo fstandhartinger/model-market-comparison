@@ -17,7 +17,8 @@ async function load(file, deps) {
 }
 const cost = await load("cost.ts", ["effective-cost.mjs", "regions.mjs", "free-route.mjs", "openrouter-pricing.mjs"]);
 const client = await load("client-model.ts", ["composite.mjs", "family-representative.mjs"]);
-const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+const datasetPath = process.env.BH_TEST_DATASET_PATH ?? new URL("../data/dataset.json", import.meta.url);
+const dataset = JSON.parse(await readFile(datasetPath, "utf8"));
 const data = client.clientData(dataset);
 const priced = data.models.map((m) => ({ m, price: cost.modelPrice(m, data, null) })).filter((x) => x.price.value != null);
 
@@ -49,17 +50,22 @@ test("real dataset: the two screenshot models are not plottable while their task
   }
 });
 
-test("sanity bound: a comparable cost per task sits between the output-token bill and list price × modeled tokens", () => {
+test("comparable cost per task matches the selected route's rates and modeled token shares", () => {
   for (const x of priced.filter((y) => comparableTaskCost(y.price) && y.price.unit === "$/task")) {
     const i = x.price.effective.inputs;
     const output = i.output_tokens_per_task, input = i.input_tokens_per_task;
     assert.ok(output > FALLBACK_OUTPUT_TOKENS, `${x.m.display_name}: ${output} output tokens per task`);
     // Output tokens are never cache-discounted, so their bill is a hard floor.
     const floor = (output * i.output_per_1m) / 1e6;
-    // Upper bound: every input token at list price, plus a cache-write surcharge of at most the input price again.
-    const ceiling = (output * i.output_per_1m + 2 * input * i.input_per_1m) / 1e6;
     assert.ok(x.price.value >= floor * 0.999, `${x.m.display_name}: $${x.price.value} below output floor $${floor}`);
-    assert.ok(x.price.value <= ceiling * 1.001 + 1e-9, `${x.m.display_name}: $${x.price.value} above list-price ceiling $${ceiling}`);
+    const cached = input * i.cache_hit_rate;
+    const uncached = input - cached;
+    // Cached reads have their own rate. With modeled cache writes, uncached input
+    // costs the write rate whenever it exceeds the base input rate.
+    const uncachedRate = i.cache_hit_rate > 0 ? Math.max(i.input_per_1m, i.cache_write_per_1m) : i.input_per_1m;
+    const expected = floor + (cached * i.cache_read_per_1m + uncached * uncachedRate) / 1e6;
+    assert.ok(Math.abs(x.price.value - expected) <= 1e-9,
+      `${x.m.display_name}: $${x.price.value} differs from the modeled bill $${expected}`);
   }
 });
 
