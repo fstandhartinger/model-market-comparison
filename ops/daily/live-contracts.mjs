@@ -29,7 +29,8 @@ export const LIVE_CONTRACT_CRITERIA = [
 const VERIFIER_SECTIONS = {
   aa: ['async function verifyAa(', 'async function verifyDa('],
   da: ['async function verifyDa(', 'async function verifyOr('],
-  or: ['async function verifyOr(', 'async function verifyAaEfficiency('],
+  // The critic needs the projection's nullable defaults as well as its equality check.
+  or: ['function orModelProjection(', 'async function verifyAaEfficiency('],
   aa_efficiency: ['function aaCarrierExtracts(', 'async function verifyOrEfficiency('],
   or_efficiency: ['async function verifyOrEfficiency(', 'async function verifyChutes('],
   chutes_efficiency: ['async function verifyChutes(', '// Raw benchmarkRows'],
