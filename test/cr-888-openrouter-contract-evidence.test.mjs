@@ -5,7 +5,7 @@ import { runInNewContext } from 'node:vm';
 import { buildLiveContractUnits } from '../ops/daily/live-contracts.mjs';
 import { GAUNTLET_LIMITS } from '../ops/daily/gauntlet.mjs';
 
-test('CR-887: OpenRouter critic receives the executable projection including absent/null/zero rules', async () => {
+test('CR-888: OpenRouter critic receives the executable projection including absent/null/zero rules', async () => {
   const verifier = await readFile(new URL('../ops/daily/review-live.mjs', import.meta.url), 'utf8');
   const [unit] = buildLiveContractUnits({
     manifest: { datasets: [{ dataset: 'or', rows: 1 }], coverage: { complete: true } },
