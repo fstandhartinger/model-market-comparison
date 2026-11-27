@@ -1,11 +1,14 @@
 import { readFile, writeFile, rm } from 'node:fs/promises';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { gzipSync, gunzipSync } from 'node:zlib';
 
 /** Staging bulk: rebuildable from the run's recorded base sha, never read by another run. */
 export const STAGING_DIRECTORIES = ['work', 'before', 'benchmark-candidates'];
 /** The evidence a later reader needs; never touched by either caller. */
 export const RETAINED_DIRECTORIES = ['sources', 'gauntlet', 'review', 'workers', 'reports'];
+
+// Board #91936: keep the failed run available for replay until the custodian releases hold #91298.
+export const REPLAY_HELD_RUN = '2026-11-27T05-17-06-712Z-113353';
 
 /**
  * Compress the two audit datasets and drop the staging bulk of one finished run.
@@ -15,6 +18,7 @@ export const RETAINED_DIRECTORIES = ['sources', 'gauntlet', 'review', 'workers',
  * that is present is verified by round-trip before the original goes.
  */
 export async function compactRunDirectory(runDir) {
+  if (basename(runDir) === REPLAY_HELD_RUN) return { applied: false, reason: 'replay-hold' };
   const compressed = [], removed = [];
   for (const name of ['dataset-before.json', 'dataset-after.json']) {
     const path = join(runDir, 'reports', name);
