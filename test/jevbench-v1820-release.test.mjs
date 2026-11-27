@@ -20,7 +20,7 @@ test('v1.8.20 validates as candidate and publication visibility follows PENDING/
 test('v1.8.20 registers the 22 Nov draw as anchor-runs-pending with offset 0 and the row sits on it',()=>{
  const t=JSON.parse(readFileSync('data/jevbench-draw-equating.json')),d=t.draws.find(x=>x.draw==='v1.6-regular-20261122');
  assert.ok(d);assert.equal(t.draws.at(-1),d);
- assert.deepEqual({label:d.label,drawn_on:d.drawn_on,releases:d.releases,latest_release:d.latest_release,status:d.status,offset:d.offset,offset_ci95:d.offset_ci95,anchors:d.anchors,joins_via:d.joins_via,g_med:d.g_med},{label:'Fourth regular draw',drawn_on:'2026-11-22',releases:['v1.8.20','v1.8.21','v1.8.22'],latest_release:'v1.8.22',status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum',g_med:2.573387642438244});
+ assert.deepEqual({label:d.label,drawn_on:d.drawn_on,releases:d.releases,latest_release:d.latest_release,status:d.status,offset:d.offset,offset_ci95:d.offset_ci95,anchors:d.anchors,joins_via:d.joins_via,g_med:d.g_med},{label:'Fourth regular draw',drawn_on:'2026-11-22',releases:['v1.8.20','v1.8.21','v1.8.22','v1.8.23'],latest_release:'v1.8.23',status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum',g_med:2.573387642438244});
  assert.match(d.g_med_note,/^Carried over from the 27 Oct draw/);
  // The 27 Oct entry and every earlier draw are untouched.
  const before=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws.slice(0,4);

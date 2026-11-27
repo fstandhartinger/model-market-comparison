@@ -43,7 +43,7 @@ test('v1.8.21 publication visibility follows the bound review state',async()=>{
  assert.deepEqual(r.proof.scorers,data('v1.8.20','proof').scorers);assert.deepEqual(r.proof.equating,data('v1.8.20','proof').equating);
 });
 test('v1.8.21 draw registration and literal scoring projection use unchanged offsets/G_med',()=>{
- const d=load('data/jevbench-draw-equating.json').draws.find(d=>d.draw==='v1.6-regular-20261122');assert.deepEqual(d.releases,['v1.8.20','v1.8.21','v1.8.22']);assert.equal(d.latest_release,'v1.8.22');assert.equal(d.status,'anchor-runs-pending');assert.deepEqual(d.offset,{I:0,C:0});assert.equal(d.offset_ci95,null);assert.equal(d.g_med,2.573387642438244);
+ const d=load('data/jevbench-draw-equating.json').draws.find(d=>d.draw==='v1.6-regular-20261122');assert.deepEqual(d.releases,['v1.8.20','v1.8.21','v1.8.22','v1.8.23']);assert.equal(d.latest_release,'v1.8.23');assert.equal(d.status,'anchor-runs-pending');assert.deepEqual(d.offset,{I:0,C:0});assert.equal(d.offset_ci95,null);assert.equal(d.g_med,2.573387642438244);
  const r=data('v1.8.21','results'),scored=load('r198/v1821/src/scored.json');
  for(const k of V1821_NEW_KEYS){const s=r.systems.find(s=>s.key===k),a=scored[k]['v17-share'];for(const f of ['axes','scores','views','capability','jevbench_score','composite_ci95','decision_limit','speed','validity','v16'])assert.deepEqual(s[f],a[f]);assert.equal(s.cost.usd_per_1000,a.cost.usd_per_1000);assert.equal(s.draw.release,'v1.8.21');assert.equal(s.v16.equated,null);}
 });

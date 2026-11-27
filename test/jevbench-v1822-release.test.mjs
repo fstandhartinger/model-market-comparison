@@ -50,5 +50,5 @@ test('v1.8.22 PENDING visibility and unchanged scorer/equating bindings',async()
  const r=await readJevbenchV1822Candidate(),visible=r.manifest.review.verdict==='PASS';assert.match(r.proof.publication_approval.status,/^(PENDING|GO \(.+\))$/);
  assert.equal(await hasPublishedJevbenchV1822Release(),visible);assert.equal(await readJevbenchV1822ForBoard()!==null,visible);assert.equal(await readJevAllDataInput('v1.8.22')!==null,visible);
  assert.deepEqual(r.proof.scorers,data('v1.8.21','proof').scorers);assert.deepEqual(r.proof.equating,data('v1.8.21','proof').equating);
- const d=load('data/jevbench-draw-equating.json').draws.find(d=>d.draw==='v1.6-regular-20261122');assert.deepEqual(d.releases,['v1.8.20','v1.8.21','v1.8.22']);assert.equal(d.latest_release,'v1.8.22');assert.deepEqual(d.offset,{I:0,C:0});assert.equal(d.g_med,2.573387642438244);
+ const d=load('data/jevbench-draw-equating.json').draws.find(d=>d.draw==='v1.6-regular-20261122');assert.deepEqual(d.releases,['v1.8.20','v1.8.21','v1.8.22','v1.8.23']);assert.equal(d.latest_release,'v1.8.23');assert.deepEqual(d.offset,{I:0,C:0});assert.equal(d.g_med,2.573387642438244);
 });
