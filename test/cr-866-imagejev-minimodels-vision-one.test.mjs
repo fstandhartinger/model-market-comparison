@@ -47,15 +47,19 @@ test('CR-866: serving, hardware, routing-budget and reasoning-share disclosures 
  assert.match(page,/Existing composite ranks from #34 down move down one place/);
 });
 
-test('CR-866: TS20 absent under a temporary exception with a visible disclosure',()=>{
- const ts=read('data/imagejev-ts20-categories.json');assert.equal(ts.systems[key],undefined);assert.equal(ts.summary[key],undefined);
- const cats=withTs20(a.categories,ts);assert.equal(cats.systems[key].typesafe,undefined);
- assert.equal(cats.missing[key],'TypeSafe-20 not run in the paid core session; a follow-up adds the cells');
- const ex=read('data/jevbench-breakdown-exceptions.json').entries.filter(e=>e.key===key);assert.equal(ex.length,1);
- assert.equal(ex[0].board,'imagejevbench');assert.deepEqual(ex[0].dims,['typesafe']);
- assert.equal(ex[0].reason,'temporary: TS20 bank not run in the paid core session; follow-up CR adds the cells');
- assert.match(ex[0].decision,/board #9 #86260/);assert.match(ex[0].decision,/#86269/);
- assert.match(readFileSync('components/ImageJevV03Page.tsx','utf8'),/For Minimodels Vision One, TypeSafe-20 was not run in the paid core session; a follow-up adds the cells \(temporary gap\)\./);
+test('CR-866: TS20 cells measured on 26 Nov 2026 (600 sealed, 0 errors); the temporary exception and gap disclosures are removed',()=>{
+ const ts=read('data/imagejev-ts20-categories.json');
+ assert.equal(Object.keys(ts.systems[key].typesafe).length,20);assert.deepEqual(ts.summary[key],{rows:600,errors:0});
+ for(const v of Object.values(ts.systems[key].typesafe))assert.deepEqual(v.slice(1),[30,30]);
+ const cats=withTs20(a.categories,ts);assert.equal(cats.systems[key].typesafe,ts.systems[key].typesafe);
+ assert.equal(a.categories.missing[key],undefined);
+ assert.equal(read('data/jevbench-breakdown-exceptions.json').entries.filter(e=>e.key===key).length,0);
+ assert.ok(row.measurement_source.includes('its cells were measured separately on 26 Nov 2026 on the 600 sealed items with 0 errors (the TypeSafe-20 bank had previously been exposed to API providers)'));
+ assert.ok(!/temporary exception/.test(row.measurement_source));
+ const page=readFileSync('components/ImageJevV03Page.tsx','utf8');
+ assert.match(page,/TypeSafe-20 was not run in the paid core session; its cells were measured on 26 Nov 2026 on the 600 sealed items with 0 errors; the TypeSafe-20 bank had previously been exposed to API providers, so this row shares that disclosure\./);
+ assert.doesNotMatch(page,/For Minimodels Vision One, TypeSafe-20 was not run/);
+ assert.doesNotMatch(page,/a temporary exception applies until a follow-up adds the cells/);
 });
 
 test('CR-866: one-read coverage, cell floor n >= 30 and no small-sample treatment',()=>{
