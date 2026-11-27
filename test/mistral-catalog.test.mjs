@@ -115,6 +115,43 @@ test("22 Oct 2026: an OCR section headed 'Prices /1000 Pages' is skipped; an unk
   assert.throws(() => pricedChatCards(page(section("/Day", row("X", 1, null, 2)))), /unit heading/);
 });
 
+test("November pricing tables use section radio controls, split USD text and unpriced side tables", () => {
+  const radio = (label, checked) => `<button role="radio" aria-checked="${checked}"><span>${label}</span></button>`;
+  const priced = (currency = "USD", mode = "Standard", regional = false) => chat(
+    row("GLM 5.3 Flash", "$<!-- -->0.15", "$<!-- -->0.03", "$<!-- -->0.5"),
+  ).replace(/<label>[\s\S]*?<\/button><button aria-pressed="false">Batch<\/button>/, [
+    radio("USD<!-- --> (<!-- -->$<!-- -->)", currency === "USD"), radio("EUR<!-- --> (<!-- -->€<!-- -->)", currency === "EUR"),
+    radio("Standard", mode === "Standard"), radio("Batch <span>i</span>", mode === "Batch"),
+    `<button role="switch" aria-checked="${regional}"></button>`,
+  ].join(""));
+  const side = (column, value) => `<table><tr><th>Model</th><th>${column}</th></tr><tr><td>Model</td><td>${value}</td></tr></table>`;
+  const { input, cached, output } = pricedChatCards(page(priced(), side("price", "Free"), side("deploy", "Self-hosted"))).get("glm53flash");
+  assert.deepEqual({ input, cached, output }, { input: 0.15, cached: 0.03, output: 0.5 });
+  assert.throws(() => pricedChatCards(page(priced(), side("price", "$1"))), /unit heading/);
+  assert.throws(() => pricedChatCards(page(priced(), priced("EUR"))), /not in USD/);
+  const withoutControls = priced().replace(/<div>[\s\S]*?<\/div>/, "<p>Prices /M Tokens</p>");
+  assert.throws(() => pricedChatCards(page(priced(), withoutControls)), /missing per-table radio controls/);
+  assert.throws(() => pricedChatCards(page(priced("USD", "Batch"))), /not on the Standard pricing mode/);
+  assert.throws(() => pricedChatCards(page(priced("USD", "Standard", true))), /regional-inference switch is not off/);
+});
+
+test("November docs data binds the linked page and preserves a verified curated API alias", () => {
+  const path = "/models/codestral-25-08";
+  const expectedId = "codestral-latest";
+  const price = (label, direction, priceUsd, unit = "/M Tokens") => ({ label, direction, priceUsd, unit });
+  const flight = (pricing) => {
+    const record = { model: { href: path, modelIds: ["codestral-2508", expectedId], pricing } };
+    return `<script>self.__next_f.push(${JSON.stringify([1, `24:${JSON.stringify(record)}\n`])})</script>`;
+  };
+  const prices = [price("Input", "input", 0.3), price("Output", "output", 0.9)];
+  assert.deepEqual(parseMistralDocsModel(flight(prices), { path, expectedId }), {
+    api_model_id: expectedId, input: 0.3, output: 0.9, cached: null,
+  });
+  assert.throws(() => parseMistralDocsModel(flight(prices), { path }), /no unambiguous API id/);
+  assert.throws(() => parseMistralDocsModel(flight(prices), { path: "/models/other", expectedId }), /expected one model record/);
+  assert.throws(() => parseMistralDocsModel(flight([prices[0], price("Output", "output", 0.9, "/Min")]), { path, expectedId }), /invalid output USD token price/);
+});
+
 test("identity is the normalized name (or the name the page last used) against the snapshot; duplicates must agree", () => {
   const html = page(
     chat(row("Mistral Large 3", 0.5, 0.05, 1.5), row("Ministral 3 (3B)", 0.1, null, 0.12)),

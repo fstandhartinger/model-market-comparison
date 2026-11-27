@@ -4,6 +4,19 @@
 **Last collected:** refreshed daily by `scripts/fetch-mistral-catalog.mjs` (first automated run
 2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
 
+## Update 2026-11-27
+
+The public pricing page returned to per-table controls. The collector checks the radio selections for
+USD and Standard pricing and requires the regional switch to be off. The chat tables still state
+`Prices /M Tokens`. The label is absent from the free moderation and self-hosted time-series tables.
+Those tables are skipped only when their two-column headers and every row match the published format.
+
+The linked model pages now publish API IDs and USD prices in embedded server-rendered data. The
+collector reads that data as JSON and matches the requested docs path. When rechecking a cached price,
+it selects the existing API ID if the page lists it, including verified `-latest` aliases. The pricing
+table and model page both omit cached prices for Codestral, Mistral Small 4 and the three Ministral 3
+sizes. The refresh removes those five old prices and records them in `diff.cache_read_dropped`.
+
 ## Update 2026-10-07 — the pricing page moved to the docs site as plain tables
 
 From 2026-10-06 every run failed closed with `Mistral pricing: no model cards (page layout

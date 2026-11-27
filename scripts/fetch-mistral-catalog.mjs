@@ -27,7 +27,7 @@ try {
   const text = await response.text();
   const docs = new Map();
   const docs_sources = [];
-  for (const { card, reason } of cardsNeedingDocs(text, previous)) {
+  for (const { card, reason, expectedId } of cardsNeedingDocs(text, previous)) {
     // No docs link and no curated id: parseMistralPricing names that as the failure. No docs link but
     // a curated id: the row keeps the id and loses the cached price, which diff.cache_read_dropped names.
     if (!card.docs_url) continue;
@@ -35,7 +35,7 @@ try {
     const page = await fetch(card.docs_url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(60000) });
     if (!page.ok) throw new Error(`Mistral docs HTTP ${page.status} for ${card.name} (${card.docs_url})`);
     const body = await page.text();
-    docs.set(nameKey(card.name), parseMistralDocsModel(body));
+    docs.set(nameKey(card.name), parseMistralDocsModel(body, { path: new URL(card.docs_url).pathname, expectedId }));
     await captureLiveSource(card.docs_url, body);
     docs_sources.push({ model_name: card.name, reason, url: card.docs_url, response_sha256: createHash("sha256").update(body).digest("hex") });
   }
@@ -46,7 +46,7 @@ try {
     ...previous,
     source: "Mistral AI (La Plateforme) — docs.mistral.ai/inference/pricing (first-party, public; mistral.ai/pricing/api redirects here)",
     collected_at,
-    method: "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page (Standard mode, global prices, the page's default); every row of its 'Model | Input | Cached input | Output' tables in a section labelled 'Prices /M Tokens' whose input and output are both bare USD amounts is a chat/text model (OCR per 1000 pages, transcription per minute, TTS per M characters, embeddings without output and free moderation drop out); a struck-through list price beside a sale price publishes the sale price and names the list price in notes; duplicate rows must agree; identity is the row's normalized model name (or the name the page last used, source_name) against the curated snapshot — a model the snapshot does not name has its id read from the docs model page the row links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived, and that page must state the same input/output prices or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
+    method: "scripts/fetch-mistral-catalog.mjs: parse the public server-rendered pricing tables in USD, Standard mode, with regional inference off. Require explicit per-million-token units and both input and output prices. OCR, audio, embeddings, free moderation and self-hosted rows are outside scope. Match the curated model name or source_name. Check the linked public model page when the model name is unknown or a cached-input price disappears. The model page must agree on input and output pricing. Record those checks in docs_sources. See mistral.method.md.",
 
     response_sha256: createHash("sha256").update(text).digest("hex"),
     docs_sources,
