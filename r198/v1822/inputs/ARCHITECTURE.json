@@ -1,0 +1,92 @@
+{
+ "decibel-30b-a3b-v0": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "30B-A3B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3-Omni-30B-A3B-Instruct; pinned measured checkpoint decagon-ai/Decibel-30B-A3B-v0@8ffed078ae92fe0fc2c4c37f79e7833271e3f6ec.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/decagon-ai/Decibel-30B-A3B-v0"
+   }
+  ]
+ },
+ "decision-4b-v16": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "4B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3.5-4B; pinned measured checkpoint flymy-ai/decision-4b-v1.6@669cf8d8453ed6c2960a6787b8d2f3c76ea500cc.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/flymy-ai/decision-4b-v1.6"
+   }
+  ]
+ },
+ "mica-v01-4b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "4B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3.5-4B; pinned measured checkpoint sky7350/Mica-v0.1-4B@9b6428b272f4708ef54a4702b52bb453a4059363 (BF16 GGUF; weights byte-equal to submitted checkpoint); akivet/Mica v0.1.3.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/sky7350/Mica-v0.1-4B"
+   }
+  ]
+ },
+ "synaps-decision-1.0-27b-preview": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "27B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3.8-27B; pinned measured checkpoint Synaptivo/Synaps-Decision-1.0-27B-Preview@a84fb94977ddef4734375c54db020178d45178ca (LoRA r32, adapter sha256 cce9634b) on Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/Synaptivo/Synaps-Decision-1.0-27B-Preview"
+   }
+  ]
+ },
+ "turion-jev-4b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "4B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3.5-4B; pinned measured checkpoint turion-ai/turion-jev-4b@b169f6098b1af1956cb59933d89381c6c3f34403.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/turion-ai/turion-jev-4b"
+   }
+  ]
+ },
+ "wepocketmodel1.0-4b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "4B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Base Qwen/Qwen3.5-4B; pinned measured checkpoint tencent/WePocketModel1.0-4B@d57517468ff546df8cb9c6da5c76319810d3523b.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/tencent/WePocketModel1.0-4B"
+   }
+  ]
+ }
+}

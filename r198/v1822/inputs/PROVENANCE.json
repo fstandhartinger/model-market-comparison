@@ -1,0 +1,379 @@
+{
+ "mica_transition": "first not-measured -> measured key transition; lead authorisation r259 (rule 6 revised)",
+ "rows": {
+  "apus-reflex2-1": {
+   "artifact": "r251/apus/NON-COST-SUMMARY-apus-reflex2-1.json",
+   "artifact_sha256": "a1f7f115cd478a680152ddda313cbbaa298663261514787fefd9f19c95a194a8",
+   "category_source_results_sha256": "b0582e629d94f1e9a885e1c73f1ccc6b8422d68eb061a67c75afa7dbd60231a7",
+   "control_receipt_sha256": "622261e4d2fd02267b8dc90dfd2e27ef3bb9c6b9bee255070b85efe580db384b",
+   "critic": "r251/apus/CONTROL-RECEIPT.json recompute receipt",
+   "source_results_sha256": "b0582e629d94f1e9a885e1c73f1ccc6b8422d68eb061a67c75afa7dbd60231a7"
+  },
+  "apus-reflex2-2": {
+   "artifact": "r251/apus/NON-COST-SUMMARY-apus-reflex2-2.json",
+   "artifact_sha256": "76267763f31ce3f9e49f8cbff733f715991f66c7a2e07c6817f9a82213253c3e",
+   "category_source_results_sha256": "b0582e629d94f1e9a885e1c73f1ccc6b8422d68eb061a67c75afa7dbd60231a7",
+   "control_receipt_sha256": "622261e4d2fd02267b8dc90dfd2e27ef3bb9c6b9bee255070b85efe580db384b",
+   "critic": "r251/apus/CONTROL-RECEIPT.json recompute receipt",
+   "source_results_sha256": "b0582e629d94f1e9a885e1c73f1ccc6b8422d68eb061a67c75afa7dbd60231a7"
+  },
+  "decibel-30b-a3b-v0": {
+   "aggregate_sha256": {
+    "categories": "95e2222b55437dc2db6e9e6505958205f58a9be28042263f534632e7594458cc",
+    "decisive": "5f19be2836f4ad23b237d2d7109ccf4333af9643bb78fb386424d58aefbb6321"
+   },
+   "artifact": "r247/decibel/DECIBEL30B-SCORES-R247.json",
+   "artifact_sha256": "120dfe75e6ac219b3f9791a15866b7109cf9334ebb74e361b5b0505f4535cdd9",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r247-decibel-critic",
+   "internal_disclosures": [],
+   "setup_sha256": "80cec2df0d5e554f484a9bb50583cf646244a157522ea0fc7082871c86d853b8",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "cleanup_confirmed_sha256": "a908df00f29ed70fb684c7218039b364ac1bbd980796da31189ce8a763ae082e",
+    "cost": {
+     "basis": "GPU-time estimate only: the base Qwen/Qwen3-Omni-30B-A3B-Instruct has no frozen market-listing decision (pricing_v15.reference raises), as for clef-omni on the same base; RTX PRO 6000 USD 1.5235/h, 70% load, moe qwen 3B active, 37,999.67 tok/s -> USD 0.006190742037976662/1k",
+     "input_tokens": 583676,
+     "output_tokens": 0,
+     "usd_per_1000": 0.006190742037976662
+    },
+    "draw": "v1.6-regular-20261122",
+    "engine": "auto-intake kit SHAS 2331f75b (workers/decibel30b-kit-m1/kit), author load_model.py + decision_adapter.py in process (exact-scope exception 20415), thinker only, bf16; score answered as an adapter-defined binned choice menu, noul as a 2-option choice; author tokenizer as shipped (transformers warns: incorrect regex pattern, fix_mistral_regex not set; same as the kit reviewed counts)",
+    "key": "decibel-30b-a3b-v0",
+    "listing_disclosure": {
+     "ruling": "deputy #86285, DECISIONS decibel30b-listing-nc-training-data-1126",
+     "text": "Weights Apache-2.0; author-reported training data includes non-commercially licensed (e.g. CC BY-NC-SA) and share-alike/ODbL sources; check data licences before commercial use."
+    },
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Starlord v2 / Strands v2 / basal-omni-2.0-mini-preview / Turion-JEV-4B on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "decagon-ai/Decibel-30B-A3B-v0@8ffed078ae92fe0fc2c4c37f79e7833271e3f6ec",
+    "pod": "Verda 1RTXPRO6000.30V FIN-03 instance da411600, network-cut (custody word #86219, ADM 2d07e2b4 / PAIR 1bd30b73; Florian code exception card 20415; CONSUMED on #9, handoff #86255)",
+    "raw_sha256": "9b0bad01c7a589430a2e4c1073b9d9b21cf1d6651ffb90c31c87c85f49f8e71b",
+    "raw_status": {
+     "200": 1495,
+     "422": 5
+    },
+    "raw_verified_sha256": "38ec2e51d72bda1a14f5b14503d9b230a50dd72472913d24e1729a3635c8624c",
+    "refusals": "5 of 1,500: HTTP 422 input_too_long at exactly the pre-registered length_refused_positions, refused by the kit before any server call; scored as refusals (wrong, out of Calibration) and counted as instant decisions in Speed (latency_s 0.0 in the scorer-side view only, raw unchanged; Speed n 1,500 instead of 1,495), same treatment as Turion-JEV-4B and WePocketModel1.0-4B under deputy ruling #86184 (DECISIONS turion4b-d1122-preflight-refusal-latency-1126; identical facts)",
+    "scorer_output_sha256": "389a8eecb47a3bdbf71e37254c6f7990f89eb5166f705e1ed3a34c63a874ce1b",
+    "scorer_view": {
+     "composite_delta": {
+      "A_raw_output_delta_1500_vs_1495": 0.006050497190564386,
+      "note": "whole-run difference; the measured-only run also changes the Cost denominator, so it is not a Speed-only effect"
+     },
+     "latency_set_0_on": 5,
+     "note": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points).",
+     "rows": 1500,
+     "ruling": "deputy #86184 (Turion; identical facts), DECISIONS turion4b-d1122-preflight-refusal-latency-1126",
+     "sha256": "579ab373b40cb80fadcd618eab5a8bd7c31a5769af5d8456fd1b3fc1251813bb",
+     "speed_delta_vs_measured_only": {
+      "axis_1495": 76.82065647263732,
+      "axis_1500": 76.8221516973535,
+      "delta": 0.0014952247161801324,
+      "p50_raw_1495": 0.5776445799999692,
+      "p50_raw_1500": 0.5774962939999568,
+      "p95_raw_1495": 0.7215217251998183,
+      "p95_raw_1500": 0.7214284941998813
+     }
+    }
+   },
+   "source_results_sha256": "389a8eecb47a3bdbf71e37254c6f7990f89eb5166f705e1ed3a34c63a874ce1b",
+   "verdict": "PASS_WITH_CONDITIONS"
+  },
+  "decision-4b-v16": {
+   "aggregate_sha256": {
+    "categories": "7cc1c1a5abe993a20c7e49d5b7d5a5710a50ebcf1b0a1b65e3a8f99329865076",
+    "decisive": "9d85b16dea5d9b9f400a9786a0a6873602c2d56f77fe950e7af4a31a3f27f766"
+   },
+   "artifact": "r256/decision-4b-v16/DECISION-4B-V16-SCORES-R256.json",
+   "artifact_sha256": "7f28a8828836c1174de403ad74c143b81e04f2de0992b537176255e0fc92e625",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r259-mica-d4b16-critic",
+   "internal_disclosures": [
+    "Weights Apache-2.0 with an explicit evaluation-and-publication permission file (static review r232).",
+    "Above 26 options the readout is two-level (as in the PREREG).",
+    "At load the kit allows the FLASH, EFFICIENT and MATH SDPA kernels so the author's CUDA graph capture works; graph replays (<= 4,096 tokens) may run captured EFFICIENT/MATH kernels, so \"FLASH-only scoring\" would be inexact (deputy #86283); eager passes above 4,096 tokens stay FLASH-only.",
+    "A fit-gate fix in our kit only (time forecast in smoke.py), no change to the readout (review-d4b16-fitfix PASS).",
+    "v1.5 numbers do not stand in: v1.6 fits choice/score temperature 1.45 (v1.5: 1.25)."
+   ],
+   "setup_sha256": "aca6b760b754d0b8aae78ead68f534369ed9a403e5fd0ebe42b4dd90eb65f887",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "cells_n30": {
+     "family": {
+      "cells": 58,
+      "min_n": 2,
+      "under_30": 55
+     },
+     "lang": {
+      "cells": 23,
+      "min_n": 5,
+      "under_30": 18
+     },
+     "type": {
+      "cells": 3,
+      "min_n": 375,
+      "under_30": 0
+     },
+     "usecase": {
+      "cells": 20,
+      "min_n": 30,
+      "under_30": 0
+     }
+    },
+    "cleanup_confirmed_sha256": "d596703721da9aaf931a407c8f4a3f0eac5a596d11f423032131da0400745a38",
+    "cost": {
+     "basis": "min(list, GPU-time), estimate: list deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 per M -> USD 0.021214919999999998/1k; GPU-time RTX PRO 6000 USD 1.5235/h, 70% load, small qwen 4B active, 61,525 tok/s -> USD 0.006948810033345587/1k; gpu binds. Usage = measured prefill tokens; refusals carry no output usage",
+     "input_tokens": 1060746,
+     "output_tokens": 0,
+     "usd_per_1000": 0.006948810033345587
+    },
+    "critic": null,
+    "disclosures": [
+     "Weights Apache-2.0 with an explicit evaluation-and-publication permission file (static review r232).",
+     "Above 26 options the readout is two-level (as in the PREREG).",
+     "At load the kit allows the FLASH, EFFICIENT and MATH SDPA kernels so the author's CUDA graph capture works; graph replays (<= 4,096 tokens) may run captured EFFICIENT/MATH kernels, so \"FLASH-only scoring\" would be inexact (deputy #86283); eager passes above 4,096 tokens stay FLASH-only.",
+     "A fit-gate fix in our kit only (time forecast in smoke.py), no change to the readout (review-d4b16-fitfix PASS).",
+     "v1.5 numbers do not stand in: v1.6 fits choice/score temperature 1.45 (v1.5: 1.25)."
+    ],
+    "draw": "v1.6-regular-20261122",
+    "driver_exit": {
+     "exit": 0
+    },
+    "engine": "mica-template kit 8a07d03c, author's in-process adapter (not run_jevbench.py, which caps at 1,000 tasks), effective context 131,072, one forward pass, temperature choice/score 1.45, noul 0.4, zero generated tokens",
+    "key": "decision-4b-v16",
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Turion / Decibel / Synaps / Mica on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "flymy-ai/decision-4b-v1.6@669cf8d8 (rank-16 LoRA on Qwen/Qwen3.5-4B@851bf6e8); static source review PASS r232",
+    "pod": "Verda 1x RTX PRO 6000 96 GB FIN-03, network-cut, about 18 min / about USD 1 (intake); ADM 07210061, PAIR 98365d31; cleanup-confirmed; custody CONSUMED #9; handoff #86833 (jevbench-auto-intake); Florian exact-scope one-run code exception cards 20385 / 20445 / 20463 (DECISIONS d4b16-fitfix-code-exception-renewal-1126)",
+    "prereg_final_sha256": "1397b5c4648547a8af0c5cced14c5a73b2d7de1abf560103562867adb65eaf27",
+    "raw_sha256": "79d7f84e0e0646b0bdf15c0a19b82da16ee414c1ebc80c72b45d60b5bff9d7da",
+    "raw_status": {
+     "200": 1500
+    },
+    "raw_verified_sha256": "c091c78cb6548a7cc6e4c7305d565394c138e0bf2e2c6e7c6286fac9d3fa06d8",
+    "refusals": "none: 1,500/1,500 HTTP 200, native probabilities, 0 preregistered refusals",
+    "scorer_output_sha256": "d07e70484ef00f96988af3e34783a418b52c1ad27c0c3d056eb4da086f784eb1"
+   },
+   "source_results_sha256": "d07e70484ef00f96988af3e34783a418b52c1ad27c0c3d056eb4da086f784eb1",
+   "verdict": "PASS"
+  },
+  "mica-v01-4b": {
+   "aggregate_sha256": {
+    "categories": "2bd65ce2c2feb3de820d6e0d777c73bfaf4c7048ef5a8de04cdf0fd14087669f",
+    "decisive": "7447cd23ea603daca58e8f617edddab732c61e34302a0cad14be56554b345772"
+   },
+   "artifact": "r254/mica/MICA01-SCORES-R254.json",
+   "artifact_sha256": "12fab53a891b8a23f27f14fd7bbf5306934b7c0bf979b560f60f66fa0c93db98",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r259-mica-d4b16-critic",
+   "internal_disclosures": [
+    "Weights Apache-2.0 (LICENSE/NOTICE at the pin name the Qwen base Qwen/Qwen3.5-4B).",
+    "Author-reported: half of the public hard set was used in recipe and LoRA-scale selection; item text excluded from training.",
+    "Completeness ceiling of this serving path on d1122: 1,495/1,500 (8,192-token window).",
+    "Replaces the v1.5 not-measured entry for mica-v01-4b (v0.1.2 stopped at 1,088/1,624 under the refusal policy); the release lane decides whether this keeps the key."
+   ],
+   "setup_sha256": "016fc25cf6343916f7fe1cf06f7055463bf64d197631461c20931fd4452c277d",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "cleanup_confirmed_sha256": "48bc627be1f87ec0b8abfd857fa8cafdde54bffe6bf5e2dc77960b16df25f8dd",
+    "cost": {
+     "basis": "min(list, GPU-time), estimate: list deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 per M -> USD 0.013338380000000004/1k; GPU-time RTX PRO 6000 USD 1.5235/h, 70% load, small qwen 4B active, 61,525 tok/s -> USD 0.004368900225528832/1k; GPU-time binds (Turion-JEV-4B / amber-4b precedent). Usage = measured llama.cpp prefill tokens, 0 output tokens (native-probability rule, 9 Oct); refusals carry no usage",
+     "input_tokens": 666919,
+     "output_tokens": 0,
+     "usd_per_1000": 0.004368900225528832
+    },
+    "critic": null,
+    "disclosures": [
+     "Weights Apache-2.0 (LICENSE/NOTICE at the pin name the Qwen base Qwen/Qwen3.5-4B).",
+     "Author-reported: half of the public hard set was used in recipe and LoRA-scale selection; item text excluded from training.",
+     "Completeness ceiling of this serving path on d1122: 1,495/1,500 (8,192-token window).",
+     "Replaces the v1.5 not-measured entry for mica-v01-4b (v0.1.2 stopped at 1,088/1,624 under the refusal policy); the release lane decides whether this keeps the key."
+    ],
+    "draw": "v1.6-regular-20261122",
+    "engine": "mica-template kit adcc57c8 (trusted Mica bridge), llama.cpp b11010 4bc272fd CUDA 12.8.1, n_ctx_seq 8192, logits-only readout, zero generated tokens",
+    "key": "mica-v01-4b",
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Turion-JEV-4B / Decibel / Synaps on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "sky7350/Mica-v0.1-4B@9b6428b272f4708ef54a4702b52bb453a4059363, mica-v0.1-4b-BF16.gguf sha256 9c89cd52 (weights byte-equal to the submitted ca36594 pin); server akivet/Mica v0.1.3 d4dcf8ed",
+    "pod": "Verda 1x L40S 48 GB FIN-02, pod 1bbd6226-3654-498f-8d40-b3e1ba0e6e0f, network-cut; ADM 570feb8b; instance + volume absent (cleanup-confirmed); custody CONSUMED #9; handoff #86732 (jevbench-auto-intake); Florian exact-scope code exception card 20443 (DECISIONS d1122-cerno-mica-fix-code-exception-20443)",
+    "prereg_final_sha256": "b7ea39dec89d5d589a8efbddb7d742420ee2372a2f16ad7fe80f9b8b322c37ae",
+    "raw_sha256": "53d0730d2d053f4edda1c96240845a3294f5f9f6109a848c8b9ba0f568eadfe1",
+    "raw_status": {
+     "200": 1495,
+     "422": 5
+    },
+    "raw_verified_sha256": "1d1693599c6c7d1235e3aa875c4414a219f8d14ee247399291d40605f225f214",
+    "refusals": "5 of 1,500: input_too_long (over 8,192 rendered tokens) at exactly the pre-registered COUNT positions, refused by the trusted bridge before author inference and recorded as scorer 422; scored as refusals (wrong, out of Calibration). Unlike Turion, the raw carries the bridge wall time for these rows, so no scorer-side view was needed (Speed n 1,500 straight from the raw)",
+    "scorer_output_sha256": "e447472e9281e9446d4452094cae822d71507c44450f26d55e875b9c14120000"
+   },
+   "source_results_sha256": "e447472e9281e9446d4452094cae822d71507c44450f26d55e875b9c14120000",
+   "verdict": "PASS_WITH_CONDITIONS"
+  },
+  "synaps-decision-1.0-27b-preview": {
+   "aggregate_sha256": {
+    "categories": "b6e61485abc733aad16f60e505ff7808bc03c1236c0bc4758771b9c8c91e5d62",
+    "decisive": "dfa880d985af074ee44739a8a6025df24362130ead17507b47c7d0e9bc11f0b9"
+   },
+   "artifact": "r253/synaps/SYNAPS27-SCORES-R253.json",
+   "artifact_sha256": "5556a31538e47aa8d482ad8c2038b2258a46d91671e4e0f59349339f666c67d1",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r253-synaps-critic",
+   "internal_disclosures": [
+    "Frozen kit PREREG text still describes the .CC envelope; the run used the plain 1RTXPRO6000.30V card (blocker-supervisor #86473, money terms unchanged), as stated in the final PREREG 173cc884 lead section.",
+    "Latency is pod-side per request (median 0.076 s, p95 0.193 s per the handoff).",
+    "Author-reported (author's release_info.json at the pin, as read in run 122's offline triage; recorded in the ADD-REQUESTS ledger row for GitHub #235, the triage folder r122 itself no longer exists): calibration regressed after adaptation on the author's own three sets (ECE 0.0090 -> 0.0213); no recalibration applied here.",
+    "The author's l2dev / retencja / Tacit PL figures reuse JevBench axis names on the author's own items and are not JevBench scores.",
+    "Training data per the author: 4,000 procedural synthetic items, no JevBench items, no protected-set decontamination guarantee."
+   ],
+   "setup_sha256": "f7edf1aa862f395e13cbf7a07d1e49c340fc489c4f4a1ca39cb0c5bd702b6fdd",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "collection_receipt_sha256": "777f5656ed4316d13b023b3c1886d24b5b7c0eb636c451c255a3d34f009d5e5a",
+    "cost": {
+     "basis": "min(list, GPU-time), estimate: list qwen/qwen3.8-27b 0.42/3.00 per M -> USD 0.28060376/1k; GPU-time RTX PRO 6000 USD 1.5235/h, 70% load, dense qwen 27B active, 11,763 tok/s -> USD 0.03402173385114387/1k; GPU-time binds (autojev-27b / eikos-27b / clef precedent on this base). Usage = rendered prompt tokens + exactly one generated token per decision (PREREG line 36; accepted by the release-owner lane as real compute). Existing Eikos/AutoJev/Clef logprob rows report zero output tokens; Synaps counts the one generated readout token required by its preregistered adapter. This accounting difference is accepted for this row and increases its GPU-time estimate by 0.1513 % (USD +0.0000514/1k)",
+     "input_tokens": 991442,
+     "output_tokens": 1500,
+     "usd_per_1000": 0.03402173385114387
+    },
+    "critic": "workers/r253-synaps-critic (codex gpt-6.1-sol) PASS_WITH_CONDITIONS: exact replay (1,145 numeric fields, max |delta| 0), M1 + S1 + S2 applied",
+    "disclosures": [
+     "Frozen kit PREREG text still describes the .CC envelope; the run used the plain 1RTXPRO6000.30V card (blocker-supervisor #86473, money terms unchanged), as stated in the final PREREG 173cc884 lead section.",
+     "Latency is pod-side per request (median 0.076 s, p95 0.193 s per the handoff).",
+     "Author-reported (author's release_info.json at the pin, as read in run 122's offline triage; recorded in the ADD-REQUESTS ledger row for GitHub #235, the triage folder r122 itself no longer exists): calibration regressed after adaptation on the author's own three sets (ECE 0.0090 -> 0.0213); no recalibration applied here.",
+     "The author's l2dev / retencja / Tacit PL figures reuse JevBench axis names on the author's own items and are not JevBench scores.",
+     "Training data per the author: 4,000 procedural synthetic items, no JevBench items, no protected-set decontamination guarantee."
+    ],
+    "draw": "v1.6-regular-20261122",
+    "engine": "adapter merged into the base on the GPU (PEFT merge_and_unload safe_merge, bf16; MERGED-SHA256SUMS d90c99a2, 18 files); stock vLLM 0.30.0 image 8a69ffad (UVA-off fix), max-model-len 262,144 (selected on public probes), chat completions, prefill \"Answer: \", max_tokens 1, T 1.0, top_logprobs 20, softmax over the item codes (eikos letter_adapter readout; token.strip() matching, maximum over duplicate token forms, a code absent from the top 20 floored at min(returned logprobs) - 5.0); kit f1314f6f (Synaps cc7 -> plain1 lineage), no author code run",
+    "final_prereg_sha256": "173cc8849e4add8cc81db9d9d0897b4b8d66e4a585d4a7b9aada031870348e68",
+    "key": "synaps-decision-1.0-27b-preview",
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Starlord v2 / Strands v2 / basal-omni-2.0-mini-preview / Turion-JEV-4B / Decibel on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "Synaptivo/Synaps-Decision-1.0-27B-Preview@a84fb94977ddef4734375c54db020178d45178ca (LoRA r32, adapter sha256 cce9634b) on Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "pod": "Verda 1RTXPRO6000.30V FIN-03 (plain, not .CC) pod 18f8c11c-0e31-4f49-a55d-ad822b54bc95, network-cut; ADM14 127c92d3 / PAIR14 c64e9576; custody word #86515; CONSUMED #86606; handoff #86608 (jevbench-auto-intake)",
+    "raw_sha256": "115e433e40a94215956eb84ec6bfca253f1e5f6c6d800b382bd5a95013f4d7f5",
+    "raw_status": {
+     "200": 1500
+    },
+    "refusals": "none: 1,500/1,500 HTTP 200, 0 length refusals at context 262,144 (as preregistered by the LEAD count); 5 answers over the 10 s decision limit, scored under the standard share treatment",
+    "scorer_output_sha256": "09be9c6eb3ba07aed27f0e3c977db74b16ff9ca1d31194e38bd34c8385fd2bdc"
+   },
+   "source_results_sha256": "09be9c6eb3ba07aed27f0e3c977db74b16ff9ca1d31194e38bd34c8385fd2bdc",
+   "verdict": "PASS_WITH_CONDITIONS"
+  },
+  "turion-jev-4b": {
+   "aggregate_sha256": {
+    "categories": "2e51a69052cf39dd910e3358dc63fba7f1f42ef1645af43e3e2a49e712a31efd",
+    "decisive": "d75e9d15e26135cce360a339d9e5598b4df7ccfeff665d2e0233aec44e2458bf"
+   },
+   "artifact": "r247/turion/TURION4B-SCORES-R247.json",
+   "artifact_sha256": "b1fb015bf3c69eb69f20f626487908574bdd70b15b3718148d78c73a3aec0e28",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r247-turion-critic",
+   "internal_disclosures": [],
+   "setup_sha256": "7b1cd23e0726f1739b03a01a307b6dc1f932290b229e6c4e6e5b50321ef0ed9a",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "cleanup_confirmed_sha256": "6539440455b39796fef45fd2f92d21a5aa02de40f28eb7c090dff7097344740f",
+    "cost": {
+     "basis": "min(list, GPU-time), estimate: list deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 per M -> USD 0.03498768000000001/1k; GPU-time RTX PRO 6000 USD 1.5235/h, 70% load, small qwen 4B active, 61,525 tok/s -> USD 0.011459988622511174/1k; GPU-time binds (amber-4b / classone-qwen3.5-4b precedent)",
+     "input_tokens": 1749384,
+     "output_tokens": 0,
+     "usd_per_1000": 0.011459988622511174
+    },
+    "draw": "v1.6-regular-20261122",
+    "engine": "auto-intake kit cb052aee (decision-index engine, kit_engine; READY runtime manifest 411b5e53)",
+    "key": "turion-jev-4b",
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Starlord v2 / Strands v2 / basal-omni-2.0-mini-preview on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "turion-ai/turion-jev-4b@b169f6098b1af1956cb59933d89381c6c3f34403",
+    "pod": "Verda L40S instance 29941594, network-cut (CONSUMED #86170, word #83313, ADM 7c9c2d70 / PAIR 998bb1c9)",
+    "raw_sha256": "baaed381c5b2048e2511db3ce24b56f1795e78858c4579eae0b9ad603b105aaf",
+    "raw_status": {
+     "200": 1495,
+     "422": 5
+    },
+    "raw_verified_sha256": "36ec71925464780f084f077a9a7a8bacc9954032a988c956f5f377debd382549",
+    "refusals": "5 of 1,500: HTTP 422 input_too_long at exactly the pre-registered length_refused_positions, refused by the kit before any server call; scored as refusals (wrong, out of Calibration) and counted as instant decisions in Speed (latency_s 0.0 in the scorer-side view only, raw unchanged; Speed n 1,500 instead of 1,495), per deputy ruling #86184 (DECISIONS turion4b-d1122-preflight-refusal-latency-1126)",
+    "scorer_output_sha256": "1d1cfa2025cc7744065c248562ab2cbffb447d21949718a5e9c5b3bcb966284c",
+    "scorer_view": {
+     "composite_delta": {
+      "A_raw_output_delta_1500_vs_1495": 0.006797636591336698,
+      "source": "workers/r247-turion-critic S1 (measured-only run also changes the Cost denominator 1500->1495)",
+      "speed_only_composite_delta_cost_fixed": 0.00020981518625973195
+     },
+     "latency_set_0_on": 5,
+     "note": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.002 Speed points).",
+     "rows": 1500,
+     "ruling": "deputy #86184, DECISIONS turion4b-d1122-preflight-refusal-latency-1126",
+     "sha256": "5309566ecb411cfba69bb87194f9e7fd641b423e030b10af31e6000e2a1c89ff",
+     "speed_delta_vs_measured_only": {
+      "axis_1495": 86.21754592218399,
+      "axis_1500": 86.21975970955891,
+      "delta": 0.0022137873749272785,
+      "p50_raw_1495": 0.10253078200003074,
+      "p50_raw_1500": 0.10245995749994563,
+      "p95_raw_1495": 0.2614431964000687,
+      "p95_raw_1500": 0.2614059469000722
+     }
+    }
+   },
+   "source_results_sha256": "1d1cfa2025cc7744065c248562ab2cbffb447d21949718a5e9c5b3bcb966284c",
+   "verdict": "PASS_WITH_CONDITIONS"
+  },
+  "wepocketmodel1.0-4b": {
+   "aggregate_sha256": {
+    "categories": "7d6df1f8016180dc746854e77dddbdcaff22907b08563f2fdc39b5c9cd30541f",
+    "decisive": "2d6f4fe64c51c91b7f63a87dfcf664f551d43f69d2e476a12fb070c09607a0b7"
+   },
+   "artifact": "r247/wepm/WEPM4B-SCORES-R247.json",
+   "artifact_sha256": "b2d40a1a8bff3940678fd1bdcd11ba4a51107e86dbf4cf726f10b3d12f08c19d",
+   "conditions_applied": "approved public notes, including Mica M1 timing disclosure",
+   "critic": "workers/r247-wepm-critic",
+   "internal_disclosures": [],
+   "setup_sha256": "e165e825b2cac71445c713e47495d8f0eddd851546a41bdc4ff8ee01d81cf282",
+   "source_record": {
+    "G_med": 2.573387642438244,
+    "cleanup_confirmed_sha256": "561b97454e18a3ac32cc9ccdb43d2250815fc84b6a51e34247ead157265300e9",
+    "cost": {
+     "basis": "min(list, GPU-time), estimate: list deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 per M -> USD 0.011639360000000001/1k; GPU-time RTX PRO 6000 USD 1.5235/h, 70% load, small qwen 4B active, 61,525 tok/s -> USD 0.0038123971973366526/1k; GPU-time binds (amber-4b / classone-qwen3.5-4b precedent)",
+     "input_tokens": 581968,
+     "output_tokens": 0,
+     "usd_per_1000": 0.0038123971973366526
+    },
+    "draw": "v1.6-regular-20261122",
+    "engine": "auto-intake kit 1048f011, wrapper 2b5f2ab1, author runtime github.com/Tencent/WePocketModel@4f18f63b7056 (learned decision slot, one forward pass, enable_thinking false); base Qwen/Qwen3.5-4B per LICENSE.txt (card has no base_model tag)",
+    "key": "wepocketmodel1.0-4b",
+    "method": "v1.8 official frozen path: score_v17 6363458d / score_v16 02132271, JEV_NOUL_METHOD=O1S, B 1000, seed 16, G_med fixed 2.573387642438244 (carried from v1.8.18, unchanged in v1.8.20; as Starlord v2 / Strands v2 / basal-omni-2.0-mini-preview / Turion-JEV-4B on this draw), offset 0 (draw anchor-runs-pending), decision limit 10 s share; no cost basis (all 1,500 items)",
+    "model_pin": "tencent/WePocketModel1.0-4B@d57517468ff546df8cb9c6da5c76319810d3523b",
+    "pod": "Verda L40S instance 7a57aa1f, network-cut (CONSUMED #86197, word #86136, ADM 0e4e7357 / PAIR ba5d8a4b)",
+    "raw_sha256": "3894601db5f82cc7d934d7889e35cacf2dadc6016ee4c6c795ca7fe613805855",
+    "raw_status": {
+     "200": 1495,
+     "422": 5
+    },
+    "raw_verified_sha256": "392d1427cdeb25e4b87d3bb91ed06b61652462e36168878972560c1d623772aa",
+    "refusals": "5 of 1,500: HTTP 422 input_too_long at exactly the pre-registered length_refused_positions, refused by the kit before any server call; scored as refusals (wrong, out of Calibration) and counted as instant decisions in Speed (latency_s 0.0 in the scorer-side view only, raw unchanged; Speed n 1,500 instead of 1,495), same treatment as Turion-JEV-4B under deputy ruling #86184 (DECISIONS turion4b-d1122-preflight-refusal-latency-1126; identical facts)",
+    "scorer_output_sha256": "43d57d44b7b8fba7bdd7700afd437e90689cb448199904c20fa9504e37b9d371",
+    "scorer_view": {
+     "composite_delta": {
+      "A_raw_output_delta_1500_vs_1495": 0.0056006320837838075,
+      "note": "whole-run difference; the measured-only run also changes the Cost denominator 1500->1495, so it is not a Speed-only effect (workers/r247-wepm-critic S2)"
+     },
+     "latency_set_0_on": 5,
+     "note": "5 inputs over the context limit were refused by the kit before inference. They are scored as refusals and count as instant decisions in Speed (delta vs the measured-only basis: +0.001 Speed points).",
+     "rows": 1500,
+     "ruling": "deputy #86184 (Turion; identical facts), DECISIONS turion4b-d1122-preflight-refusal-latency-1126",
+     "sha256": "841bdeb62748313fa50e0e7c00f0e12dfb594ea70c254c46a74a6bc4a934719f",
+     "speed_delta_vs_measured_only": {
+      "axis_1495": 82.60244220595895,
+      "axis_1500": 82.60345940996831,
+      "delta": 0.0010172040093578971,
+      "p50_raw_1495": 0.261198954000065,
+      "p50_raw_1500": 0.26113719399995716,
+      "p95_raw_1495": 0.3334128802999885,
+      "p95_raw_1500": 0.3333922550500006
+     }
+    }
+   },
+   "source_results_sha256": "43d57d44b7b8fba7bdd7700afd437e90689cb448199904c20fa9504e37b9d371",
+   "verdict": "PASS_WITH_CONDITIONS"
+  }
+ }
+}

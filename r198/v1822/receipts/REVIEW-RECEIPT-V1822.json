@@ -1,0 +1,23 @@
+{
+ "release": "v1.8.22",
+ "engine": "Claude Code, claude-opus-5-5 (Opus 5.5), account C, effort medium",
+ "verdict": "PASS",
+ "reviewed_head": "4075add5cd12120bb82266849d78bb458f6d3c43",
+ "base": "5a52ad05636936d32fd570f32972650eb24c5255",
+ "scope": "independent critic, final bytes: full review of 0ca15dbb (r259/critic1, all checks except M1/M2 passed) + scoped re-review of the M1/M2 fix commit",
+ "checks": [
+  {"id": "diff-scope", "result": "PASS", "evidence": "git diff --stat 0ca15dbb 4075add5: 3 files, +2/-3: approval_v1822.py (-1 line: the stray `for e in ex), ...` line), data/jevbench-draw-equating.json (d1027 latest_release v1.8.19 -> v1.8.22 only), test/jevbench-v1820-release.test.mjs (before[3].latest_release pin only). Nothing else."},
+  {"id": "M1-closed", "result": "PASS", "evidence": "approval_v1822.py imports; py_compile on all r198/v1822/*.py passes. check_approval refuses the current PENDING inputs/APPROVAL.json (AssertionError 'the release owner binds the GO text...'). In a /tmp copy, a simulated GO APPROVAL.json plus proof.publication_approval set to match returns True. GO with the stale PENDING proof is refused."},
+  {"id": "M2-closed-tests", "result": "PASS", "evidence": "20 files, node --test --test-concurrency=1, NODE_OPTIONS=--max-old-space-size=6144, NEON_API_KEY/SUPABASE_PWD unset: 127 tests, 127 pass, 0 fail, all exit 0 (v1822-release 5/5, v1822-topics-base 1/1, cr-257-v1822-min-samples 4/4, v1713..v1821 release files all green, v1820 4/4). validate_v1822.mjs exit 0: 'PASS validator; 21 negative controls'."},
+  {"id": "d1027-latest-release-consistency", "result": "PASS", "evidence": "v1.8.19 (10adc5ff4) appended v1.8.19 to d1027 releases and moved latest_release v1.8.18 -> v1.8.19 in the same change. 4075add5 does the same for v1.8.22, which 0ca15dbb had already appended to releases. All five draws now have latest_release == releases[-1]."},
+  {"id": "d1027-page-api-consequence", "result": "PASS", "evidence": "d1027 has joins_via 'v1.7-addendum'. readCohortRows (lib/jevbench-cohort-merge.mjs:224) and readChainLatestRelease (lib/jevbench-live-board.mjs:222) both skip addendum draws, so neither the cohort reader map nor the feed's latest_release/latest_release_page reads d1027.latest_release. readDrawEquating only checks that it matches /^v1\\.(7|8)\\.\\d+$/, and v1.8.22 does. The board's draw table (components/JevBenchV16Board.tsx:281) renders d.releases, which is unchanged. No page links d1027.latest_release; the effect is limited to metadata consistency."},
+  {"id": "publication-manifest-pins", "result": "PASS", "evidence": "jevbench-v1.8.22-publication.json pins 6 path/sha256 pairs, all match the 4075add5 bytes (0 mismatches). None of the 3 changed files is pinned or named in the manifest, proof, r198/v1822/receipts or r198/v1822/inputs. git diff 0ca15dbb 4075add5 is empty for data/raw/benchmarks/jevbench/v1.8/ and lib/."}
+ ],
+ "musts": [],
+ "notes": [
+  "Read-only review in detached checkout /tmp/r259-critic2 at 4075add5. The checkout has been removed and the worktree list pruned.",
+  "Out of scope, for the lead: at review time the builder worktree /home/flori/wt/jevbench-v1822-20261126 had UNCOMMITTED changes to APPROVAL.json (status GO naming this re-review), proof.json, publication.json, lib/jevbench-v1822-release.mjs and data/jevbench-v1.8.22-alldata.json. This PASS covers the committed bytes of 4075add5 only, not the GO flip. After committing the flip, re-run validate_v1822.mjs and the v1822 tests and re-check the manifest pins.",
+  "No sealed raws read. No repo edits, pushes or messages."
+ ],
+ "date": "2026-11-26T15:21:00Z"
+}
