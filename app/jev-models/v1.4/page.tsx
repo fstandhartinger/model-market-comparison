@@ -2,7 +2,6 @@ import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegac
 import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import type { Metadata } from 'next';
 import { readJevbenchV14, jevbenchV14View } from '../../../lib/jevbench-v14.mjs';
-import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 import { seoTitle } from '../../../lib/seo';
 
