@@ -1,0 +1,35 @@
+{
+ "alibaba-decision-model-sg": {
+  "author": "Alibaba Cloud (Model Studio)",
+  "code_commit": null,
+  "cost_basis": "Cost uses the provider's published list price. Free quotas, free previews and launch credits are not counted. USD 0.042 per million input tokens, output free; 480,609 input tokens over 600 decisions give USD 0.03364263 per 1,000 decisions. The API bills input tokens only and reports no output token count; cost uses input tokens.",
+  "disclosure": "Hosted API from Alibaba Cloud (Model Studio), Singapore endpoint, served model decision-model, measured 26 Nov 2026 on the 600-item supplementary set (300 sealed and 300 public items). All 600 requests were answered (HTTP 200).",
+  "display": "Alibaba decision-model",
+  "endpoint_condition": "Vendor-hosted Alibaba Model Studio decision-model API, Singapore endpoint; native probabilities; one question per request; measured on the 600-item supplementary set (300 sealed and 300 public items).",
+  "http_status": {
+   "200": 600
+  },
+  "licence": "Proprietary hosted API (no weights published)",
+  "measured_on": "2026-11-26",
+  "model_pin": "hosted-api:https://www.alibabacloud.com/help/en/model-studio/decision-model-api#decision-model",
+  "notes": "Hosted API from Alibaba Cloud (Model Studio), Singapore endpoint, measured 26 Nov 2026 on the 600-item supplementary set.",
+  "repo": "https://www.alibabacloud.com/help/en/model-studio/decision-model-api"
+ },
+ "urun-sense": {
+  "author": "uRun",
+  "code_commit": null,
+  "cost_basis": "Cost uses the provider's published list price. Free quotas, free previews and launch credits are not counted. USD 0.025 per million input tokens, output free; 310,149 input tokens over 600 decisions (the 3 requests that returned HTTP 502 report no tokens) give USD 0.012922875 per 1,000 decisions.",
+  "disclosure": "Hosted API from uRun, measured 25 Nov 2026 on the 600-item supplementary set (300 sealed and 300 public items). Measured through the provider's sense-latest model alias. 3 of 600 requests returned HTTP 502; they count as wrong answers and all 600 items remain in the denominator.",
+  "display": "uRun Sense",
+  "endpoint_condition": "Vendor-hosted uRun /v1/systemone endpoint; native probabilities; one question per request; measured through the sense-latest model alias on the 600-item supplementary set (300 sealed and 300 public items).",
+  "http_status": {
+   "200": 597,
+   "502": 3
+  },
+  "licence": "Proprietary hosted API (no weights published)",
+  "measured_on": "2026-11-25",
+  "model_pin": "hosted-api:https://inference.urun.sh#sense-latest",
+  "notes": "Hosted API from uRun, measured 25 Nov 2026 on the 600-item supplementary set. Measured through the provider's sense-latest model alias.",
+  "repo": "https://inference.urun.sh"
+ }
+}
