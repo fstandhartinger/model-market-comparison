@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "b9346844b1258d3f9b90970612b69a9c11e06690a1ca212a0b095e43cdd6be28",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:f10d9ca5000d476646918023",
+    "public:83d8e4d7041d70e9c92f16a0",
+    "public:1f1dd66d67012938fb9f4bb1",
+    "public:d496db57f385aa9dae80025b",
+    "public:14b9b457e88e7853b29d1889",
+    "public:f1afe3e5b760f6e567fd0542",
+    "public:da368b2aa8489ab0037d057c",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "As a read-only critic I cannot independently recompute row SHA-256 hashes, re-fetch the CSV, or execute transport/qualification checks; row hash binding and source retrieval are trusted from the owner's separately executed checks.",
+    "The board's app.py states W/10 is the published combination of W/10-Direct and W/10-Adherence, but the weighting/formula is not published. The rows report the served composite without deriving it, so no derivation is claimed to verify.",
+    "The source has published_at null; the only source-date evidence is retrieved_at and the per-row Test Date, both of which match the candidate rows."
+  ],
+  "missing_evidence": []
+}

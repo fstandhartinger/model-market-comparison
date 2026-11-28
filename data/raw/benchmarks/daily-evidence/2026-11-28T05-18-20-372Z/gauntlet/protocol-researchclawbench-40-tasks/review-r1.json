@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row researchclawbench::40-tasks: fields version / version_status",
+      "evidence": "Row claims version_status \"published\", i.e. version \"40-tasks\" copies a maintainer release identifier. SOURCE 3 (README) and SOURCE 1 (page) contain no release identifier for this board — only dated news entries and an initial-release note (2026-03-19) without a release version string. \"40-tasks\" matches the task-count identity, not a maintainer-published release id.",
+      "repair": "Either cite the actual maintainer-published release identifier the version copies, or set version_status to \"snapshot\" with version \"snapshot-<date>\" per the c2 vocabulary."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not execute owner hash or transport/qualification checks; accepted owner receipt as stated per instructions.",
+    "Row scoring notes reference 2026-09-21 coverage (33–40 of 40); no primary source in the packet covers that date's values, but this is context in the row's own protocol text, not a criterion field.",
+    "SOURCE 4 summary (10 changed values) supports status \"active\" only; methodology/task-set continuity under c1 rests on README/page text, which the version_guard summarizes consistently (40 tasks, 10 domains, weighted rubric LLM judge, 50=match, app.js plain mean per SOURCE 2).",
+    "SOURCE 5 served values (12.41–21.12) fall inside the row's range [0,100]; unit \"points\" not contradicted; protocol text need not restate scale per c1."
+  ],
+  "missing_evidence": [],
+  "notes": "c1 identity/description/metric/unit/range checked against SOURCE 1, SOURCE 2, SOURCE 3 and SOURCE 5; c2 status supported by SOURCE 4, superseded_by null consistent with protocol naming no successor; version_status is the sole unresolved field."
+}

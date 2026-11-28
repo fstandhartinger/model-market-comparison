@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "5050d13b2011264850a8980797f9b08366a812500e66ceeff3a0f901cc6f833b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:dfccc68685cb9ff910a9431d",
+    "public:b8e74505d0bcd2e0294058d8",
+    "public:10e88acf4df16d5940a8a4b0",
+    "public:27f3676e51af00c72c0925b1",
+    "public:5f661fe5e066d824afc5583c",
+    "public:dd67fe5b6274488338b00cca",
+    "public:075eaab72a9c30cc7fccdac1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute SHA-256 hashes or perform transport/qualification checks; per instructions these are owner-executed, so this is a limitation of my read-only review, not missing numeric evidence.",
+    "The 'basis: measured' field is inferred as the board's published test result; source does not explicitly label it measured versus derived, but no contrary evidence exists and the row's protocol claims only the published composite.",
+    "The NatInt composite weighting is not verified (source states the composition but not the weights); the artifact does not claim to provide weights, so this is not an error.",
+    "The production protocol and locator match the primary source excerpt; I have not executed a network fetch to confirm current availability."
+  ],
+  "missing_evidence": []
+}

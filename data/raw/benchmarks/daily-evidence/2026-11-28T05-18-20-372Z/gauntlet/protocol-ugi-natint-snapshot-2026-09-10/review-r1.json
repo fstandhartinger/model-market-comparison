@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-ugi-natint-snapshot-2026-09-10",
+  "artifact_sha256": "e8c5fbf22b910a838194bcb65eebffca49c38a4d0aa0ea7ac52b6a1ef07c9120",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi-natint::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row ugi-natint::snapshot-2026-09-10 (c1): identity 'NatInt 💡' matches the primary column name in app.py (PRESET_COLUMNS 'Overview', MASTER_COLUMN_ORDER, ALL_COLUMN_DEFS, 'Intelligence' preset); description matches 'Measures a model's general knowledge and reasoning capabilities across a range of standard and specialized domains' and the sub-components Textbook, Pop Culture, World Model; privacy note matches 'all test questions are kept private'. higher_better=true is consistent with descending sort on 'NatInt 💡' in load_leaderboard_data.",
+    "Row ugi-natint::snapshot-2026-09-10 (c1 scale): served summary (SOURCE 4) shows 1383 finite values, lowest 0.56, highest 81.9. Row states unit 'score' and range [null,null]; a null bound is the row declining to claim one, and no stated bound is contradicted by the served values, so unit/range are not contradicted. The app.py excerpt states no numeric scale for NatInt, which per criteria is not a mismatch.",
+    "Row (c2 status): SOURCE 3 activity summary reports 7 newly added 'NatInt 💡' values today vs prior snapshot, which is affirmative evidence for status 'active' per the criteria; protocol text shows no retirement or successor. superseded_by null is consistent: no successor board is named in either source excerpt.",
+    "Row (c2 version_status 'snapshot'): neither source excerpt publishes a release identifier for this board (app.py loads 'ugi-leaderboard-data.csv' with no version constant; the HF Space page excerpt contains only shell/metadata text), supporting 'snapshot'. The exact sha256 of the artifact file and per-row hash could not be recomputed by me; owner-side hash/transport checks are assumed per packet design.",
+    "SOURCE 2 (HF Space page) excerpt is mostly navigation chrome and adds nothing about the board's protocol; c1/c2 were settled from SOURCE 1 plus the generated summaries."
+  ],
+  "missing_evidence": []
+}

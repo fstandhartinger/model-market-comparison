@@ -1,0 +1,15 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "dce4bad3c5f7df7e51ce92e661b5e57c21470360cafc71d4506cfcf6b3e83148",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The paper publication date (source date) is not visible in the captured PDF fragments; the row's published_at is null and no specific date is claimed, so we could not independently confirm it. Retrieved_at is provided and matches the evidence.",
+    "The protocol label 'overall' in the row is not explicitly stated in Table 6, which only shows 'LongBench v2 (Acc.)'; however, the numeric value and other protocol details (8K token limit, original prompts, repeated testing for <1000 samples) match the evidence."
+  ],
+  "missing_evidence": []
+}

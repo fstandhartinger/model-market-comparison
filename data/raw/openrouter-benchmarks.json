@@ -13,8 +13,8 @@
     "design_arena_rows": 1283,
     "models": 351
   },
-  "response_sha256": "9ec2ec83874f90b5a0fc3df9d87e44160ae29f6b39cc32ee856fe1b65dd37238",
-  "own_response_sha256": "c63bc82aa14d6bee61465194d54d05527786be00e818f74b5c4631e6d37c1f0c",
+  "response_sha256": "cd858c1853d81031231f3bdee6e1519993308ae82a5392e319e3d61c2109813c",
+  "own_response_sha256": "4abb7522a6cb6b0fc4cac9b051041e0f71ba91f9dcaafd58c543568cb64a570b",
   "own_data": [
     {
       "source": "openrouter",
@@ -1349,6 +1349,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
+      "display_name": "Z.ai: GLM 4.7 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.62963,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.03961401515151516,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-13T21:28:41.390Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "deepseek/deepseek-chat-v3",
       "display_name": "DeepSeek: DeepSeek V3",
       "benchmark_type": "gpqa_diamond",
@@ -1478,17 +1489,6 @@
       "avg_cost_per_task": 0.0008383863636363636,
       "total_tasks": 396,
       "last_run_timestamp": "2026-10-01T19:13:37.127Z"
-    },
-    {
-      "source": "openrouter",
-      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
-      "display_name": "Z.ai: GLM 4.7 Flash",
-      "benchmark_type": "gpqa_diamond",
-      "accuracy": 0.486532,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.011848409090909092,
-      "total_tasks": 198,
-      "last_run_timestamp": "2026-08-30T01:15:14.669Z"
     },
     {
       "source": "openrouter",
@@ -4779,8 +4779,8 @@
       "multilingual_index": null,
       "decision_index": null,
       "pricing": {
-        "prompt": "0.00000007",
-        "completion": "0.0000002"
+        "prompt": "0.000000075",
+        "completion": "0.0000003"
       }
     },
     {
@@ -36374,6 +36374,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
+      "display_name": "Z.ai: GLM 4.7 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.62963,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.03961401515151516,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-13T21:28:41.390Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "deepseek/deepseek-chat-v3",
       "display_name": "DeepSeek: DeepSeek V3",
       "benchmark_type": "gpqa_diamond",
@@ -36503,17 +36514,6 @@
       "avg_cost_per_task": 0.0008383863636363636,
       "total_tasks": 396,
       "last_run_timestamp": "2026-10-01T19:13:37.127Z"
-    },
-    {
-      "source": "openrouter",
-      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
-      "display_name": "Z.ai: GLM 4.7 Flash",
-      "benchmark_type": "gpqa_diamond",
-      "accuracy": 0.486532,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.011848409090909092,
-      "total_tasks": 198,
-      "last_run_timestamp": "2026-08-30T01:15:14.669Z"
     },
     {
       "source": "openrouter",

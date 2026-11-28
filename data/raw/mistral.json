@@ -1,12 +1,12 @@
 {
   "source": "Mistral AI (La Plateforme) — docs.mistral.ai/inference/pricing (first-party, public; mistral.ai/pricing/api redirects here)",
   "region": "eu (France)",
-  "collected_at": "2026-11-23",
-  "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page (Standard mode, global prices, the page's default); every row of its 'Model | Input | Cached input | Output' tables in a section labelled 'Prices /M Tokens' whose input and output are both bare USD amounts is a chat/text model (OCR per 1000 pages, transcription per minute, TTS per M characters, embeddings without output and free moderation drop out); a struck-through list price beside a sale price publishes the sale price and names the list price in notes; duplicate rows must agree; identity is the row's normalized model name (or the name the page last used, source_name) against the curated snapshot — a model the snapshot does not name has its id read from the docs model page the row links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived, and that page must state the same input/output prices or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
+  "collected_at": "2026-11-28",
+  "method": "scripts/fetch-mistral-catalog.mjs: parse the public server-rendered pricing tables in USD, Standard mode, with regional inference off. Require explicit per-million-token units and both input and output prices. OCR, audio, embeddings, free moderation and self-hosted rows are outside scope. Match the curated model name or source_name. Check the linked public model page when the model name is unknown or a cached-input price disappears. The model page must agree on input and output pricing. Record those checks in docs_sources. See mistral.method.md.",
   "models": [
     {
       "model_name": "Z.ai GLM 5.3 Flash",
-      "source_name": "Z.ai GLM 5.3 Flash",
+      "source_name": "GLM 5.3 Flash",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.5,
@@ -35,7 +35,7 @@
       "region": "eu",
       "api_model_id": "zai-glm-5-3",
       "mapping": "derived",
-      "source_name": "Z.ai GLM 5.3"
+      "source_name": "GLM 5.3"
     },
     {
       "model_name": "Mistral Small 4",
@@ -45,8 +45,7 @@
       "region": "eu",
       "notes": "Apache-2.0",
       "api_model_id": "mistral-small-latest",
-      "source_name": "Mistral Small 4",
-      "cache_read_per_1m_usd": 0.015
+      "source_name": "Mistral Small 4"
     },
     {
       "model_name": "Mistral Large 4",
@@ -67,8 +66,7 @@
       "region": "eu",
       "notes": "open-weight edge model",
       "api_model_id": "ministral-14b-latest",
-      "source_name": "Ministral 3 14B",
-      "cache_read_per_1m_usd": 0.02
+      "source_name": "Ministral 3 (14B)"
     },
     {
       "model_name": "Ministral 3 8B",
@@ -78,8 +76,7 @@
       "region": "eu",
       "notes": "open-weight edge model",
       "api_model_id": "ministral-8b-latest",
-      "source_name": "Ministral 3 8B",
-      "cache_read_per_1m_usd": 0.015
+      "source_name": "Ministral 3 (8B)"
     },
     {
       "model_name": "Ministral 3 3B",
@@ -89,8 +86,7 @@
       "region": "eu",
       "notes": "open-weight edge model",
       "api_model_id": "ministral-3b-latest",
-      "source_name": "Ministral 3 3B",
-      "cache_read_per_1m_usd": 0.01
+      "source_name": "Ministral 3 (3B)"
     },
     {
       "model_name": "Codestral",
@@ -100,16 +96,58 @@
       "region": "eu",
       "notes": "Premier coding model",
       "api_model_id": "codestral-latest",
-      "source_name": "Codestral",
-      "cache_read_per_1m_usd": 0.03
+      "source_name": "Codestral"
     }
   ],
-  "response_sha256": "4300488037b6a57d1ca560204678142e669d7e0e467c70510bbfbd27c595e4b3",
+  "response_sha256": "09cbd0cbdec5ba0636e86ec3ee0e7a6b45c1ceb5403f909868d45b397d82ace0",
   "diff": {
     "added": [],
     "removed": [],
     "price_changed": [],
-    "cache_read_dropped": []
+    "cache_read_dropped": [
+      "Mistral Small 4",
+      "Ministral 3 14B",
+      "Ministral 3 8B",
+      "Ministral 3 3B",
+      "Codestral"
+    ]
   },
-  "docs_sources": []
+  "docs_sources": [
+    {
+      "model_name": "GLM 5.3 Flash",
+      "reason": "api_id",
+      "url": "https://docs.mistral.ai/models/zai-glm-5-3-flash",
+      "response_sha256": "bd5741c16ae354b4654e8f3dd8028dc62c08cc0bd5e8ba88578e2b69aed5e50e"
+    },
+    {
+      "model_name": "Mistral Small 4",
+      "reason": "cache_read",
+      "url": "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+      "response_sha256": "0b7d7d1542207426ec0083388d20cf84a2897d850eec3cef15927c4cfebc3098"
+    },
+    {
+      "model_name": "Ministral 3 (14B)",
+      "reason": "cache_read",
+      "url": "https://docs.mistral.ai/models/ministral-3-14b-25-12",
+      "response_sha256": "c68c937f4bf69558727d7c1211ea1a9ad619f258ddbd24132a2d18e8ec18ba6c"
+    },
+    {
+      "model_name": "Ministral 3 (8B)",
+      "reason": "cache_read",
+      "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+      "response_sha256": "7cfb74541f24846168bf3da2c52c7e51a657aa5e863f370f367572add7111ddb"
+    },
+    {
+      "model_name": "Ministral 3 (3B)",
+      "reason": "cache_read",
+      "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
+      "response_sha256": "8be3490b0ba977d2b6c803a69b5baeb4c3447e60af3db2519628257888fce5d9"
+    },
+    {
+      "model_name": "Codestral",
+      "reason": "cache_read",
+      "url": "https://docs.mistral.ai/models/codestral-25-08",
+      "response_sha256": "912daed24d7f7ae5a7f790f04eac16e9b73efc6d80a97836b6e31b03c8e94deb"
+    }
+  ]
 }

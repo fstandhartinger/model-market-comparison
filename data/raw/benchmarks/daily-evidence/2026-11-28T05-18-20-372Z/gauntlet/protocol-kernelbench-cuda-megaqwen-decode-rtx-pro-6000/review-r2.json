@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "Row kernelbench-cuda-megaqwen-decode::rtx-pro-6000 fields version and version_status",
+      "evidence": "Row sets version='rtx-pro-6000' and version_status='published'. Protocol evidence: leaderboard.json has schema_version 1 and generated_from_summary.tag 'v2'; SPEC.md has 'Perfect stack (v1)'. 'rtx-pro-6000' is the hardware board name, not a maintainer release identifier for this board. Per criterion c2, 'published' requires version to copy the maintainer's release identifier; if no release identifier is published, version_status should be 'snapshot' with a snapshot-<date> version.",
+      "repair": "Set version to the actual published release identifier (e.g. 'v2' or 'schema-1') and keep version_status 'published'; or, if no release identifier exists, set version_status to 'snapshot' and version to 'snapshot-<capture date>'."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "Row version_guard",
+      "evidence": "Version_guard states 'the problem must stay in the stated four-problem deck.' The actual protocol: SPEC.md states 'Three hard CUDA-only problems' and 'Problem 04 ... was retired 2026-11-09'; leaderboard.json problems array is ['01_glm52_fused_moe','02_deepseek_nsa','03_megaqwen_decode'] — a three-problem deck.",
+      "repair": "Change 'four-problem deck' to 'three-problem deck' and note that problem 04 was retired on 2026-11-09."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "Row scoring.notes",
+      "evidence": "Notes reference problem-04 cells and values no longer present: 'the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)', 'the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04', and 'Opus 5 reaches 196.10% on 04'. The current leaderboard.json contains no problem 04 (problems array is three items, per_problem has no 04) and SPEC.md says 04 was retired 2026-11-09.",
+      "repair": "Remove or update the problem-04 references in the notes to reflect the current three-problem board (04 retired)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute hashes or transport checks; I rely on the owner-provided hashes and receipt.",
+    "The judgment of whether the maintainer publishes a release identifier for this board is ambiguous: evidence shows schema_version 1 and tag 'v2' as candidate identifiers, but neither is clearly a per-board release identifier; this ambiguity underlies finding f1.",
+    "The per-run value-scale summary (lowest 0.97, highest 8.12) is used only for the unit/range check as permitted; I could not verify raw capture values beyond the supplied excerpt."
+  ],
+  "missing_evidence": []
+}

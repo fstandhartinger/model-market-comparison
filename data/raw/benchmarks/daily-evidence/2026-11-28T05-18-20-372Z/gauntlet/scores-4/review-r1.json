@@ -1,0 +1,45 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "a684a56d0da5e9ccc07fcd7b4cbf93357d5b6019d8a53f2448f0c54b2b966def",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1-benchmark-version",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, benchmark_id",
+      "evidence": "Primary source pages 30-31 label the benchmark only as 'SWE-Bench Verified (OpenAI, 2024d)' with locator 'SWE Verified (Resolved)'; no 'snapshot-2026-09-10' or any snapshot/version string appears in the captured evidence. The required row id embeds this unsupported snapshot.",
+      "repair": "Provide primary evidence identifying the exact SWE-bench Verified snapshot/version or align benchmark_id to the source-supported label with explicit evidence; do not infer the snapshot."
+    },
+    {
+      "id": "f2-source-date",
+      "severity": "major",
+      "location": "row source.published_at / source date",
+      "evidence": "Candidate source object reports published_at:null and the captured PDF excerpts contain no publication date. Criterion c1 requires verification of source date.",
+      "repair": "Record an actual source/publication date from current primary evidence, or explicitly explain that the source date is unavailable without fabricating it from the arXiv id."
+    },
+    {
+      "id": "f3-subject-label",
+      "severity": "minor",
+      "location": "subject.source_id, subject.name, subject.model_id",
+      "evidence": "The source table header is 'DeepSeek V3'; the captured evidence contains no 'December 2024 update', 'Dec '24', or 'deepseek-v3-dec-24::default'. The dated variant appears inferred from the arXiv id/date rather than directly evidenced.",
+      "repair": "Use the exact subject label present in primary evidence or supply separate evidence for the dated checkpoint/variant; no alias inference is permitted."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute row hashes or execute transport/qualification checks; I relied on the owner-supplied row hash and source SHA-256.",
+    "Numeric equality 42.0 vs 42 passes under the stated parsing rule; no rounding issue found.",
+    "If 'snapshot-2026-09-10' is an external dataset snapshot not expected in the paper, its source evidence is still absent from this packet.",
+    "Source date may be intended as retrieved_at rather than published_at, but criterion c1 explicitly requires verification of source date and the evidence does not provide a publication date."
+  ],
+  "missing_evidence": [
+    "explicit SWE-bench Verified snapshot/version identifier 'snapshot-2026-09-10'",
+    "source publication date for arXiv 2412.19437v2"
+  ]
+}
