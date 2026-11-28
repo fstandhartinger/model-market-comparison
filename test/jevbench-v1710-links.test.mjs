@@ -26,7 +26,7 @@ test('v1.7.10 latest feed projection uses vendor links for both API rows',()=>{
 test('v1.7.10 actual API roster JSX renders vendor hrefs for both rows',()=>{
  // Compile the real roster and its formatting helpers in isolation. Unrelated latency cells are stubbed.
  const src=readFileSync('components/JevBenchV16Board.tsx','utf8'),ast=ts.createSourceFile('board.tsx',src,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
- const names=new Set(['rosterCapability','ENDPOINT_TAG','basisLine','costCell','rosterStatus','ApiRoster']);
+ const names=new Set(['rosterCapability','ENDPOINT_TAG','supplementaryBasis','basisLine','costCell','rosterStatus','ApiRoster']);
  const parts=ast.statements.filter(n=>names.has(n.name?.text)||n.declarationList?.declarations.some(d=>names.has(d.name.text))).map(n=>n.getText(ast));
  assert.equal(parts.length,names.size);
  const code=ts.transpileModule(parts.join('\n'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
