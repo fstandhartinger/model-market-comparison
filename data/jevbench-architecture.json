@@ -8266,6 +8266,38 @@
             "url": "https://huggingface.co/sthanika-ai/Sieve-31B-v4"
           }
         ]
+      },
+      "alibaba-decision-model-sg": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Hosted Alibaba Model Studio decision-model API; no base model or weights declared.",
+            "kind": "provider-docs",
+            "url": "https://www.alibabacloud.com/help/en/model-studio/decision-model-api"
+          }
+        ],
+        "note": "Hosting implementation and deployed weights were not independently inspected."
+      },
+      "urun-sense": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Hosted uRun Sense API; no base model or weights declared.",
+            "kind": "provider-docs",
+            "url": "https://urun.sh/pricing"
+          }
+        ],
+        "note": "Hosting implementation and deployed weights were not independently inspected."
       }
     },
     "imagejevbench": {

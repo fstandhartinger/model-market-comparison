@@ -1,0 +1,83 @@
+{
+ "alibaba-decision-model-sg": {
+  "artifact_top_level_fields_withheld": [
+   "addendum",
+   "calibration",
+   "intelligence",
+   "planned_weight_denominator",
+   "validity"
+  ],
+  "cost_axis": {
+   "artifact": 54.19330182215635,
+   "delta": 0.0,
+   "published": 54.19330182215635
+  },
+  "http_status": {
+   "200": 600
+  },
+  "max_abs_delta_excluding_cost_axis_and_usd": 0.0,
+  "n_release_set": 600,
+  "numeric_fields_compared": 599,
+  "numeric_fields_different": {},
+  "ok_rows": 600,
+  "published_numeric_fields_not_in_artifact": [
+   ".http_status.200"
+  ],
+  "speed_axis": {
+   "artifact": 80.00848732051425,
+   "published": 80.00848732051425
+  },
+  "speed_p50_p95": [
+   0.9386254677083343,
+   1.0633076396537946
+  ],
+  "usd_per_1000": {
+   "artifact": 0.03364263,
+   "cost_proof": 0.03364263,
+   "published": 0.03364263
+  }
+ },
+ "urun-sense": {
+  "artifact_top_level_fields_withheld": [
+   "addendum",
+   "calibration",
+   "intelligence",
+   "planned_weight_denominator",
+   "validity"
+  ],
+  "cost_axis": {
+   "artifact": 66.65922065356219,
+   "delta": 5.040995873173415e-06,
+   "published": 66.65922569455806
+  },
+  "http_status": {
+   "200": 597,
+   "502": 3
+  },
+  "max_abs_delta_excluding_cost_axis_and_usd": 0.0,
+  "n_release_set": 600,
+  "numeric_fields_compared": 599,
+  "numeric_fields_different": {
+   ".axes.cost": 5.040995873173415e-06,
+   ".cost.usd_per_1000": 4.999999999102944e-09
+  },
+  "ok_rows": 597,
+  "published_numeric_fields_not_in_artifact": [
+   ".http_status.200",
+   ".http_status.502"
+  ],
+  "speed_axis": {
+   "artifact": 79.37983333157396,
+   "published": 79.37983333157396
+  },
+  "speed_p50_p95": [
+   0.5111516548786312,
+   2.256663973466492
+  ],
+  "usd_per_1000": {
+   "artifact": 0.01292288,
+   "cost_proof": 0.012922875,
+   "published": 0.012922875
+  }
+ }
+}
