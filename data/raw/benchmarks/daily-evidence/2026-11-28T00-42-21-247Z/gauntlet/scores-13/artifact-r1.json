@@ -1,0 +1,362 @@
+[
+  {
+    "id": "public:4d65efbafb718271a77e710a",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1",
+      "name": "TheDrummer/Orion-26B-A4B-v1",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 31.22,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1361; TheDrummer/Orion-26B-A4B-v1; field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:5e772df3d9808002a383ea0c",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill)",
+      "name": "TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.11,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1362; TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d8ddc4266441dc0d7d51a992",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.99,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1363; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:20e978b2f723d4d537c9d6d6",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.85,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1364; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=medium; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:8337ade47800eee87af243fa",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.01,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1365; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=high; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:77761b6d962935f26c3e7f31",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 44.37,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1366; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=xhigh; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:4ea5acefbbb32eebab52e800",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "nokeepai/Inkling-2-Mini-Unbound (reasoning=minimal)",
+      "name": "nokeepai/Inkling-2-Mini-Unbound (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 44.72,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1367; nokeepai/Inkling-2-Mini-Unbound (reasoning=minimal); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/27/2026; Model Link=https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e1f3cdf18e79946ec8df6203",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "nokeepai/Inkling-2-Mini-Unbound (reasoning=medium)",
+      "name": "nokeepai/Inkling-2-Mini-Unbound (reasoning=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 44.37,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1368; nokeepai/Inkling-2-Mini-Unbound (reasoning=medium); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=medium; Test Date=11/27/2026; Model Link=https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7abf3415dc78a0155428742c",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "nokeepai/Inkling-2-Mini-Unbound (reasoning=high)",
+      "name": "nokeepai/Inkling-2-Mini-Unbound (reasoning=high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.56,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1369; nokeepai/Inkling-2-Mini-Unbound (reasoning=high); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=high; Test Date=11/27/2026; Model Link=https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:1bd7128730704f6b36f68957",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "nokeepai/Inkling-2-Mini-Unbound (reasoning=xhigh)",
+      "name": "nokeepai/Inkling-2-Mini-Unbound (reasoning=xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 48.89,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1370; nokeepai/Inkling-2-Mini-Unbound (reasoning=xhigh); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=xhigh; Test Date=11/27/2026; Model Link=https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:29aa94d3b9e6f466e70dd22b",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "benthecarman/Inkling-2-Mini-uncensored (reasoning=minimal)",
+      "name": "benthecarman/Inkling-2-Mini-uncensored (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 37.15,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1371; benthecarman/Inkling-2-Mini-uncensored (reasoning=minimal); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/27/2026; Model Link=https://huggingface.co/benthecarman/Inkling-2-Mini-uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:3df08831eb47ae7581782184",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "benthecarman/Inkling-2-Mini-uncensored (reasoning=medium)",
+      "name": "benthecarman/Inkling-2-Mini-uncensored (reasoning=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 39.93,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1372; benthecarman/Inkling-2-Mini-uncensored (reasoning=medium); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=medium; Test Date=11/27/2026; Model Link=https://huggingface.co/benthecarman/Inkling-2-Mini-uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:5f56e12c949d776c7137c99f",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "benthecarman/Inkling-2-Mini-uncensored (reasoning=high)",
+      "name": "benthecarman/Inkling-2-Mini-uncensored (reasoning=high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 37.57,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1373; benthecarman/Inkling-2-Mini-uncensored (reasoning=high); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=high; Test Date=11/27/2026; Model Link=https://huggingface.co/benthecarman/Inkling-2-Mini-uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:04271025b2e99c00f7b5e463",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "benthecarman/Inkling-2-Mini-uncensored (reasoning=xhigh)",
+      "name": "benthecarman/Inkling-2-Mini-uncensored (reasoning=xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.83,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1374; benthecarman/Inkling-2-Mini-uncensored (reasoning=xhigh); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=xhigh; Test Date=11/27/2026; Model Link=https://huggingface.co/benthecarman/Inkling-2-Mini-uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c9a5d26164d36a13cec6ec9d",
+    "benchmark_id": "ugi::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "satellitedown/Inkling-2-Mini-abliterated-ingine (reasoning=minimal)",
+      "name": "satellitedown/Inkling-2-Mini-abliterated-ingine (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 15.69,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1375; satellitedown/Inkling-2-Mini-abliterated-ingine (reasoning=minimal); field UGI 🏆"
+    },
+    "protocol": "UGI 🏆 published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/27/2026; Model Link=https://huggingface.co/satellitedown/Inkling-2-Mini-abliterated-ingine; Is Thinking Model=True",
+    "comparison_key": null
+  }
+]

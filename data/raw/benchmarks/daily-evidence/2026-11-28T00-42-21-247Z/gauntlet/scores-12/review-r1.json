@@ -1,0 +1,12 @@
+{
+  "artifact_id": "scores-12",
+  "artifact_sha256": "7beec22609228c5aa03886956c4f60cb1f098beffdbd0b9478216d6b39a8dfb2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:a609529bde077dec76edb200","public:da0d42f0421530691aa8958b","public:e03574e22043174943091b6b","public:46a8d8ae11aa33243d6dbfd5","public:727c3b1abb77fc4fa92ca478","public:e6d017c7b86fc4f14f834d2d","public:a9abe26334c75a8e81c15fe4","public:38f99dd648cacd86ff7ee3af","public:bd99b785f777c27fbf01a8cf","public:5b9799094e106e186ee35181","public:1d3818b67d7e4adb7e209c94","public:436b82dfad9b9479b479ac06","public:b71b43bd4b6c53b1a819aee7","public:86b463ee77dc361f1268a5b4","public:74ec95f5408cb983c43409c8","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": ["Could not execute hash or transport/qualification checks (owner-side responsibility); relied on supplied per-row sha256 bindings and owner receipt for deepseek/deepseek-v4-flash-0731 identity only. SOURCE 2/3 are page/app excerpts verifying published protocol description; CSV is the numeric primary evidence. SOURCE 4 notes these rows are newly published values this run, consistent with rows being present in the capture. benchmark_id 'ugi::snapshot-2026-09-10' transcribed from registry id; unit 'score' from registry scoring; basis 'measured' is the board's published measured basis. Comparison_key null permitted: no unknown configurations create key values."],
+  "missing_evidence": []
+}

@@ -1,0 +1,362 @@
+[
+  {
+    "id": "public:4cc602aded30629f8a6067cf",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "ornith-ai/Ornith-1.5-35B-A3B (no think)",
+      "name": "ornith-ai/Ornith-1.5-35B-A3B (no think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1331; ornith-ai/Ornith-1.5-35B-A3B (no think); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ no think; Test Date=11/26/2026; Model Link=https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:af885e142f59f5ac37f00f72",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "ornith-ai/Ornith-1.5-35B-A3B (<think> prefill)",
+      "name": "ornith-ai/Ornith-1.5-35B-A3B (<think> prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1332; ornith-ai/Ornith-1.5-35B-A3B (<think> prefill); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ <think> prefill; Test Date=11/26/2026; Model Link=https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:0111ec1d628dd80d019b1260",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "Qwen/Qwen3.8-27B (no think)",
+      "name": "Qwen/Qwen3.8-27B (no think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1333; Qwen/Qwen3.8-27B (no think); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ no think; Test Date=11/26/2026; Model Link=https://huggingface.co/Qwen/Qwen3.8-27B; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:b634f57cc06549580d3aa8a7",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "Qwen/Qwen3.8-27B (<think> prefill)",
+      "name": "Qwen/Qwen3.8-27B (<think> prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1334; Qwen/Qwen3.8-27B (<think> prefill); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ <think> prefill; Test Date=11/26/2026; Model Link=https://huggingface.co/Qwen/Qwen3.8-27B; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:1a8965f71c4001fbbef97af7",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=xhigh)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 4.2,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1335; thinkingmachines/Inkling-2-Mini (reasoning=xhigh); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=xhigh; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6a5092140561171aefdc5b25",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=none)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=none)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1336; thinkingmachines/Inkling-2-Mini (reasoning=none); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=none; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6354f5a9438073578ef24127",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=minimal)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1337; thinkingmachines/Inkling-2-Mini (reasoning=minimal); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:72c772b3a1911d03434f5c79",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=low)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1338; thinkingmachines/Inkling-2-Mini (reasoning=low); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=low; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:dd6720142470d5d32a056173",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=medium)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1339; thinkingmachines/Inkling-2-Mini (reasoning=medium); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=medium; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9cd0aa11bb8c7947cba7f0fe",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling-2-Mini (reasoning=high)",
+      "name": "thinkingmachines/Inkling-2-Mini (reasoning=high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.2,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1340; thinkingmachines/Inkling-2-Mini (reasoning=high); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=inkling-2 w/ reasoning=high; Test Date=11/26/2026; Model Link=https://huggingface.co/thinkingmachines/Inkling-2-Mini; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:5ef39a58042a9e24d2ed7589",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "autotrust/AutoTrust-Decider-Pro-35B (no think)",
+      "name": "autotrust/AutoTrust-Decider-Pro-35B (no think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1341; autotrust/AutoTrust-Decider-Pro-35B (no think); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ no think; Test Date=11/26/2026; Model Link=https://huggingface.co/autotrust/AutoTrust-Decider-Pro-35B; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:291af2ab71456793fd22e83f",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "autotrust/AutoTrust-Decider-Pro-35B (<think> prefill)",
+      "name": "autotrust/AutoTrust-Decider-Pro-35B (<think> prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.5,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1342; autotrust/AutoTrust-Decider-Pro-35B (<think> prefill); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ <think> prefill; Test Date=11/26/2026; Model Link=https://huggingface.co/autotrust/AutoTrust-Decider-Pro-35B; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:0449672ea5a95ab233764e9f",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (no think)",
+      "name": "llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (no think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1343; llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (no think); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ no think; Test Date=11/26/2026; Model Link=https://huggingface.co/llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:f3b4e5201ae44eb103c583ce",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (<think> prefill)",
+      "name": "llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (<think> prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1344; llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic (<think> prefill); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ <think> prefill; Test Date=11/26/2026; Model Link=https://huggingface.co/llmfan46/Qwen3.5-35B-A3B-ultra-uncensored-heretic; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c10cc08a8b1d9af072273a0f",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "wangzhang/Qwen3.5-35B-A3B-abliterated (no think)",
+      "name": "wangzhang/Qwen3.5-35B-A3B-abliterated (no think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 9,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1345; wangzhang/Qwen3.5-35B-A3B-abliterated (no think); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=chatml w/ no think; Test Date=11/26/2026; Model Link=https://huggingface.co/wangzhang/Qwen3.5-35B-A3B-abliterated; Is Thinking Model=False",
+    "comparison_key": null
+  }
+]

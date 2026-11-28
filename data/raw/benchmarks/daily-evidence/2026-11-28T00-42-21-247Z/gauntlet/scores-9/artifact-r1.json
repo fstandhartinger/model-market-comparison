@@ -1,0 +1,362 @@
+[
+  {
+    "id": "public:cd2f474d9f4d650afa83377b",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "coder3101/gemma-4-26B-A4B-it-heretic",
+      "name": "coder3101/gemma-4-26B-A4B-it-heretic",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.82,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1351; coder3101/gemma-4-26B-A4B-it-heretic; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/coder3101/gemma-4-26B-A4B-it-heretic; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e3b00d22f48e160681136a73",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "coder3101/gemma-4-26B-A4B-it-heretic (<|channel>thought prefill)",
+      "name": "coder3101/gemma-4-26B-A4B-it-heretic (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.29,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1352; coder3101/gemma-4-26B-A4B-it-heretic (<|channel>thought prefill); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/coder3101/gemma-4-26B-A4B-it-heretic; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c399f1d36e7195dd7278e23a",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1.1",
+      "name": "TheDrummer/Orion-26B-A4B-v1.1",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.28,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1353; TheDrummer/Orion-26B-A4B-v1.1; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1.1; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:1cf4d2471cc081888b69d2dd",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1.1 (<|channel>thought prefill)",
+      "name": "TheDrummer/Orion-26B-A4B-v1.1 (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 47.07,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1354; TheDrummer/Orion-26B-A4B-v1.1 (<|channel>thought prefill); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1.1; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6e1015a091a798c79dd8c0ff",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TrevorJS/gemma-4-26B-A4B-it-uncensored",
+      "name": "TrevorJS/gemma-4-26B-A4B-it-uncensored",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.43,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1355; TrevorJS/gemma-4-26B-A4B-it-uncensored; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/TrevorJS/gemma-4-26B-A4B-it-uncensored; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c70fd9db453c77a5079392fd",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TrevorJS/gemma-4-26B-A4B-it-uncensored (<|channel>thought prefill)",
+      "name": "TrevorJS/gemma-4-26B-A4B-it-uncensored (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.91,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1356; TrevorJS/gemma-4-26B-A4B-it-uncensored (<|channel>thought prefill); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/TrevorJS/gemma-4-26B-A4B-it-uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:92c594e19b8f64d9b00a3dbf",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "huihui-ai/Huihui-gemma-4-26B-A4B-it-abliterated",
+      "name": "huihui-ai/Huihui-gemma-4-26B-A4B-it-abliterated",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.16,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1357; huihui-ai/Huihui-gemma-4-26B-A4B-it-abliterated; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/huihui-ai/Huihui-gemma-4-26B-A4B-it-abliterated; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:2e507e016e8544a709460a07",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "ReadyArt/Dark-Scarlett-v1.0-26B-A4B",
+      "name": "ReadyArt/Dark-Scarlett-v1.0-26B-A4B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 37.31,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1359; ReadyArt/Dark-Scarlett-v1.0-26B-A4B; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/ReadyArt/Dark-Scarlett-v1.0-26B-A4B; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:cf1f29bc1df194e86db04429",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "ReadyArt/Dark-Scarlett-v1.0-26B-A4B (<|channel>thought prefill)",
+      "name": "ReadyArt/Dark-Scarlett-v1.0-26B-A4B (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.54,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1360; ReadyArt/Dark-Scarlett-v1.0-26B-A4B (<|channel>thought prefill); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/ReadyArt/Dark-Scarlett-v1.0-26B-A4B; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:cf8da8706815ae50b1d0d67b",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1",
+      "name": "TheDrummer/Orion-26B-A4B-v1",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 44.75,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1361; TheDrummer/Orion-26B-A4B-v1; field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1; Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:98c4513cb8935ec7aebfc96f",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill)",
+      "name": "TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 46.46,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1362; TheDrummer/Orion-26B-A4B-v1 (<|channel>thought prefill); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=gemma-4 w/ <|channel>thought prefill; Test Date=11/27/2026; Model Link=https://huggingface.co/TheDrummer/Orion-26B-A4B-v1; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d9185e6291429a9ddbdc6509",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 38.66,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1363; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=minimal); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=inkling-2 w/ reasoning=minimal; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:efd7e1278c6bc8bc1bb4e835",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.15,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1364; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=medium); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=inkling-2 w/ reasoning=medium; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6ae9bf93664e0902c3cdbffd",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 40.78,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1365; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=high); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=inkling-2 w/ reasoning=high; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  },
+  {
+    "id": "public:2fde225d776afaa864f849bb",
+    "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh)",
+      "name": "OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 40.28,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-28T00:49:07.294309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/30c7c9eed00f24574d3c.gz",
+      "sha256": "30c7c9eed00f24574d3c9ee914c5162131759d5b5e2ce20d3ecfda187b6fca79",
+      "locator": "csv; source row 1366; OpenUncensored/Inkling-2-Mini-Uncensored (reasoning=xhigh); field Writing ✍️"
+    },
+    "protocol": "Writing ✍️ published composite; Prompt Template=inkling-2 w/ reasoning=xhigh; Test Date=11/27/2026; Model Link=https://huggingface.co/OpenUncensored/Inkling-2-Mini-Uncensored; Is Thinking Model=True",
+    "comparison_key": null
+  }
+]

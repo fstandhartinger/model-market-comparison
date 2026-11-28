@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-26T05:32:14.732Z",
+  "collected_at": "2026-11-28T00:56:06.587Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -14579,71 +14579,71 @@
         "status": "available",
         "daily": [
           {
+            "date": "2026-11-27",
+            "total_prompt_tokens": 223598125,
+            "total_completion_tokens": 2692866,
+            "count": 4692
+          },
+          {
+            "date": "2026-11-26",
+            "total_prompt_tokens": 167653597,
+            "total_completion_tokens": 3056193,
+            "count": 3895
+          },
+          {
+            "date": "2026-11-25",
+            "total_prompt_tokens": 315054579,
+            "total_completion_tokens": 3142903,
+            "count": 3896
+          },
+          {
+            "date": "2026-11-24",
+            "total_prompt_tokens": 224757084,
+            "total_completion_tokens": 2614206,
+            "count": 3630
+          },
+          {
+            "date": "2026-11-23",
+            "total_prompt_tokens": 246174295,
+            "total_completion_tokens": 3902781,
+            "count": 5380
+          },
+          {
+            "date": "2026-11-22",
+            "total_prompt_tokens": 105706758,
+            "total_completion_tokens": 1667605,
+            "count": 2577
+          },
+          {
             "date": "2026-11-21",
             "total_prompt_tokens": 81162147,
             "total_completion_tokens": 1319111,
             "count": 2412
-          },
-          {
-            "date": "2026-11-20",
-            "total_prompt_tokens": 371601807,
-            "total_completion_tokens": 5893302,
-            "count": 6787
-          },
-          {
-            "date": "2026-11-19",
-            "total_prompt_tokens": 347918986,
-            "total_completion_tokens": 3505332,
-            "count": 4706
-          },
-          {
-            "date": "2026-11-18",
-            "total_prompt_tokens": 364424621,
-            "total_completion_tokens": 5235883,
-            "count": 5530
-          },
-          {
-            "date": "2026-11-17",
-            "total_prompt_tokens": 545864965,
-            "total_completion_tokens": 6143852,
-            "count": 7574
-          },
-          {
-            "date": "2026-11-16",
-            "total_prompt_tokens": 615486858,
-            "total_completion_tokens": 6568748,
-            "count": 6916
-          },
-          {
-            "date": "2026-11-15",
-            "total_prompt_tokens": 205432742,
-            "total_completion_tokens": 2575663,
-            "count": 2870
           }
         ],
-        "total_prompt_tokens": 2531892126,
-        "total_completion_tokens": 31241891,
-        "total_requests": 36795,
-        "input_output_ratio": 81.0415773488231
+        "total_prompt_tokens": 1364106585,
+        "total_completion_tokens": 18395665,
+        "total_requests": 26482,
+        "input_output_ratio": 74.1536978956727
       },
-      "source_updated_at": "2026-11-22T21:20:15.431Z",
+      "source_updated_at": "2026-11-28T00:54:04.308Z",
       "window": {
-        "start_date": "2026-11-15",
-        "end_date": "2026-11-21"
+        "start_date": "2026-11-21",
+        "end_date": "2026-11-27"
       },
       "provenance": {
         "source": "OpenRouter model-page usage",
         "url": "https://openrouter.ai/openai/gpt-6-sol-pro",
-        "collected_at": "2026-11-22T21:20:50.897Z",
+        "collected_at": "2026-11-28T00:56:08.899Z",
         "basis": "measured"
       },
-      "response_sha256": "ca93c1827ac6de450e0cea7d1764de0e2554b49829ac449819dd0875cf902f30",
+      "response_sha256": "235d0bf5ee8cd4774b28c50e21e3b8a16262dfb421abc12b0ebe1c7ed909ac25",
       "cache_attempt": {
         "source": "OpenRouter effective pricing statistics",
         "status": "fetch_or_parse_failed",
-        "reason": "Partial cache summary: 1 previous endpoint rates absent; retaining dated cache observation",
+        "reason": "Partial cache summary: 3 previous endpoint rates absent; retaining dated cache observation",
         "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-sol-pro-20260922&variant=standard&shape=v7",
-        "collected_at": "2026-11-22T21:20:52.953Z"
+        "collected_at": "2026-11-28T00:56:11.027Z"
       },
       "cache": {
         "unjoined": [],
@@ -35088,6 +35088,308 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "inclusionai/ling-3.2-flash": {
+      "or_model_id": "inclusionai/ling-3.2-flash",
+      "model_permaslug": "inclusionai/ling-3.2-flash-20261113",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "inclusionai/ling-3.2-flash",
+          "endpoint_tag": "antdigital/fp8",
+          "provider": "Ant Digital",
+          "endpoint_id": "98068bd7-3db5-407e-9a04-3cbebbc0143a",
+          "cache_read_per_1m": 0.06,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.3111951721045769,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Ant Digital",
+          "source_provider_slug": "antdigital",
+          "total_tokens": 842859
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-11-27",
+            "total_prompt_tokens": 32041037,
+            "total_completion_tokens": 5540035,
+            "count": 3736
+          },
+          {
+            "date": "2026-11-26",
+            "total_prompt_tokens": 3449371,
+            "total_completion_tokens": 514159,
+            "count": 357
+          },
+          {
+            "date": "2026-11-25",
+            "total_prompt_tokens": 4677550,
+            "total_completion_tokens": 75623,
+            "count": 260
+          },
+          {
+            "date": "2026-11-24",
+            "total_prompt_tokens": 6192677,
+            "total_completion_tokens": 73352,
+            "count": 272
+          },
+          {
+            "date": "2026-11-23",
+            "total_prompt_tokens": 4383029,
+            "total_completion_tokens": 159542,
+            "count": 182
+          },
+          {
+            "date": "2026-11-22",
+            "total_prompt_tokens": 3394707,
+            "total_completion_tokens": 32749,
+            "count": 246
+          },
+          {
+            "date": "2026-11-21",
+            "total_prompt_tokens": 2600851,
+            "total_completion_tokens": 23547,
+            "count": 202
+          }
+        ],
+        "total_prompt_tokens": 56739222,
+        "total_completion_tokens": 6419007,
+        "total_requests": 5255,
+        "input_output_ratio": 8.839252239481901
+      },
+      "source_updated_at": "2026-11-28T00:55:46.883Z",
+      "window": {
+        "start_date": "2026-11-21",
+        "end_date": "2026-11-27"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/inclusionai/ling-3.2-flash",
+        "collected_at": "2026-11-28T00:56:13.033Z",
+        "basis": "measured"
+      },
+      "response_sha256": "2c5a042321b1e315f510b9968cf1441bab4cb38bf931ed2398bfdf1244ab3713",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-27 00:00:00",
+          "last": "2026-11-28 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=inclusionai%2Fling-3.2-flash-20261113&variant=standard&shape=v7",
+          "collected_at": "2026-11-28T00:56:15.616Z",
+          "basis": "measured"
+        },
+        "response_sha256": "b3f87c05eb262f3f727212121dcd1c6724638ab68f8c0a92686a92ab07cd3140"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=inclusionai%2Fling-3.2-flash-20261113&variant=standard&shape=v7",
+        "collected_at": "2026-11-28T00:56:15.616Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "inclusionai/lingsante-3.1-air-vl": {
+      "or_model_id": "inclusionai/lingsante-3.1-air-vl",
+      "model_permaslug": "inclusionai/lingsante-3.1-air-vl-20261126",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "inclusionai/lingsante-3.1-air-vl",
+          "endpoint_tag": "deepinfra/fp4",
+          "provider": "DeepInfra",
+          "endpoint_id": "b8969083-5c1f-4f21-95c7-c3bee1357729",
+          "cache_read_per_1m": 0.012,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.9060451602512658,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 52350409
+        }
+      ],
+      "usage": {
+        "status": "incomplete_window",
+        "input_output_ratio": null,
+        "daily": [
+          {
+            "date": "2026-11-27",
+            "total_prompt_tokens": 1320575809,
+            "total_completion_tokens": 93048757,
+            "count": 73939
+          },
+          {
+            "date": "2026-11-26",
+            "total_prompt_tokens": 205468296,
+            "total_completion_tokens": 64985527,
+            "count": 27423
+          }
+        ]
+      },
+      "source_updated_at": "2026-11-28T00:55:34.626Z",
+      "window": {
+        "start_date": "2026-11-21",
+        "end_date": "2026-11-27"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/inclusionai/lingsante-3.1-air-vl",
+        "collected_at": "2026-11-28T00:56:17.620Z",
+        "basis": "measured"
+      },
+      "response_sha256": "5e5b7be97552f86e6dbe3d75a78943bd5e9745820079e01b9ed997f171f1272b",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-26 00:00:00",
+          "last": "2026-11-28 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=inclusionai%2Flingsante-3.1-air-vl-20261126&variant=standard&shape=v7",
+          "collected_at": "2026-11-28T00:56:19.714Z",
+          "basis": "measured"
+        },
+        "response_sha256": "713de18cab2c31fa1128a49ba9e29f76fb8f8128bc1708f4f6139c6d85aa1634"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=inclusionai%2Flingsante-3.1-air-vl-20261126&variant=standard&shape=v7",
+        "collected_at": "2026-11-28T00:56:19.714Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "qwen/qwen3-coder": {
+      "or_model_id": "qwen/qwen3-coder",
+      "model_permaslug": "qwen/qwen3-coder-480b-a35b-07-25",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "qwen/qwen3-coder",
+          "endpoint_tag": "deepinfra/turbo",
+          "provider": "DeepInfra",
+          "endpoint_id": "6982ced0-1d3c-4fd0-bc36-21297218fdbe",
+          "cache_read_per_1m": 0.09999999999999999,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.8683377888931546,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra (Turbo)",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 12050914
+        },
+        {
+          "or_model_id": "qwen/qwen3-coder",
+          "endpoint_tag": "venice/fp8",
+          "provider": "Venice",
+          "endpoint_id": "042e96a9-24e0-43c1-a472-b93b506f211c",
+          "cache_read_per_1m": 0.04,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7055722319980678,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Venice",
+          "source_provider_slug": "venice",
+          "total_tokens": 297778
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-11-27",
+            "total_prompt_tokens": 1270205566,
+            "total_completion_tokens": 14581543,
+            "count": 56086
+          },
+          {
+            "date": "2026-11-26",
+            "total_prompt_tokens": 2197157360,
+            "total_completion_tokens": 23294140,
+            "count": 95037
+          },
+          {
+            "date": "2026-11-25",
+            "total_prompt_tokens": 1185129433,
+            "total_completion_tokens": 13748710,
+            "count": 52607
+          },
+          {
+            "date": "2026-11-24",
+            "total_prompt_tokens": 1285412711,
+            "total_completion_tokens": 17576146,
+            "count": 55217
+          },
+          {
+            "date": "2026-11-23",
+            "total_prompt_tokens": 1309083712,
+            "total_completion_tokens": 18349868,
+            "count": 54829
+          },
+          {
+            "date": "2026-11-22",
+            "total_prompt_tokens": 1049560854,
+            "total_completion_tokens": 19486810,
+            "count": 50813
+          },
+          {
+            "date": "2026-11-21",
+            "total_prompt_tokens": 1051244618,
+            "total_completion_tokens": 12390189,
+            "count": 39582
+          }
+        ],
+        "total_prompt_tokens": 9347794254,
+        "total_completion_tokens": 119427406,
+        "total_requests": 404171,
+        "input_output_ratio": 78.27176832426554
+      },
+      "source_updated_at": "2026-11-28T00:55:25.816Z",
+      "window": {
+        "start_date": "2026-11-21",
+        "end_date": "2026-11-27"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/qwen/qwen3-coder",
+        "collected_at": "2026-11-28T00:56:21.717Z",
+        "basis": "measured"
+      },
+      "response_sha256": "be8bd45bdef2d7981462418958a4de5baa0c398a4f22ecf669022a1d79f189d2",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 2,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-21 00:00:00",
+          "last": "2026-11-28 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=qwen%2Fqwen3-coder-480b-a35b-07-25&variant=standard&shape=v7",
+          "collected_at": "2026-11-28T00:56:23.730Z",
+          "basis": "measured"
+        },
+        "response_sha256": "7ca59d0a0f5ec7da5cd60575fb41a0c3c561c11441e1a5f7e8032fded3b2b2fb"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=qwen%2Fqwen3-coder-480b-a35b-07-25&variant=standard&shape=v7",
+        "collected_at": "2026-11-28T00:56:23.730Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -35794,7 +36096,7 @@
     "openai/gpt-6-sol-pro": {
       "source": "OpenRouter model page",
       "url": "https://openrouter.ai/openai/gpt-6-sol-pro",
-      "collected_at": "2026-11-22T21:20:50.897Z",
+      "collected_at": "2026-11-28T00:56:08.899Z",
       "status": "available",
       "http_status": 200
     },
@@ -36931,6 +37233,27 @@
       "collected_at": "2026-11-26T05:32:29.647Z",
       "status": "available",
       "http_status": 200
+    },
+    "inclusionai/ling-3.2-flash": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/inclusionai/ling-3.2-flash",
+      "collected_at": "2026-11-28T00:56:13.033Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "inclusionai/lingsante-3.1-air-vl": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/inclusionai/lingsante-3.1-air-vl",
+      "collected_at": "2026-11-28T00:56:17.620Z",
+      "status": "incomplete_window",
+      "http_status": 200
+    },
+    "qwen/qwen3-coder": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/qwen/qwen3-coder",
+      "collected_at": "2026-11-28T00:56:21.717Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -36939,228 +37262,228 @@
         "model_permaslug": "tencent/hy4-flash-20261116",
         "variant": "standard",
         "variant_permaslug": "tencent/hy4-flash-20261116",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 31841319426999,
-        "total_completion_tokens": 224273666801,
-        "total_requests": 636481711,
-        "input_output_ratio": 141.9752924236624
-      },
-      {
-        "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
-        "variant": "standard",
-        "variant_permaslug": "minimax/minimax-m3.1-flash-20261019",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 4657786420602,
-        "total_completion_tokens": 72281291215,
-        "total_requests": 59272586,
-        "input_output_ratio": 64.43972350670188
-      },
-      {
-        "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
-        "variant": "free",
-        "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 4208560392226,
-        "total_completion_tokens": 41146815125,
-        "total_requests": 48575002,
-        "input_output_ratio": 102.28155883853478
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 38424850885334,
+        "total_completion_tokens": 264880395807,
+        "total_requests": 327003952,
+        "input_output_ratio": 145.0649104033034
       },
       {
         "model_permaslug": "moonshotai/kimi-k3.1-pro-20261023",
         "variant": "standard",
         "variant_permaslug": "moonshotai/kimi-k3.1-pro-20261023",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 4336854335226,
-        "total_completion_tokens": 35466706813,
-        "total_requests": 48749600,
-        "input_output_ratio": 122.27958908314446
-      },
-      {
-        "model_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "variant": "standard",
-        "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 12828070261308,
-        "total_completion_tokens": 310747798361,
-        "total_requests": 524154010,
-        "input_output_ratio": 41.28129090203707
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 4805227879296,
+        "total_completion_tokens": 41009441171,
+        "total_requests": 60120384,
+        "input_output_ratio": 117.17369810671883
       },
       {
         "model_permaslug": "deepseek/deepseek-v4.1-flash-20261017",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20261017",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 72687238908862,
-        "total_completion_tokens": 975619534727,
-        "total_requests": 997061899,
-        "input_output_ratio": 74.50367312417694
-      },
-      {
-        "model_permaslug": "typesafe/jev-1.14-20261014",
-        "variant": "standard",
-        "variant_permaslug": "typesafe/jev-1.14-20261014",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2334475477085,
-        "total_completion_tokens": 191712924832,
-        "total_requests": 679632552,
-        "input_output_ratio": 12.176933188676376
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 81963946711312,
+        "total_completion_tokens": 1088381446243,
+        "total_requests": 1059919419,
+        "input_output_ratio": 75.30810727640072
       },
       {
         "model_permaslug": "z-ai/glm-5.3-20260816",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.3-20260816",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 3757884643728,
-        "total_completion_tokens": 92324454445,
-        "total_requests": 84538945,
-        "input_output_ratio": 40.70302571857239
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 4065300894225,
+        "total_completion_tokens": 98200058368,
+        "total_requests": 85702163,
+        "input_output_ratio": 41.398151506086485
       },
       {
-        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "model_permaslug": "z-ai/glm-5.3-flash-20260826",
         "variant": "standard",
-        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 3280653662808,
-        "total_completion_tokens": 35578136540,
-        "total_requests": 40088692,
-        "input_output_ratio": 92.20982271287893
+        "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 12904952844896,
+        "total_completion_tokens": 292623920303,
+        "total_requests": 505670831,
+        "input_output_ratio": 44.10081319235096
       },
       {
-        "model_permaslug": "anthropic/claude-haiku-5.5-20261007",
-        "variant": "standard",
-        "variant_permaslug": "anthropic/claude-haiku-5.5-20261007",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2903308451077,
-        "total_completion_tokens": 155928876808,
-        "total_requests": 245491615,
-        "input_output_ratio": 18.619440545652957
+        "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
+        "variant": "free",
+        "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 4232474875059,
+        "total_completion_tokens": 40693315519,
+        "total_requests": 49676293,
+        "input_output_ratio": 104.00909390346499
       },
       {
         "model_permaslug": "typesafe/jev-1.13-20260917",
         "variant": "standard",
         "variant_permaslug": "typesafe/jev-1.13-20260917",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2962195214585,
-        "total_completion_tokens": 214401549630,
-        "total_requests": 880960377,
-        "input_output_ratio": 13.816109163842148
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 3279047316860,
+        "total_completion_tokens": 200169629974,
+        "total_requests": 942193230,
+        "input_output_ratio": 16.381342750575673
       },
       {
-        "model_permaslug": "nvidia/nemotron-3.5-super-vl-20261015",
-        "variant": "free",
-        "variant_permaslug": "nvidia/nemotron-3.5-super-vl-20261015:free",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2830193706422,
-        "total_completion_tokens": 39560975473,
-        "total_requests": 30022829,
-        "input_output_ratio": 71.54003844909185
-      },
-      {
-        "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
+        "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
         "variant": "standard",
-        "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 1835044653162,
-        "total_completion_tokens": 122954833484,
-        "total_requests": 220148528,
-        "input_output_ratio": 14.924542624026184
+        "variant_permaslug": "minimax/minimax-m3.1-flash-20261019",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 4660740116053,
+        "total_completion_tokens": 72771250483,
+        "total_requests": 60863391,
+        "input_output_ratio": 64.0464480838046
       },
       {
-        "model_permaslug": "baidu/ernie-5.5-flash-preview-20261110",
-        "variant": "free",
-        "variant_permaslug": "baidu/ernie-5.5-flash-preview-20261110:free",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 3245532576025,
-        "total_completion_tokens": 42645397744,
-        "total_requests": 26373777,
-        "input_output_ratio": 76.10510741412021
-      },
-      {
-        "model_permaslug": "anthropic/claude-sonnet-5.5-20260928",
+        "model_permaslug": "typesafe/jev-1.14-20261014",
         "variant": "standard",
-        "variant_permaslug": "anthropic/claude-sonnet-5.5-20260928",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2682146726363,
-        "total_completion_tokens": 42374927544,
-        "total_requests": 61874904,
-        "input_output_ratio": 63.2956061949131
+        "variant_permaslug": "typesafe/jev-1.14-20261014",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 2373893788592,
+        "total_completion_tokens": 193610359038,
+        "total_requests": 704633966,
+        "input_output_ratio": 12.261192016725069
+      },
+      {
+        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "variant": "standard",
+        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 3394426243474,
+        "total_completion_tokens": 36067618378,
+        "total_requests": 40651873,
+        "input_output_ratio": 94.11284681731253
+      },
+      {
+        "model_permaslug": "anthropic/claude-haiku-5.5-20261007",
+        "variant": "standard",
+        "variant_permaslug": "anthropic/claude-haiku-5.5-20261007",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 2930863862745,
+        "total_completion_tokens": 154683892740,
+        "total_requests": 243890330,
+        "input_output_ratio": 18.94744055653768
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2528318124194,
-        "total_completion_tokens": 176036091259,
-        "total_requests": 258219648,
-        "input_output_ratio": 14.362498656449448
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 2563866652454,
+        "total_completion_tokens": 159726953527,
+        "total_requests": 295354671,
+        "input_output_ratio": 16.05155921302041
       },
       {
-        "model_permaslug": "openai/gpt-6-luna-20260922",
+        "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
         "variant": "standard",
-        "variant_permaslug": "openai/gpt-6-luna-20260922",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 7508077632454,
-        "total_completion_tokens": 311035118196,
-        "total_requests": 665231536,
-        "input_output_ratio": 24.139002939606183
+        "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 1790743826397,
+        "total_completion_tokens": 97942368724,
+        "total_requests": 222462506,
+        "input_output_ratio": 18.283648330410376
+      },
+      {
+        "model_permaslug": "nvidia/nemotron-3.5-super-vl-20261015",
+        "variant": "free",
+        "variant_permaslug": "nvidia/nemotron-3.5-super-vl-20261015:free",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 2685643000639,
+        "total_completion_tokens": 39548126985,
+        "total_requests": 28967847,
+        "input_output_ratio": 67.90822234533694
+      },
+      {
+        "model_permaslug": "anthropic/claude-sonnet-5.5-20260928",
+        "variant": "standard",
+        "variant_permaslug": "anthropic/claude-sonnet-5.5-20260928",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 2546662574285,
+        "total_completion_tokens": 41479221525,
+        "total_requests": 60207690,
+        "input_output_ratio": 61.396103414093666
+      },
+      {
+        "model_permaslug": "baidu/ernie-5.5-flash-preview-20261110",
+        "variant": "free",
+        "variant_permaslug": "baidu/ernie-5.5-flash-preview-20261110:free",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 3091204030547,
+        "total_completion_tokens": 45274533277,
+        "total_requests": 27279768,
+        "input_output_ratio": 68.27688342217253
       },
       {
         "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 14123198653740,
-        "total_completion_tokens": 329099241141,
-        "total_requests": 480811590,
-        "input_output_ratio": 42.91471048299691
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 13619125886849,
+        "total_completion_tokens": 321439142724,
+        "total_requests": 470131947,
+        "input_output_ratio": 42.36922041116475
       },
       {
         "model_permaslug": "anthropic/claude-opus-5.5-20260921",
         "variant": "standard",
         "variant_permaslug": "anthropic/claude-opus-5.5-20260921",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 6406824999126,
-        "total_completion_tokens": 53162961479,
-        "total_requests": 59921718,
-        "input_output_ratio": 120.51294399121787
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 6310754657810,
+        "total_completion_tokens": 52704899787,
+        "total_requests": 58219093,
+        "input_output_ratio": 119.73753262626614
+      },
+      {
+        "model_permaslug": "openai/gpt-6-luna-20260922",
+        "variant": "standard",
+        "variant_permaslug": "openai/gpt-6-luna-20260922",
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 7099765835434,
+        "total_completion_tokens": 321483205105,
+        "total_requests": 658262070,
+        "input_output_ratio": 22.084406658553554
       },
       {
         "model_permaslug": "openai/gpt-6.1-sol-20260929",
         "variant": "standard",
         "variant_permaslug": "openai/gpt-6.1-sol-20260929",
-        "date": "2026-11-25 00:00:00",
-        "total_prompt_tokens": 2053773704328,
-        "total_completion_tokens": 39202211580,
-        "total_requests": 66865025,
-        "input_output_ratio": 52.38923064676751
+        "date": "2026-11-27 00:00:00",
+        "total_prompt_tokens": 1814693014761,
+        "total_completion_tokens": 35001927754,
+        "total_requests": 78736813,
+        "input_output_ratio": 51.8455162674181
       }
     ],
     "window": {
-      "start_date": "2026-11-19",
-      "end_date": "2026-11-25"
+      "start_date": "2026-11-21",
+      "end_date": "2026-11-27"
     },
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-11-26T05:32:15.492Z",
+      "collected_at": "2026-11-28T00:56:06.888Z",
       "basis": "measured"
     },
-    "response_sha256": "6f2abc3a374e0a71873e45f340ce705f5122e708e0c2fec78d3a8a1f7802943b"
+    "response_sha256": "60e728a5e5bf500d32e282ac366a463e2ff176e0805056ba03d8a0961af9e560"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-11-26T05:32:15.492Z",
+    "collected_at": "2026-11-28T00:56:06.888Z",
     "basis": "measured",
     "status": "available"
   },
   "coverage": {
-    "catalog_models": 474,
-    "eligible_page_models": 322,
+    "catalog_models": 476,
+    "eligible_page_models": 325,
     "pages_selected": 4,
     "pages_succeeded_this_run": 4,
-    "retained_model_pages": 248,
+    "retained_model_pages": 251,
     "policy": "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained."
   }
 }

@@ -1,0 +1,12 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "3d94ec8a2e9db5f30e84dd383eab282e79b4d01902eef83c9e71218d00ca21bd",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:984dc84b4bdc39906b6a1f75","public:d27d481600bc2f8e0d5f5887","public:8a7f4799b4bfd90c114941d8","public:8290c890b90a8e89846b4fd4","public:0d6004e18fa5c90b55dc85f5","public:210f65245884a7892368e3be","public:4ecb36fa40be595013f5b753","public:7b1b1264d5de1ed5c8f08b48","public:116b9fea84ddc6d1f6e5fc89","public:82982b48a8792edf4eccf070","public:1460c2de634405d0159be750","public:8971f301d6919ce4408d8a95","public:7a40375ca79aaf4454329415","public:aef037c94a966874d4beca18","public:07fc6b444b32d9ff1238fda0","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": ["Numeric equality verified per c1 by parsed value, not text formatting; source serving format for each W/10 cell was taken as transcribed in the packet's native_source_row JSON, and trailing-zero variants (e.g. 9.0 vs 9, 10.0 vs 10) were treated as equal values. Row/hash binding relies on the owner-computed per-row SHA-256 list; I cannot recompute hashes. I also cannot re-verify transport/qualification checks (owner receipt covers identity only). The 'W/10 👍' published composite weighting is not verified per registry notes; this does not affect transcription review. The maintainers' 52-row activity summary and scale summary (Sources 4-5) are generated run summaries, not maintainer text, and were not used as per-row evidence."],
+  "missing_evidence": []
+}

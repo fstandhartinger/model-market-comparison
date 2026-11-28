@@ -1,0 +1,84 @@
+{
+  "started_at": "2026-11-28T01:05:54.213Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.5,
+    "context": 1048576,
+    "aa_intelligence_index": 27.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 27.8
+      }
+    ]
+  },
+  "input_sha256": "988f4933472b9e7444165aaf41eee9380d6d9de3d8010c52cf1f211057dd9542",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-28T01:04:35.084Z"
+  },
+  "request_limits": {
+    "max_tokens": 32768,
+    "timeout_seconds": 600,
+    "input_bytes": 71767
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [
+    "Wafer",
+    "OpenInference"
+  ],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 17180,
+    "completion_tokens": 433,
+    "total_tokens": 17613,
+    "cost": 0.000637235181,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 576,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0006436719,
+      "upstream_inference_prompt_cost": 0.0006083824,
+      "upstream_inference_completions_cost": 0.0000352895
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 201,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Relace",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-28T01:06:01.383Z",
+  "output_sha256": "6fad33a5795d8cb6e7970569473d1d336eb2ae4da331091778be3b30ef9532df"
+}

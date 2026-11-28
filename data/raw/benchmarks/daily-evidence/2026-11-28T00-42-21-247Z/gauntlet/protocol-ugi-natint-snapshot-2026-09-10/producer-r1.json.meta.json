@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-11-28T01:05:36.231Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.045599999999999995,
+    "output_per_1m": 0.3,
+    "context": 1048576,
+    "aa_intelligence_index": 24.1,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 24.1,
+        "estimated_from_v4": 34.3
+      }
+    ]
+  },
+  "input_sha256": "af0581405bc7363062ec4825da8c86a95c2e5cb1d11f67fc6451692808181399",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-28T01:04:35.084Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 69789
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 17669,
+    "completion_tokens": 2959,
+    "total_tokens": 20628,
+    "cost": 0.00117991363248,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 256,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001191831952,
+      "upstream_inference_prompt_cost": 0.000789526312,
+      "upstream_inference_completions_cost": 0.00040230564
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2892,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Baidu",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-28T01:05:53.512Z",
+  "output_sha256": "b50f9cdb0add0ea311e5fb3907703a7f3738e2ab8ecb68697a41282f7091d0fe"
+}

@@ -1,0 +1,169 @@
+{
+  "artifact_id": "scores-4",
+  "rounds_used": 1,
+  "rows": {
+    "total": 15,
+    "accepted": [
+      "public:4cc602aded30629f8a6067cf",
+      "public:af885e142f59f5ac37f00f72",
+      "public:0111ec1d628dd80d019b1260",
+      "public:b634f57cc06549580d3aa8a7",
+      "public:1a8965f71c4001fbbef97af7",
+      "public:6a5092140561171aefdc5b25",
+      "public:6354f5a9438073578ef24127",
+      "public:72c772b3a1911d03434f5c79",
+      "public:dd6720142470d5d32a056173",
+      "public:9cd0aa11bb8c7947cba7f0fe",
+      "public:5ef39a58042a9e24d2ed7589",
+      "public:291af2ab71456793fd22e83f",
+      "public:0449672ea5a95ab233764e9f",
+      "public:f3b4e5201ae44eb103c583ce",
+      "public:c10cc08a8b1d9af072273a0f"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 15
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 15,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00206275765608,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/gauntlet/scores-4/producer-r1.json",
+      "output_sha256": "ea74c640e3d97166de7d106cf564bb936beecedc68192b830e58fdf2bb2f78f4",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.045599999999999995,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 39710,
+        "completion_tokens": 2171,
+        "total_tokens": 41881,
+        "cost": 0.00206275765608,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.002083593592,
+          "upstream_inference_prompt_cost": 0.001788424432,
+          "upstream_inference_completions_cost": 0.00029516916
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1356,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.001436992326,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-28T00-42-21-247Z/gauntlet/scores-4/review-r1.json",
+      "output_sha256": "a17969e3a97ffe4f32d456bee00238366c73832517d67abb64084fa0f79eb928",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 27.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 27.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 38780,
+        "completion_tokens": 910,
+        "total_tokens": 39690,
+        "cost": 0.001436992326,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 576,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0014515074,
+          "upstream_inference_prompt_cost": 0.0013773424,
+          "upstream_inference_completions_cost": 0.000074165
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 165,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}
