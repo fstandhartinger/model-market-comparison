@@ -5,7 +5,6 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { jevApiRoster } from '../lib/jevbench-scope.mjs';
-import * as format from '../lib/jevbench-board-format.mjs';
 
 const D = 'data/raw/benchmarks/jevbench/v1.8/';
 const load = (rev, kind) => JSON.parse(readFileSync(`${D}jevbench-${rev}-${kind}.json`));
@@ -22,6 +21,8 @@ const injected = ['one', 'usd'].filter(name => !declared(name));
 const names = new Set([...['one', 'usd'].filter(declared), 'rosterCapability', 'ENDPOINT_TAG', 'supplementaryBasis', 'basisLine', 'costCell', 'rosterStatus', 'ApiRoster']);
 const parts = ast.statements.filter(n => names.has(n.name?.text) || n.declarationList?.declarations.some(d => names.has(d.name.text))).map(n => n.getText(ast));
 const code = ts.transpileModule(parts.join('\n'), { compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+// lib/jevbench-board-format.mjs exists only on bases that carry the archive-board change.
+const format = await import('../lib/jevbench-board-format.mjs').catch(() => ({}));
 const helpers = { one: format.one, usd: format.usd };
 const ApiRoster = new Function('React', 'jevApiRoster', 'JevLatencyValue', 'JevLatencyLegend', 'NOT_RANKED', 'PUBLIC_SET', ...injected, code + '\nreturn ApiRoster;')(React, jevApiRoster, () => null, () => null, {}, new Map(), ...injected.map(name => helpers[name]));
 
