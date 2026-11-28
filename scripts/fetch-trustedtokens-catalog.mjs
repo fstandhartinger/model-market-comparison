@@ -37,7 +37,7 @@ try {
     ...previous,
     source: "TrustedTokens — trustedtokens.eu/api/public/models (first-party, public; the endpoint the /models page itself loads)",
     collected_at,
-    method: `scripts/fetch-trustedtokens-catalog.mjs (${collected_at}): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).`,
+    method: `scripts/fetch-trustedtokens-catalog.mjs (${collected_at}): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate. Normalize EUR per token to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent). Skip rows without both token prices and the "auto" entry with no concrete model identity. Keep lifecycle attributes and audited sovereign German hosting (see trustedtokens.method.md).`,
     currency: "EUR",
     currency_note: `Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB ${fx.date}: 1 EUR = ${fx.rate} USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.`,
     usd_normalization: { status: "applied", eur_to_usd: fx.rate, fx_rate_date: fx.date, source: ecbUrl, rounding: "nearest USD cent" },

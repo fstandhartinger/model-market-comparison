@@ -49,6 +49,18 @@ test("rows without a positive input or output price are skipped (not chat models
   assert.deepEqual(skipped, ["mistralai/embed-large"]);
 });
 
+test("the exact auto entry is reported as skipped and cannot satisfy the catalog size guard", () => {
+  const auto = row("auto", { input: 5e-7, output: 1.25e-6, cache: 1e-7, attributes: ["experimental"] });
+  const previous = { models: parseTrustedTokensCatalog(page(nine()), { models: [] }, fx).models };
+  const { models, skipped, diff } = parseTrustedTokensCatalog(page(nine([auto])), previous, fx);
+  assert.deepEqual(models, previous.models);
+  assert.deepEqual(skipped, ["auto"]);
+  assert.deepEqual(diff, { added: [], removed: [], eur_price_changed: [] });
+  assert.throws(() => parseTrustedTokensCatalog(page([...nine().slice(0, 7), auto]), previous, fx), /only 7 catalog models/);
+  assert.throws(() => parseTrustedTokensCatalog(page(nine([auto, auto])), previous, fx), /auto listed twice/);
+  assert.throws(() => parseTrustedTokensCatalog(page(nine([row("auto-next")])), previous, fx), /unexpected model name "auto-next"/);
+});
+
 test("fails closed: non-JSON, no models array, too few models, duplicates, odd names, weird prices", () => {
   assert.throws(() => parseTrustedTokensCatalog("<html>sign in</html>", { models: [] }, fx), /not JSON/);
   assert.throws(() => parseTrustedTokensCatalog("{}", { models: [] }, fx), /no models array/);

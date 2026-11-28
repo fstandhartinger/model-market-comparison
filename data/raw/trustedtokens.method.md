@@ -8,6 +8,10 @@ verified 2026-10-21). One GET plus the ECB daily EUR/USD reference rate.
 bot-protection circumvention — this is the page's own data request, the preferred collection
 method in E3.
 
+**27 November 2026:** The catalog added the priced experimental entry `auto` without a concrete
+model identity. The collector records it in `skipped` and excludes it from the minimum catalog
+count. All other entries must identify a model in `vendor/model` form.
+
 **Operator and hosting (audited 2026-09-15, see
 `/home/flori/jobs/bh-data-verification-20260915/TRUSTEDTOKENS.md`):** TrustedTokens is operated by
 TNG Technology Consulting GmbH (Unterföhring, Germany; HRB 135082 München). The FAQ states all
