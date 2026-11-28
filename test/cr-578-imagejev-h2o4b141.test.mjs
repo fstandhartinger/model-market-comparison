@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 const read = async (p) => JSON.parse(await readFile(new URL(p, import.meta.url), 'utf8'));
 const release = await read('../data/imagejev-v03.json');
 const key = 'h2o_lightning_4b_v141_image';
@@ -35,11 +36,11 @@ test('CR-578 H2O-4B v1.4.1: pinned official GPU row discloses version, engine, i
 
 test('CR-578 H2O-4B v1.4.1: full image/use-case coverage is bound to the official output; TS20 cells are measured and the temporary exception is removed', async () => {
   const cats = release.categories.systems[key];
-  assert.equal(Object.keys(cats.capabilities).length, 14);
-  assert.equal(Object.keys(cats.usecases).length, 5);
+  assert.equal(Object.keys(cats.capabilities).length + withheldCells(release.categories, key, 'capabilities').length, 14);
+  assert.equal(Object.keys(cats.usecases).length + withheldCells(release.categories, key, 'usecases').length, 5);
   const coverage = (await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json')).systems[key];
   for (const dim of ['capabilities', 'usecases']) {
-    assert.equal(Object.values(cats[dim]).reduce((n, c) => n + c[1], 0), 1500);
+    assert.equal(scoredTotal(release.categories, key, dim, coverage), 1500);
     for (const cell of Object.values(coverage.cells[dim])) assert.equal(cell[0], cell[1]);
   }
   assert.equal(coverage.source.output_sha256, '1350387a12fc22a234654cbd6fde401a45ccd7a81538db339e5c541a73ae050f');

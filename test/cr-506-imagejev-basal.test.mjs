@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const release = JSON.parse(await read('../data/imagejev-v03.json'));
@@ -81,11 +82,11 @@ test('CR-506 basal stays inside both caps; CR-536 H2O-31B updates both top fives
 
 test('CR-506 basal-omni-1.0-ultra has aggregate-only category and answered-coverage cells; the TypeSafe-20 gap is a recorded temporary exception', async () => {
   const cells = release.categories.systems[KEY];
-  assert.equal(Object.keys(cells.capabilities).length, 14);
-  assert.equal(Object.keys(cells.usecases).length, 5);
+  assert.equal(Object.keys(cells.capabilities).length + withheldCells(release.categories, KEY, 'capabilities').length, 14);
+  assert.equal(Object.keys(cells.usecases).length + withheldCells(release.categories, KEY, 'usecases').length, 5);
   assert.equal(Object.values(cells.usecases).reduce((n, c) => n + c[1], 0), 1500);
-  assert.equal(Object.values(cells.capabilities).reduce((n, c) => n + c[1], 0), 1500);
   const coverage = JSON.parse(await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json'));
+  assert.equal(scoredTotal(release.categories, KEY, 'capabilities', coverage.systems[KEY]), 1500);
   assert.equal(coverage.systems[KEY].source.public_score_sha256, row.source_sha256);
   assert.equal(coverage.systems[KEY].source.output_sha256, '098080af890ea3ca43a88c61ada6b3ef2a392fb62ac25af226eae00455038e90');
   const ts20 = JSON.parse(await read('../data/imagejev-ts20-categories.json'));

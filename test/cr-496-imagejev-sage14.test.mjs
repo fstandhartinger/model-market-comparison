@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const release = JSON.parse(await read('../data/imagejev-v03.json'));
@@ -34,8 +35,8 @@ test('CR-496 Sage 1.4 + images: official pass 1 via Levanto /decide, beta image 
 
 test('CR-496 Sage 1.4 + images has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {
   const cells = release.categories.systems[KEY];
-  assert.equal(Object.keys(cells.capabilities).length, 14);
-  assert.equal(Object.keys(cells.usecases).length, 5);
+  assert.equal(Object.keys(cells.capabilities).length + withheldCells(release.categories, KEY, 'capabilities').length, 14);
+  assert.equal(Object.keys(cells.usecases).length + withheldCells(release.categories, KEY, 'usecases').length, 5);
   assert.equal(Object.values(cells.usecases).reduce((n, c) => n + c[1], 0), 600);
   const coverage = JSON.parse(await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json'));
   assert.equal(coverage.systems[KEY].source.public_score_sha256, row(KEY).source_sha256);

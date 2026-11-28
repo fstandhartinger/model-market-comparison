@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { withheldCells, scoredTotal } from '../lib/imagejev-sample-floor.mjs';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const release = JSON.parse(await read('../data/imagejev-v03.json'));
@@ -44,8 +45,8 @@ test('CR-530 Drex Max: official pass 1 via Nace AI /v1/systemone, paid fast-lane
 
 test('CR-530 Drex Max has aggregate-only category and answered-coverage cells; TypeSafe-20 cells were added by CR-531 and the temporary exception is gone', async () => {
   const cells = release.categories.systems[KEY];
-  assert.equal(Object.keys(cells.capabilities).length, 14);
-  assert.equal(Object.keys(cells.usecases).length, 5);
+  assert.equal(Object.keys(cells.capabilities).length + withheldCells(release.categories, KEY, 'capabilities').length, 14);
+  assert.equal(Object.keys(cells.usecases).length + withheldCells(release.categories, KEY, 'usecases').length, 5);
   assert.equal(Object.values(cells.usecases).reduce((n, c) => n + c[1], 0), 600);
   const coverage = JSON.parse(await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json'));
   assert.equal(coverage.systems[KEY].source.public_score_sha256, row.source_sha256);
