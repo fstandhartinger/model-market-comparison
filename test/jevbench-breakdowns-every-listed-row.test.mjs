@@ -8,7 +8,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
-import { assembleJevBoard } from '../lib/jevbench-live-board.mjs';
+import { assembleJevBoard, readLatestJevbenchRelease } from '../lib/jevbench-live-board.mjs';
+import { assertJevbenchRowBreakdownFloor } from './helpers/jevbench-row-breakdown-floor.mjs';
 import { jevBreakdownGaps, imageJevBreakdownGaps, readBreakdownExceptions, unexcusedBreakdownGaps, validateBreakdownExceptions } from '../lib/jevbench-breakdown-gate.mjs';
 import { withCohortCategoryCells, validateCohortTopicCells, readCohortTopicCells } from '../lib/jevbench-cohort-categories.mjs';
 import { validateCategoryArtifact } from '../lib/jevbench-categories.mjs';
@@ -29,6 +30,11 @@ test('gate: no listed row lacks topic, use-case or language cells without a reco
   const { open, stale } = unexcusedBreakdownGaps(jevBreakdownGaps(board, previous), exceptions);
   assert.deepEqual(open.map((g) => `${g.key}: ${g.dims.join('+')} (${g.where.join(', ')})`), []);
   assert.deepEqual(stale, [], 'exception entries without a matching gap must be removed');
+});
+
+test('gate: the live board uses the latest release and shows no row breakdown below 30 scored items', async () => {
+  assert.equal(board.published.restated_by, await readLatestJevbenchRelease(release.artifact.revision));
+  assertJevbenchRowBreakdownFloor(board.published, 'live board');
 });
 
 test('gate catches a future fresh-draw row whose release ships no category cells', () => {

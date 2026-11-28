@@ -49,23 +49,13 @@ test('v1.8.15: precomputed All-data JSON has no small row breakdowns', () => {
  assertRowBreakdownFloor(JSON.parse(readFileSync('data/jevbench-v1.8.15-alldata.json')).artifact, 'snapshot');
 });
 
-test('v1.8.15: published live board and every All-data JSON input have no small row breakdowns', async t => {
+test('v1.8.15: published All-data input has no small row breakdowns', async t => {
  const manifest = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.15-publication.json'));
- if (manifest.review.verdict !== 'PASS') return t.skip('candidate PENDING; live board still uses the historical release');
- const {readJevbenchV161Release} = await import('../lib/jevbench-v16-release.mjs');
- const {readJevbenchV157Release} = await import('../lib/jevbench-v15-release.mjs');
- const {assembleJevBoard} = await import('../lib/jevbench-live-board.mjs');
+ if (manifest.review.verdict !== 'PASS') return t.skip('candidate PENDING; archived input is unpublished');
  const {readJevAllDataInput} = await import('../lib/jevbench-alldata-input.mjs');
- const [release, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
- const apiA4 = JSON.parse(readFileSync('data/jevbench-api-a4-equated.json'));
- const board = await assembleJevBoard({release, previous, apiA4, live: true});
- assert.ok(['v1.8.15','v1.8.16','v1.8.17','v1.8.18','v1.8.19','v1.8.20','v1.8.21','v1.8.22', 'v1.8.23'].includes(board.published.restated_by));
- assertRowBreakdownFloor(board.published, 'live board');
- for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.15']) {
-  const input = await readJevAllDataInput(version);
-  assert.ok(input, `${version}: published input exists`);
-  assertRowBreakdownFloor(input.artifact, version);
- }
+ const input = await readJevAllDataInput('v1.8.15');
+ assert.ok(input, 'v1.8.15: published input exists');
+ assertRowBreakdownFloor(input.artifact, 'v1.8.15');
 });
 
 test('v1.8.15: previous breakdowns are filtered at arbitrary depth in every dimension', async () => {

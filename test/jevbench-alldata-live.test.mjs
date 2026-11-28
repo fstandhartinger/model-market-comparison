@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
 import { readJevAllDataInput } from '../lib/jevbench-alldata-input.mjs';
+import { assertJevbenchRowBreakdownFloor } from './helpers/jevbench-row-breakdown-floor.mjs';
 // Execute the actual live page's server wrapper and capture its Board element, without rendering the UI.
 const file = new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url);
 const require = createRequire(file);
@@ -24,7 +25,10 @@ function findBoard(tree) {
 for (const scope of ['open', 'api', 'all']) test(`board-${scope}: endpoint uses the exact live page artifact, categories and previous roster`, async () => {
   const page = findBoard(await module.exports.JevBenchV16ReleaseRoute({ live: true, scope }));
   assert.ok(page);
-  const input = await readJevAllDataInput(`board-${scope}`);
+  const version = `board-${scope}`;
+  const input = await readJevAllDataInput(version);
+  assert.ok(input, `${version}: published input exists`);
+  assertJevbenchRowBreakdownFloor(input.artifact, version);
   assert.deepEqual(input.artifact, page.artifact);
   assert.deepEqual(input.categories, page.categories);
   // VM-created arrays have another realm's prototype.
