@@ -5,6 +5,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { jevApiRoster } from '../lib/jevbench-scope.mjs';
+import * as format from '../lib/jevbench-board-format.mjs';
 
 const D = 'data/raw/benchmarks/jevbench/v1.8/';
 const load = (rev, kind) => JSON.parse(readFileSync(`${D}jevbench-${rev}-${kind}.json`));
@@ -15,10 +16,14 @@ const BASIS = 'Supplementary set of 600 items: 300 sealed and 300 public (API la
 // Compile the real roster component and its helpers in isolation (latency cells stubbed), as the v1.7.10 links test does.
 const src = readFileSync('components/JevBenchV16Board.tsx', 'utf8');
 const ast = ts.createSourceFile('board.tsx', src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-const names = new Set(['one', 'usd', 'rosterCapability', 'ENDPOINT_TAG', 'supplementaryBasis', 'basisLine', 'costCell', 'rosterStatus', 'ApiRoster']);
+// `one`/`usd` are local helpers on some bases and imported from lib/jevbench-board-format.mjs on others (archive-board change): take them from the source when local, inject otherwise.
+const declared = name => ast.statements.some(n => n.name?.text === name || n.declarationList?.declarations.some(d => d.name.text === name));
+const injected = ['one', 'usd'].filter(name => !declared(name));
+const names = new Set([...['one', 'usd'].filter(declared), 'rosterCapability', 'ENDPOINT_TAG', 'supplementaryBasis', 'basisLine', 'costCell', 'rosterStatus', 'ApiRoster']);
 const parts = ast.statements.filter(n => names.has(n.name?.text) || n.declarationList?.declarations.some(d => names.has(d.name.text))).map(n => n.getText(ast));
 const code = ts.transpileModule(parts.join('\n'), { compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
-const ApiRoster = new Function('React', 'jevApiRoster', 'JevLatencyValue', 'JevLatencyLegend', 'NOT_RANKED', 'PUBLIC_SET', code + '\nreturn ApiRoster;')(React, jevApiRoster, () => null, () => null, {}, new Map());
+const helpers = { one: format.one, usd: format.usd };
+const ApiRoster = new Function('React', 'jevApiRoster', 'JevLatencyValue', 'JevLatencyLegend', 'NOT_RANKED', 'PUBLIC_SET', ...injected, code + '\nreturn ApiRoster;')(React, jevApiRoster, () => null, () => null, {}, new Map(), ...injected.map(name => helpers[name]));
 
 const render = rev => {
   const a = load(rev, 'results'), carry = load(rev, 'carry');
