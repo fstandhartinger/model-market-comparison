@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1616Release, v1616BoardInput } from '../../../lib/jevbench-v1616-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -28,7 +28,7 @@ export default async function JevModelsV1616Page() {
       <p className="mt-3 max-w-3xl">The ten full-draw rows of v1.6.15 retain their full 1,500-item results, point scores and categories on draw {release.proof.draw_release}; <strong>reflex-instinct-0.6b</strong> stays <strong>listed but not ranked</strong> (its Speed figure is not official), and the unranked Microsoft A2 re-run is carried through unchanged. One self-hosted system is added: <strong>vLLM-SR d3</strong> (<code>vllm-sr/d3</code>, a Qwen3.8-27B fine-tune, Apache-2.0 weights, training data not disclosed). It has the highest Capability of this draw, but its cost is an estimate far above the Jev-class cost cap, so it is not on the default capped Capability ranking and the squared cost gate keeps its composite small. It was timed on an RTX PRO 6000 GPU, while this draw&rsquo;s other GPU rows, Perplexity Decider and Torchcast-Decision-27B were timed on an H100. Ranks recompute over the new roster; no earlier point score moves.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.16">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.15">Previous v1.6.15</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.16" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

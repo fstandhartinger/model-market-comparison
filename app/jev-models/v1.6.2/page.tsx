@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV162Release, historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -23,7 +23,7 @@ export default async function JevModelsV162Page() {
       <p className="mt-3 max-w-3xl">Paid submissions measured on the same fresh 1,500-decision draw with methodology v1.6. Historical scores retain their original dates and are listed separately below.</p>
       <p className="bh-muted mt-2 text-xs"><a className="text-accent underline" href="/api/jevbench/v1.6.2">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(release.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.2" artifact={withPublicAdapterIds(release.artifact)} sha256={release.sha256}
       categories={release.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

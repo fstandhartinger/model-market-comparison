@@ -1,3 +1,5 @@
+import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegacyArchiveProvider';
+import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import type { Metadata } from 'next';
 import { jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
 import { readJevbenchV142WithFamilies } from '../../../lib/jevbench-v142-families.mjs';
@@ -44,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function JevModelsV142Page() {
   const view = await pinnedView();
-  return <>
+  return <JevBenchLegacyArchiveProvider version="v1.4.2" key="v1.4.2"><>
     <header className="bh-page-head">
       <p className="bh-eyebrow" data-bh-jev-frozen-version>Frozen JevBench release {view.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {view.revision} — frozen results</h1>
@@ -57,11 +59,11 @@ export default async function JevModelsV142Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} sealedFamilyN={view.sealedFamilyN} />
+    <JevBenchLegacyArchiveWidget version="v1.4.2" part="board" artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} sealedFamilyN={view.sealedFamilyN} />
     <details className="bh-panel mt-8 p-4 sm:p-5" data-bh-jev-frozen-capability>
       <summary className="cursor-pointer text-lg font-semibold text-accent">Explore Capability, cost and speed charts</summary>
-      <JevCapabilityChart systems={view.systems} revision={view.revision} />
+      <JevBenchLegacyArchiveWidget version="v1.4.2" part="capability" systems={view.systems} revision={view.revision} />
     </details>
     <PageJsonLd meta={await generateMetadata()} />
-  </>;
+  </></JevBenchLegacyArchiveProvider>;
 }

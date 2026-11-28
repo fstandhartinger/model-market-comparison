@@ -1,4 +1,5 @@
 'use client';
+import { JevHistoricalSupplementHeader } from './JevHistoricalSupplementHeader';
 import { Radar, type Spoke } from './JevRadars';
 import { RADAR_SIGNED_DOMAIN } from '../lib/radar-shape.mjs';
 import type { HistoricalSupplement, HistoricalRow } from '../lib/jevbench-history-supplement.mjs';
@@ -15,9 +16,7 @@ function CategoryRadar({ row, artifact, dimension }: { row: HistoricalRow; artif
 }
 export function JevHistoricalSupplement({ artifact, sha256 }: { artifact: HistoricalSupplement; sha256: string }) {
   return <section id="historical-measurements" className="mx-auto max-w-7xl px-4 py-10 sm:px-6" data-jevbench-historical-supplement>
-    <h2 className="text-2xl font-bold">Additional historical measurements</h2>
-    <p className="mt-2 bh-muted">Measured {artifact.measurement_period.from} through {artifact.measurement_period.to} (UTC); published {artifact.published_on}. {artifact.measurement_basis}</p>
-    <p className="mt-2 bh-muted">{artifact.systems.length} complete measurements join this historical table. The frozen v1.5.7 ranking and its top five remain unchanged. Prices are estimates from the original declared references (*est.); latency includes the original self-hosted adjustment. Decision 2.0 Vega is the version measured in this pool.</p>
+    <JevHistoricalSupplementHeader artifact={artifact} />
     <div className="mt-6 overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Historical model measurements, ordered by original composite A score</caption>
       <thead><tr>{['Model', 'Intelligence', 'Calibration', 'Capability', 'Speed', 'Cost axis', 'Composite A', 'USD / 1,000', 'Median seconds', 'Answers'].map(s => <th key={s} className="p-3">{s}</th>)}</tr></thead>
       <tbody>{artifact.systems.map(row => <tr key={row.key} className="border-t border-line"><th scope="row" className="p-3 font-medium"><a href={`#historical-${row.key}`} className="underline">{row.name}</a></th>

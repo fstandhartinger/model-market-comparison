@@ -1,3 +1,5 @@
+import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegacyArchiveProvider';
+import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import { readHistoricalJevbenchSupplement } from '../../../lib/jevbench-history-supplement.mjs';
 import { JevHistoricalSupplement } from '../../../components/JevHistoricalSupplement';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
@@ -30,9 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function JevModelsV157Page() {
   const { artifact, sha256 } = await currentRelease();
   const supplement = await readHistoricalJevbenchSupplement();
-  return <>
+  return <JevBenchLegacyArchiveProvider version="v1.5.7" key="v1.5.7"><>
     <JevBenchReleaseVersionNav active="v1.5.7" /><JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath="/jev-models/v1.5.7" />
-    <JevHistoricalSupplement artifact={supplement.artifact} sha256={supplement.sha256} />
+    <JevBenchLegacyArchiveWidget version="v1.5.7" part="supplement" artifact={supplement.artifact} sha256={supplement.sha256} />
     <JevHistoryLazy />
-  </>;
+  </></JevBenchLegacyArchiveProvider>;
 }

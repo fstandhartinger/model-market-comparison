@@ -2,7 +2,7 @@ import { jevMethodLabel } from '../../../lib/jev-decision-limit.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1810ForBoard, v1810BoardInput } from '../../../lib/jevbench-v1810-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { readJevbenchV157Release, withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { readJevbenchV161Release } from '../../../lib/jevbench-v16-release.mjs';
@@ -22,6 +22,6 @@ export default async function JevModelsV1810Page() {
  <h1 className="mt-1 text-3xl font-bold">JevBench v1.8.10: the 27 Oct draw equated with four strong anchors and ranked</h1>
  <p className="mt-3 max-w-3xl">Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust&apos;s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor&apos;s request; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay); all published breakdown cells are now shown, small samples marked; 18 API base models added with sources.</p>
  <p className="bh-muted mt-2 text-xs break-all"><a href="/api/jevbench/v1.8.10">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a href="/jev-models/v1.8.9">Previous v1.8.9</a></p></header>
- <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={release.categoriesSha256} carry={{...release.carry,rows:[]}} carrySha256={release.carrySha256} previousKeys={release.artifact.systems.filter((row: {remeasured_in?: string; new_in?: string})=>row.remeasured_in!=='v1.8.10' && row.new_in!=='v1.8.10').map((row: {key: string})=>row.key)} scope="all" />
+ <JevBenchArchiveBoard version="v1.8.10" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={release.categoriesSha256} carry={{...release.carry,rows:[]}} carrySha256={release.carrySha256} previousKeys={release.artifact.systems.filter((row: {remeasured_in?: string; new_in?: string})=>row.remeasured_in!=='v1.8.10' && row.new_in!=='v1.8.10').map((row: {key: string})=>row.key)} scope="all" />
  <section className="mt-10 max-w-4xl" data-bh-jev1810-method><h2 className="text-2xl font-bold">What changed in v1.8.10</h2>{notes.map((note,i)=><p className="mt-2" key={i}>{note}</p>)}</section><JevHistoryLazy/></>;
 }

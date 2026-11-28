@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1642Release, v1642BoardInput } from '../../../lib/jevbench-v1642-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -18,7 +18,7 @@ export default async function JevModelsV1642Page() {
  <h1 className="mt-1 text-3xl font-bold">Torchcast Decision 4B (v1.3) added</h1>
  <p className="mt-3 max-w-3xl">One paid public fast-lane addition on the same draw and common cost basis: Torchcast Decision 4B v1.3, a self-hosted model measured as its author ships it (the author's own server unchanged, non-causal full attention as trained), priced as an estimate from its declared base model. It is a new version next to v1.2, which stays listed. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>
  <p className="bh-muted mt-2 text-xs break-all"><a href="/api/jevbench/v1.6.42">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a href="/jev-models/v1.6.40">Previous v1.6.40</a></p></header>
- <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={board.categoriesSha256}
+ <JevBenchArchiveBoard version="v1.6.42" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={board.categoriesSha256}
  carry={{...release.historical.carry,rows:[]}} carrySha256={release.historical.carrySha256} previousKeys={historicalCatalogue(release.historical.artifact, release.historical.carry).map(row => row.key)} scope="all" />
  <section className="mt-10 max-w-4xl" data-bh-jev1642-method><h2 className="text-2xl font-bold">What changed in v1.6.42</h2>
  <p>{JEVBENCH_COST_RULE} {JEVBENCH_COST_RULE_HISTORY}</p>

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1623Release, v1623BoardInput } from '../../../lib/jevbench-v1623-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -36,7 +36,7 @@ export default async function JevModelsV1623Page() {
       <p className="mt-3 max-w-3xl">All 26 full-draw rows of v1.6.22 keep their 1,500-item results on draw {release.proof.draw_release}; <strong>no model was called again</strong>. Three rows that v1.6.22 listed without a price now carry their vendors&rsquo; public list prices: <strong>Sage 1.4</strong> (Levanto Labs, USD 0.05 per million input tokens and USD 10 per million output tokens), <strong>Nimble-v4</strong> (Bespoke Labs, USD 0.04 per million input tokens) and <strong>Nimble-v4-max</strong> (USD 0.09 per million input tokens; Nimble output tokens are free). With a cost axis they get composites and ranks. Every other row keeps its point scores and intervals; carried ranks shift where a newly ranked row sits above them, and every move is counted in the notes below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.23">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.22">Previous v1.6.22</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.23" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

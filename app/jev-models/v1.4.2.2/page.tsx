@@ -1,3 +1,5 @@
+import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegacyArchiveProvider';
+import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import type { Metadata } from 'next';
 import { readJevbenchV12 } from '../../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../../lib/jevbench-v11.mjs';
@@ -162,7 +164,7 @@ export default async function JevModelsPage() {
       },
     ],
   };
-  return <>
+  return <JevBenchLegacyArchiveProvider version="v1.4.2.2" key="v1.4.2.2"><>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head" data-bh-jev-frozen-head>
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
@@ -186,12 +188,12 @@ export default async function JevModelsPage() {
 
     {/* Florian 25 Sep 2026: new page order — 1. Capability ranking of Jev-class systems, 2. bubble charts, 3. the official
         composite score with weight sliders, sorting and filters, 4. compare view, axes table and the rest as before. */}
-    <JevCapabilityRanking systems={v14.systems} revision={v14.revision} officialHref="#jev14-chart-title" />
+    <JevBenchLegacyArchiveWidget version="v1.4.2.2" part="capability" systems={v14.systems} revision={v14.revision} officialHref="#jev14-chart-title" />
     {/* F-197 (pass 36): the guides follow the Jev-class method panel (#jev-class-method), before the bubbles. */}
     <JevBoardIntentLinks />
-    <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
+    <JevBenchLegacyArchiveWidget version="v1.4.2.2" part="bubbles" points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
 
-    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev-capability" sealedFamilyN={v14Result.sealedFamilyN} compactMobile />
+    <JevBenchLegacyArchiveWidget version="v1.4.2.2" part="board" artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev-capability" sealedFamilyN={v14Result.sealedFamilyN} compactMobile />
 
 
     {/* Page fix (Florian 23 Sep 2026): the v1.3 page's "what the run says" findings, recomputed from the v1.4 board. */}
@@ -327,5 +329,5 @@ export default async function JevModelsPage() {
     <JevContextLazy />
 
     <JevHistoryLazy />
-  </>;
+  </></JevBenchLegacyArchiveProvider>;
 }

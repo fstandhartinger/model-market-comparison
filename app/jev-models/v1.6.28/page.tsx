@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1628Release, v1628BoardInput } from '../../../lib/jevbench-v1628-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -34,7 +34,7 @@ export default async function JevModelsV1628Page() {
       <p className="mt-3 max-w-3xl">The 53 full-draw rows of v1.6.27 keep their full 1,500-item results, point scores and categories on draw {release.proof.draw_release}. Added here: <strong>basal-omni-1.0-ultra</strong> (Remek Kinas), a Gemma-4-31B-it decision model, ranked; and <strong>PurpleMIST-Flash-1.0</strong> (Olaverse), a Qwen3.5-9B-Base decision model, <strong>listed but not ranked</strong> because the frozen pricing path has no price for its base model. Both are public submissions measured on our own rented GPUs. Carried ranks shift where the new ranked row sits above them; some carried confidence intervals move with the new roster; no earlier point score moves, and every move is counted in the notes below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.28">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.27">Previous v1.6.27</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.28" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

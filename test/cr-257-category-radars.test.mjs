@@ -96,7 +96,7 @@ test('CR-257: the live ImageJevBench release has category values for every ranke
 
 test('CR-257: both compare views receive the categories and draw the two category radars', async () => {
   const [board, image, compare, radar] = await Promise.all([
-    read('../components/JevBenchV15Preview.tsx'), read('../app/jev-models/multimodal-preview/page.tsx'),
+    read('../components/JevBenchV15View.tsx'), read('../app/jev-models/multimodal-preview/page.tsx'),
     read('../components/JevCompareV15.tsx'), read('../components/JevRadars.tsx'),
   ]);
   assert.match(board, /<JevCompareV15 [^>]*categories=\{jevbenchCategoryView\(/, 'JevBench compare view gets the categories');

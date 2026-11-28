@@ -1,3 +1,4 @@
+import { JevBenchLegacyArchiveWidget } from './JevBenchLegacyArchive';
 import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
@@ -101,7 +102,7 @@ export async function JevBenchV15ReleasePage({ artifact: releaseArtifact, sha256
         <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={artifact.revision === 'v1.5.7' ? '/jev-models/v1.5.6' : artifact.revision === 'v1.5.6' ? '/jev-models/v1.5.5' : artifact.revision === 'v1.5.5' ? '/jev-models/v1.5.4' : artifact.revision === 'v1.5.4' ? '/jev-models/v1.5.3' : artifact.revision === 'v1.5.3' ? '/jev-models/v1.5.2' : artifact.revision === 'v1.5.2' ? '/jev-models/v1.5.1' : artifact.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{artifact.revision === 'v1.5.7' ? 'JevBench v1.5.6' : artifact.revision === 'v1.5.6' ? 'JevBench v1.5.5' : artifact.revision === 'v1.5.5' ? 'JevBench v1.5.4' : artifact.revision === 'v1.5.4' ? 'JevBench v1.5.3' : artifact.revision === 'v1.5.3' ? 'JevBench v1.5.2' : artifact.revision === 'v1.5.2' ? 'JevBench v1.5.1' : artifact.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'}</a></span>
       </p>
     </header>
-    <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} />
+    {live ? <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} /> : <JevBenchLegacyArchiveWidget version={artifact.revision} part="board" artifact={artifact} sha256={sha256} previousKeys={previousKeys} />}
     <p className="bh-muted mt-6 text-sm" data-bh-priority-evaluation-link>Model author? <a className="text-accent underline" href="/submit" data-bh-submit-link>Submit a model for evaluation (free queue or fast lane) →</a></p>
   </>;
 }

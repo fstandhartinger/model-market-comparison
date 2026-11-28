@@ -1,5 +1,6 @@
 import { jevArchFields } from '../lib/jevbench-architecture.mjs';
-import { jevV14RowNote, type JevV14Artifact, type JevV14System, sealedFamilyShares } from '../lib/jevbench-v14.mjs';
+import type { JevV14Artifact, JevV14System } from '../lib/jevbench-v14.mjs';
+import { jevV14RowNote, sealedFamilyShares } from '../lib/jevbench-v14-display.mjs';
 import { withFieldNames } from './jevFieldNames';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { shortName, type JevBoardViewRow } from './JevBoardShared';
@@ -70,9 +71,8 @@ function compareRow(row: JevV14System): JevCompareRow {
 }
 
 export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, sealedFamilyN, compactMobile = false }: { artifact: JevV14Artifact; sha256: string; previous?: { revision: string; keys: string[] }; capabilityHref?: string; sealedFamilyN?: Record<string, number>; compactMobile?: boolean }) {
-  const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
-  const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
-  const rows = [...ranked, ...unranked];
+  const rows = jevV14BoardRows(artifact);
+  const ranked = rows.filter(row => row.listing === 'ranked');
   const noteOf = new Map(rows.map((row) => [row.key, jevV14RowNote(artifact.footnotes?.[row.key], row)]));
   const notes = rows.filter((row) => noteOf.get(row.key));
   const previousKeys = previous ? new Set(previous.keys) : null;
@@ -98,7 +98,12 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, 
     </details>
     <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
 
-    <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
+    <JevV14ArchiveMethod />
+  </section>;
+}
+
+export function JevV14ArchiveMethod() {
+  return <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
       <h3 id="jev14-changes-head" className="text-lg font-semibold">What changed in v1.4</h3>
       <ul className="bh-muted mt-3 list-disc space-y-2 pl-5 text-sm">
         <li>Fresh sealed decisions keep the benchmark moving as public items saturate. Sealed items contribute 20% of Intelligence: <code>I = 0.8 × I_v1.3 + 0.2 × I_sealed</code>, where <code>I_sealed = 100 × max(0, (acc_sealed − 0.293) / (1 − 0.293))</code>. Public and sealed scores are published only as aggregates.</li>
@@ -107,6 +112,11 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, 
         <li>The four axes use an equal-weight harmonic mean (<code>p = −1</code>). Intelligence below 50 keeps its quadratic penalty; Speed and Cost each have a separate Jev-class gate below 50. Speed and Cost axis calculations are unchanged from v1.3.0.</li>
         <li>The visible <b className="text-gray-200">API</b> flag discloses when an operator endpoint received held-out item text, without answers. Existing system notes preserve disclosures such as Hopper's public-half development and JevK5's public-set selection.</li>
       </ul>
-    </section>
-  </section>;
+    </section>;
+}
+
+export function jevV14BoardRows(artifact: JevV14Artifact) {
+  const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
+  return [...ranked, ...unranked];
 }

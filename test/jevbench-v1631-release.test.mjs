@@ -31,7 +31,7 @@ test('v1.6.31 loader rejects changed carried scores, forged handoff axes, lost d
 test('v1.6.31 archived route uses the shared board, its own notes and historical catalogue',async()=>{
  const page=await readFile('app/jev-models/v1.6.31/page.tsx','utf8');
  assert.match(page,/readOptionalJevbenchV1631Release\(\)/);assert.match(page,/v1631BoardInput\(release\)/);
- assert.ok(page.indexOf('<JevBenchV16Board')<page.indexOf('data-bh-jev1631-method'));
+ assert.ok(page.indexOf('<JevBenchArchiveBoard')<page.indexOf('data-bh-jev1631-method'));
  assert.ok(page.indexOf('data-bh-jev1631-method')<page.indexOf('<JevHistoryLazy'));
  assert.match(page,/previousKeys=\{historicalCatalogue/);
 });

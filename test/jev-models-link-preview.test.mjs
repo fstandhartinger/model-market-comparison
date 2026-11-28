@@ -40,7 +40,8 @@ test('CR-134: the frozen /jev-models/v1.4 preview uses the immutable artifact an
   assert.match(metadata, /canonical = '\/jev-models\/v1\.4'/);
   assert.match(metadata, /JevBench Score\): \$\{topFive\}/);
   assert.match(frozenPage, /data-bh-jev-frozen-version/);
-  assert.match(frozenPage, /JevModelsV14Board artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
+  assert.match(frozenPage, /<JevBenchLegacyArchiveProvider version="v1\.4"/);
+  assert.match(frozenPage, /<JevBenchLegacyArchiveWidget version="v1\.4" part="board" artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
   assert.match(frozenPage, /href="\/jev-models\/v1\.4" data-bh-jev-version-share>Share this version/);
   assert.match(frozenPage, /href="\/jev-models" data-bh-jev-live-link>View live board/);
 });

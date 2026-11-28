@@ -2,8 +2,10 @@
 import { jevLatencyView, latencySeconds, JEV_LATENCY_LABEL, type JevSpeedLike } from '../lib/jev-latency.mjs';
 import { jevRowArch } from './jevTypes';
 import { JevMethodTag } from './JevMethodTag';
-import { JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL, jevMethodView } from '../lib/jev-decision-limit.mjs';
-import { JEV_SCOPE_LISTING, jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
+import { jevMethodView } from '../lib/jev-decision-limit.mjs';
+import { jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
+import { referenceNote, unrankedNote } from '../lib/jevbench-capability-notes.mjs';
+export { unrankedNote } from '../lib/jevbench-capability-notes.mjs';
 import { jevBelowRankedLast } from '../lib/jev-below-ranked.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
@@ -155,18 +157,6 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   </li>;
 }
 
-// v1.7.1 (Florian 6 Oct 2026): the Jev row on the open-weights board says plainly that it is a comparison reference.
-export function unrankedNote(listing: string, benchName: string, preliminary?: { label?: string | null } | null) {
-  if (listing === JEV_SCOPE_LISTING.reference) return 'Not ranked, only shown as a reference to compare with';
-  if (listing === JEV_SCOPE_LISTING.api) return 'Not ranked here: API offering, ranked on the API leaderboard';
-  // v1.7.5 (Florian 6 Oct 2026): public-set figures shown before the full sealed re-run.
-  // v1.6.14: a measurement that discloses its own preliminary scope shows that label; legacy P300 rows keep the exact text.
-  if (listing === 'preliminary') return preliminary?.label ?? 'Preliminary · public set (300 items) · full sealed run pending';
-  if (listing === 'pending') return 'Pending · no v1.6 figure yet';
-  // v1.7.0: the row keeps its v1.6 values, labelled as v1.6, and has no v1.7 value or rank.
-  if (listing === JEV_REMEASURE_PENDING) return `Not ranked: ${JEV_REMEASURE_PENDING_LABEL}. Shown with its v1.6 values until it is measured again`;
-  return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
-}
 
 export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, scopeLabel, outsideOpen = false, headline = true, pinnedKeys, ...options }: {
   /** v1.7.1: false on the API board, where the Composite is the headline. */
@@ -249,7 +239,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   const isPinned = ({ r }: { r: JevClassRow }) => !r.row.ranked && Boolean(pinnedKeys?.includes(r.row.key));
   const { head, rest } = jevFoldWithPinned(numbered, HEADLINE_TOP, isPinned);
   const bar = (item: { r: JevClassRow; label: string }) => { const { r, label } = item; return <RankingRow key={r.row.key} compactName={isPinned(item)} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
-    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName, (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined} />; };
+    note={r.isReference ? referenceNote(classLabel) : !r.row.ranked ? unrankedNote(r.row.listing, benchName, (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined} />; };
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(filteredRows.map((r) => jevRowArch(r.row)));
 

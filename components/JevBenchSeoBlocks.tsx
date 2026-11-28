@@ -1,3 +1,4 @@
+import { readJevBoardGuideLinks } from '../lib/jevbench-guide-links.mjs';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../lib/seo';
@@ -184,13 +185,7 @@ export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser
 }
 
 export async function JevBoardIntentLinks() {
-  const comparisons = await readJevbenchComparisonLinks();
-  return <JevBoardGuides links={[
-    { href: '/jev-models/alternatives', label: 'Compare Jev-compatible alternatives' },
-    { href: '/jev-models/how-to-choose', label: 'Choose a Jev-compatible model by use case' },
-    { href: '/jev-models/open-source-jev', label: 'Is Jev open source? Open-weight options' },
-    ...comparisons.map((pair) => ({ href: `/jev-models/${pair.slug}`, label: `Jev vs ${pair.label}` })),
-  ]} />;
+  return <JevBoardGuides links={await readJevBoardGuideLinks()} />;
 }
 
 export function JevRowLink({ row, children }: { row: SeoRow; children?: ReactNode }) {

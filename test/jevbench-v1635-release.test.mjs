@@ -37,7 +37,7 @@ test('v1.6.35 rejects altered usage, runtime, approval, disclosures and release 
  rejects(b=>{b.artifact.systems.find(s=>s.key==='kettei-fat').axes.intelligence++},/capability|carried|axes/);
 });
 test('v1.6.35 archived route keeps shared board, method and history',async()=>{
- const page=await readFile('app/jev-models/v1.6.35/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1635Release\(\)/);assert.match(page,/v1635BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchV16Board')<page.indexOf('data-bh-jev1635-method'));assert.ok(page.indexOf('data-bh-jev1635-method')<page.indexOf('<JevHistoryLazy'));
+ const page=await readFile('app/jev-models/v1.6.35/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1635Release\(\)/);assert.match(page,/v1635BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchArchiveBoard')<page.indexOf('data-bh-jev1635-method'));assert.ok(page.indexOf('data-bh-jev1635-method')<page.indexOf('<JevHistoryLazy'));
 });
 
 import { readCohortRows, jevWithCohortRows } from '../lib/jevbench-cohort-merge.mjs';

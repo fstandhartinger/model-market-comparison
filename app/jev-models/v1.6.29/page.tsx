@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1629Release, v1629BoardInput } from '../../../lib/jevbench-v1629-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -34,7 +34,7 @@ export default async function JevModelsV1629Page() {
       <p className="mt-3 max-w-3xl">The 55 full-draw rows of v1.6.28 keep their point scores and categories on draw {release.proof.draw_release}. Added here: <strong>Torchcast Decision 4B v1.2</strong> (Torchcast AI, paid public fast-lane), measured on a Verda FIN-01 A100 SXM4 80GB; and <strong>Vega-U (Qwen3.5-0.8B reader)</strong> (Nandakishor M), measured on our own CPU server. Both answered all 1,500 items and are ranked. Carried ranks and confidence intervals may shift; every move is counted below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.29">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.28">Previous v1.6.28</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.29" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

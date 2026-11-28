@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const component = readFileSync(new URL('../components/JevBenchV15Preview.tsx', import.meta.url), 'utf8');
+const component = readFileSync(new URL('../components/JevBenchV15View.tsx', import.meta.url), 'utf8');
 const verifier = readFileSync(new URL('../ops/ux-2026-09-12/bin/verify-fable-pass41-design.mjs', import.meta.url), 'utf8');
 
 test('F-218: independent live verifier covers desktop and mobile in both themes', () => {
