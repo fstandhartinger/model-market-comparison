@@ -496,7 +496,14 @@ const rosterCapability = (s: { capability?: number | null; axes?: { intelligence
 };
 const ENDPOINT_TAG: Record<string, string> = { api: 'hosted API', demo: 'author-hosted demo' };
 // Review 6 Oct 2026: the roster says per row which score basis it is, and marks estimated costs like the charts do.
-const basisLine = (s: { publication_scope?: string; a4?: { n_items: number; subset?: string } }, fullItems: number) => s.publication_scope === 'standard-axes-only' ? 'Published scores; private breakdowns withheld' : s.a4 ? `${s.a4.subset ?? 'A4'} ∪ P (${s.a4.n_items} items, equated)` : `full set (${fullItems.toLocaleString('en-US')} items)`;
+// v1.8.24: a row the API lane measured on a supplementary subset (v16.api_subset, not the full set) states its own basis
+// (v16.metric_basis: size, sealed/public split, not equated) instead of the full-set default; rows on the full set,
+// including those with a few failed requests, and A4/A5 re-run rows (they carry `a4`) render exactly as before.
+const supplementaryBasis = (s: { a4?: unknown; v16?: { api_subset?: boolean; full_set_api?: boolean | null; metric_basis?: string | null } }): string | null => {
+  const v = s.v16;
+  return !s.a4 && v && v.api_subset === true && v.full_set_api === false && v.metric_basis ? v.metric_basis : null;
+};
+const basisLine = (s: { publication_scope?: string; a4?: { n_items: number; subset?: string }; v16?: { api_subset?: boolean; full_set_api?: boolean | null; metric_basis?: string | null } }, fullItems: number) => s.publication_scope === 'standard-axes-only' ? 'Published scores; private breakdowns withheld' : s.a4 ? `${s.a4.subset ?? 'A4'} ∪ P (${s.a4.n_items} items, equated)` : supplementaryBasis(s) ?? `full set (${fullItems.toLocaleString('en-US')} items)`;
 const costCell = (cost: { usd_per_1000?: number | null; kind?: string | null } | null | undefined) => <>{cost?.kind === 'estimate' && <span className="bh-thin-tag bh-est-tag mr-1 align-middle" data-bh-jev14-est>est.</span>}{usd(cost?.usd_per_1000)}</>;
 const rosterStatus = (listing: string | null, reason: string | null) => listing === 'listed' ? 'configuration variant · not ranked'
   : listing ? `${NOT_RANKED[listing] ?? listing.replace(/_/g, ' ')} · not ranked` : reason ?? 'not ranked';
@@ -512,7 +519,9 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
   const configVariants = variants.filter((s) => (s.listing as string) !== 'wrapper'), wrappers = variants.filter((s) => (s.listing as string) === 'wrapper');
   const variantRow = (s: (typeof variants)[number]) => <tr key={s.key} className="border-t border-line">
     <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
-    <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}<span className="block text-xs">{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span></td>
+    <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}<span className="block text-xs">{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span>
+      {/* v1.8.24: the stated reason accompanies a supplementary-set row; other rows keep their status line unchanged. */}
+      {s.not_ranked_because && supplementaryBasis(s as { v16?: { api_subset?: boolean; full_set_api?: boolean | null; metric_basis?: string | null } }) && <span className="block max-w-md text-xs" data-bh-jev-api-roster-reason={s.key}>{s.not_ranked_because}</span>}</td>
     <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
     <td className="p-2">{costCell(s.cost)}</td><td className="p-2"><JevLatencyValue speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} /></td></tr>;
   const head = (label: string, n: number) => <tr className="border-t border-line"><th colSpan={6} scope="colgroup" className="p-2 pt-4 text-left text-sm font-semibold">{label} ({n})</th></tr>;
