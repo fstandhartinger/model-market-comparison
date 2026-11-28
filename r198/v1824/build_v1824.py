@@ -34,7 +34,9 @@ for k in keys:
  s['v16'].pop('raw_on_A',None)
  s['v16']['equating_flag']=NOTE;s['v16']['metric_basis']='Supplementary set of 600 items: 300 sealed and 300 public (API lane; not equated)'
  s['status']={'status':'complete'}
- for f in ['display','author','repo','licence','endpoint_condition','disclosure']:s[f]=pr[f]
+ # No licence key: the providers state none for the model (precedent: microsoft-decision-1-r2, strike-1 carry no licence); none is asserted.
+ for f in ['display','author','repo','endpoint_condition','disclosure']:s[f]=pr[f]
+ s.pop('licence',None)
  s['underlying']=pr['disclosure'];s['notes']=pr['notes'];s['base_model']=en['base_model'];s['http_status']=pr['http_status']
  s['model_pin']=pins[k]['model_pin']
  s.update(method='v1.7',new_in=REV,measured_in=REV,last_measured_on=en['measured_on'],measurement_date_status='measured',paid_fast_lane=en['paid_fast_lane'],ranked=False,rank=None,ranks={'A':None,'B':None,'C':None,'capability':None},listing='unranked',not_ranked_because=NOTE)
