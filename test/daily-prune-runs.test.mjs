@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, writeFile, readFile, access, rm } from 'node:fs/promise
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
+import { compactRunDirectory, REPLAY_HELD_RUN } from '../ops/daily/compact-run.mjs';
 import { planRunPruning, pruneStaleRuns, RETAIN_STAGING_DAYS, RETAIN_STAGING_RUNS } from '../ops/daily/prune-runs.mjs';
 
 const NOW = new Date('2026-09-25T00:00:00Z');
@@ -67,6 +68,14 @@ test('an already compacted run is not counted against the investigation window',
   assert.deepEqual(plan.prune, []);
 });
 
+test('the held replay run keeps its staging without using the ordinary investigation window', () => {
+  const other = run('ordinary', { started: daysAgo(31) });
+  const held = run(REPLAY_HELD_RUN, { started: daysAgo(30) });
+  const plan = planRunPruning({ runs: [held, other], now: NOW, retainStagingRuns: 1 });
+  assert.deepEqual(plan.prune, []);
+  assert.deepEqual(reasons(plan), { [REPLAY_HELD_RUN]: 'replay-hold', ordinary: 'investigation-window' });
+});
+
 test('the boundary is the documented one: RETAIN_STAGING_DAYS is kept, a minute past it is not', () => {
   const inside = run('inside', { started: new Date(NOW.getTime() - RETAIN_STAGING_DAYS * 86_400_000 + 60_000) });
   const outside = run('outside', { started: new Date(NOW.getTime() - RETAIN_STAGING_DAYS * 86_400_000 - 60_000) });
@@ -91,6 +100,7 @@ test('pruneStaleRuns removes only the staging bulk and only from the runs the pl
       return dir;
     };
     const stale = await make('2026-09-01T05-17-00-000Z-1', '2026-09-01T05:17:00.000Z');
+    const held = await make(REPLAY_HELD_RUN, '2026-09-01T05:17:00.000Z');
     const fresh = await make('2026-09-24T16-17-00-000Z-2', '2026-09-24T16:17:00.000Z');
     // Three more fresh runs, so the investigation window is filled by runs newer than `stale`.
     for (const hour of ['17', '18', '19']) await make(`2026-09-24T${hour}-17-00-000Z-9`, `2026-09-24T${hour}:17:00.000Z`);
@@ -103,9 +113,13 @@ test('pruneStaleRuns removes only the staging bulk and only from the runs the pl
     const receipt = await pruneStaleRuns({ home, now: NOW });
     assert.equal(receipt.applied, true);
     assert.deepEqual(receipt.pruned.map((p) => p.name), ['2026-09-01T05-17-00-000Z-1']);
+    assert.ok(receipt.kept.some(({ name, reason }) => name === REPLAY_HELD_RUN && reason === 'replay-hold'));
+    assert.deepEqual(await compactRunDirectory(held), { applied: false, reason: 'replay-hold' });
     for (const name of ['work', 'before', 'benchmark-candidates']) {
       await assert.rejects(access(join(stale, name)), { code: 'ENOENT' });
+      assert.equal(await readFile(join(held, name, 'sentinel'), 'utf8'), name);
     }
+    assert.deepEqual(await readFile(join(held, 'reports/dataset-before.json')), before);
     for (const name of ['sources', 'gauntlet', 'review', 'workers']) {
       assert.equal(await readFile(join(stale, name, 'sentinel'), 'utf8'), name);
     }

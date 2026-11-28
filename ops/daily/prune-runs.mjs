@@ -27,9 +27,9 @@
 // skip itself while a deletion ran.
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { readdir, readFile, rm, stat } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
-import { compactRunDirectory, STAGING_DIRECTORIES } from './compact-run.mjs';
+import { compactRunDirectory, REPLAY_HELD_RUN, STAGING_DIRECTORIES } from './compact-run.mjs';
 
 const exec = promisify(execFile);
 
@@ -57,13 +57,14 @@ const DAY_MS = 86_400_000, HOUR_MS = 3_600_000;
 export function planRunPruning({ runs, now = new Date(), retainStagingDays = RETAIN_STAGING_DAYS,
   retainStagingRuns = RETAIN_STAGING_RUNS, settleHours = SETTLE_HOURS } = {}) {
   const at = now.getTime();
-  const withStaging = runs.filter((run) => run.staging?.length);
+  const withStaging = runs.filter((run) => run.name !== REPLAY_HELD_RUN && run.staging?.length);
   // Newest first, by the run's own start time where it has one and by file activity otherwise.
   const order = [...withStaging].sort((a, b) =>
     (b.started?.getTime() ?? b.activity.getTime()) - (a.started?.getTime() ?? a.activity.getTime()));
   const newest = new Set(order.slice(0, retainStagingRuns).map((run) => run.name));
   const prune = [], keep = [];
   for (const run of runs) {
+    if (run.name === REPLAY_HELD_RUN) { keep.push({ name: run.name, reason: 'replay-hold' }); continue; }
     if (!run.staging?.length) { keep.push({ name: run.name, reason: 'no-staging' }); continue; }
     // An unfinished directory that was written recently may be the run that is executing now.
     if (!run.finished && at - run.activity.getTime() < settleHours * HOUR_MS) {
