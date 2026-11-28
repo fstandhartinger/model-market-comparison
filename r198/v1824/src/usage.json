@@ -1,0 +1,62 @@
+{
+ "alibaba-decision-model-sg": {
+  "api_pricing_v15_sha256": "29d90b4d36bacb8e19283fbc73591202b198bb4709fefd63f74d05162255405f",
+  "base_model": null,
+  "check_arithmetic": 0.03364263,
+  "cost_all": 0.03364263,
+  "cost_axis": {
+   "artifact_axis": 54.19330182215635,
+   "artifact_usd_per_1000": 0.03364263,
+   "axis_delta": 0.0,
+   "exact_axis": 54.19330182215635,
+   "formula": "score_v15.cost_score: clip(100 - 30*log10(usd_per_1000/0.001), 0, 100); reproduces the artifact axis exactly from the artifact USD figure",
+   "usd_delta": 0.0
+  },
+  "in_per_m": 0.042,
+  "input_tokens": 480609,
+  "n_items": 600,
+  "non_ok_rows_in_denominator": 0,
+  "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+  "ok_rows": 600,
+  "out_per_m": 0.0,
+  "output_tokens": 0,
+  "raw_sha256": "07f977c70f0abdd4c81cabc229b0ee3c6aa4deb2cb1212ea7de1673d0f66e49f",
+  "registry_sha256": "6d7ab8383931e61df639a7517de92992c0dc2f9031b24df144a534092888689a",
+  "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+  "source": "api",
+  "view": {
+   "fields_added": [
+    "usage.output_tokens=0 (ok rows only)"
+   ],
+   "rows_changed": 600,
+   "view_sha256": "da950c6c1f3fa69759807ba3fac02051a527f51616995cb47ead08976a580d01"
+  }
+ },
+ "urun-sense": {
+  "api_pricing_v15_sha256": "29d90b4d36bacb8e19283fbc73591202b198bb4709fefd63f74d05162255405f",
+  "base_model": null,
+  "check_arithmetic": 0.012922875,
+  "cost_all": 0.012922875,
+  "cost_axis": {
+   "artifact_axis": 66.65922065356219,
+   "artifact_usd_per_1000": 0.01292288,
+   "axis_delta": 5.040995873173415e-06,
+   "exact_axis": 66.65922569455806,
+   "formula": "score_v15.cost_score: clip(100 - 30*log10(usd_per_1000/0.001), 0, 100); reproduces the artifact axis exactly from the artifact USD figure",
+   "usd_delta": -4.999999999102944e-09
+  },
+  "in_per_m": 0.025,
+  "input_tokens": 310149,
+  "n_items": 600,
+  "non_ok_rows_in_denominator": 3,
+  "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+  "ok_rows": 597,
+  "out_per_m": 0.0,
+  "output_tokens": 0,
+  "raw_sha256": "ee8f68b70197bd00f3aff3567add4d03dac081986a7a0cebe7d482e4fa2f6c33",
+  "registry_sha256": "abbc66c125535b831c91a1b9123d41cf92cf084874ac5692e08609cf7769e70e",
+  "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+  "source": "api",
+  "view": null
+ }
+}
