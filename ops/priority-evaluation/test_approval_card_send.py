@@ -369,10 +369,7 @@ class ApprovalCardSend(unittest.TestCase):
                                          '--ask', '720', '--allow-german', '--text-stdin', '--dry-run'],
                                         input=text, text=True, capture_output=True, env=env, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
-                # A reached global immediate limit only changes routing (board #28 instead of Telegram), not
-                # whether the caption passed every card lint; the live counter must not decide this test.
-                self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists'
-                                                r'|global immediate limit reached; message would be)')
+                self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists)')
                 warnings = [l for l in result.stderr.splitlines() if l.startswith('repeat-lint')]
                 if not strict:
                     warnings = [l for l in warnings if '(money-eur)' not in l]
